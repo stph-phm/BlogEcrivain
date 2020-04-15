@@ -30,14 +30,13 @@ function getAllComments($id_article)
 
 function dbConnect()
 {
-    try 
+    try
     {
-        $db = new PDO ('mysql:host=localhost;dbname=blog;charset=utf8','root','');
-
+        $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
         return $db;
-    } 
-    catch (Exception $e) 
+    }
+    catch(Exception $e)
     {
-        die('Erreur:' .$e->getMessage());
+        die('Erreur : '.$e->getMessage());
     }
 }
