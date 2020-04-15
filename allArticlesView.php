@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php $title = "Homepage" ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog ecrivain</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
+<?php ob_start(); ?>
     <div class="global">
         <div class="header">
             <header>
@@ -28,22 +20,27 @@
             <section>
                 <div class="header-section">
 
-                    <a href="post.php?id=<?= $allArticles['id'] ?>"> <h3> <?= htmlspecialchars($allArticles['title']) ?> </h3></a>
+                    <a href="article.php?id=<?= $allArticles['id'] ?>"> <h3> <?= htmlspecialchars($allArticles['title']) ?> </h3></a>
                     <p> <?= $allArticles['date_fr'] ?> </p>
                 </div>
 
                 <div class="content-section">
-                    <p> <?= nl2br(substr($allArticles['content'],0,390)) ?>... <a href="post.php?id=<?= $allArticles['id'] ?>">Lire la suite</a> </p>
+                    <p> <?= nl2br(substr($allArticles['content'],0,390)) ?>... <a href="article.php?id=<?= $allArticles['id'] ?>">Lire la suite</a> </p>
                 </div>
             </section>
             <?php 
                 endwhile;
                 $req->closeCursor();
             ?>
-        </div>
-        <!--list-article-->
-    </div>
-    <!--global-->
-</body>
+        </div><!--/.list-article-->
 
-</html>
+        <footer>
+            <p> Site réalisé par Stéphanie Pham dans le cadre de la formation Openclassrooms</p>
+        </footer>
+    </div><!--/.global-->
+
+    <?php $content = ob_get_clean(); ?>
+    <?php include 'template.php'; ?>
+
+
+

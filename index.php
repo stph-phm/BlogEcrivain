@@ -3,6 +3,6 @@ include 'model.php';
 
 $req = getAllArticles();
 
-include 'indexView.php';
+include 'allArticlesView.php';
 
 

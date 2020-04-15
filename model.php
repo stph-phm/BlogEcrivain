@@ -14,9 +14,9 @@ function getArticle($id_article)
     $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles WHERE id = ?');
 
     $req->execute(array($id_article));
-    $post = $req->fetch();
+    $article = $req->fetch();
 
-    return $post;
+    return $article;
 }
 
 function getAllComments($id_article)
