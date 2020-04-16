@@ -22,7 +22,7 @@
         <h2>Commentaires</h2>
 
         <div class="form-comment">
-            <form action="" method="post">
+            <form action="index.php?action=addComment&amp;id=<?= $article['id'] ?>" method="post">
                 <div>
                     <label for="pseudo">Pseudo : </label> <br>
                     <input type="text" name="pseudo" id="pseudo">
@@ -32,7 +32,7 @@
                     <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
                 </div>
                 <div>
-                    <button type="submit">Valider</button>
+                   <input type="submit" value="Commenter">
                 </div>
             </form>
         </div><!--form-comment-->

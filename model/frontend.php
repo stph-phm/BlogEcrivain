@@ -28,24 +28,17 @@ function getAllComments($article_id)
     return $comments;
 }
 
-function addComments($article_id, $pseudo, $comment)
+function getAddComments($article_id, $pseudo, $comment)
 {
     $db = dbConnect();
     $comments = $db->prepare('INSERT INTO comments(article_id, pseudo, comment, date_com) VALUES (?, ?, ?, NOW())');
-    $addComment = $comments->execute(array($article_id, $pseudo, $comment)); 
+    $addLinesComment = $comments->execute(array($article_id, $pseudo, $comment)); 
 
-    return $addComment;
+    return $addLinesComment;
 }
 
 function dbConnect()
 {
-    try
-    {
-        $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        return $db;
-    }
-    catch(Exception $e)
-    {
-        die('Erreur : '.$e->getMessage());
-    }
+    $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+    return $db;
 }

@@ -20,10 +20,10 @@ function article()
 
 function addComment($article_id, $pseudo, $comment )
 {
-    $addComment = addComments($article_id, $pseudo, $comment);
+    $addLinesComment = getAddComments($article_id, $pseudo, $comment);
 
-    if ($addComment === false) {
-        die('Impossible d\'ajouter le commentaire !');
+    if ($addLinesComment === false) {
+        throw new Exception('Impossible d\'ajouter le commentaire !');
     } 
     else {
         header('Location: index.php?action=article&id='.$article_id);
