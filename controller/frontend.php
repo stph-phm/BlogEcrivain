@@ -1,31 +1,37 @@
 <?php 
 
-include 'model/frontend.php';
+include_once 'model/ArticleManager.php';
+include_once 'model/CommentManager.php';
 
 function allArticles()
 {
-
-    $req = getAllArticles();
+    $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+    $req = $articleManager->getAllArticles();
     
     include 'view/frontend/allArticlesView.php';
 }
 
 function article()
 {
-    $article = getArticle($_GET['id']);
-    $comments = getAllComments($_GET['id']);
+    $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+    $commentManager = new \OpenClassrooms\Blog\Model\CommentManager();
+
+    $article = $articleManager->getArticle($_GET['id']);
+    $comments = $commentManager->getAllComments($_GET['id']);
 
     include 'view/frontend/articleView.php';
 }
 
 function addComment($article_id, $pseudo, $comment )
 {
-    $addLinesComment = getAddComments($article_id, $pseudo, $comment);
+    $commentManager = new \OpenClassrooms\Blog\Model\CommentManager();
 
-    if ($addLinesComment === false) {
-        throw new Exception('Impossible d\'ajouter le commentaire !');
-    } 
+    $addLinesComment = $commentManager->getAddComments($article_id, $pseudo, $comment);
+
+    if ($addLinesComment === true) {
+        throw new Exception(' Impossible d\'ajouter le commentaire !');
+    }
     else {
-        header('Location: index.php?action=article&id='.$article_id);
+        header('Location: index.php?action=article&id=' . $article_id);
     }
 }
