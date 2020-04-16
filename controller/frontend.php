@@ -18,4 +18,14 @@ function article()
     include 'view/frontend/articleView.php';
 }
 
+function addComment($article_id, $pseudo, $comment )
+{
+    $addComment = addComments($article_id, $pseudo, $comment);
 
+    if ($addComment === false) {
+        die('Impossible d\'ajouter le commentaire !');
+    } 
+    else {
+        header('Location: index.php?action=article&id='.$article_id);
+    }
+}

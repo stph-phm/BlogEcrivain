@@ -16,16 +16,33 @@
                 <?= nl2br($article['content']) ?>
             </p>
         </article>
-    </div>
+    </div><!--news-->
+    
     <section>
         <h2>Commentaires</h2>
+
+        <div class="form-comment">
+            <form action="" method="post">
+                <div>
+                    <label for="pseudo">Pseudo : </label> <br>
+                    <input type="text" name="pseudo" id="pseudo">
+                </div>
+                <div>
+                    <label for="comment">Commentaire : </label> <br>
+                    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                </div>
+                <div>
+                    <button type="submit">Valider</button>
+                </div>
+            </form>
+        </div><!--form-comment-->
 
         <?php while ($allcomments = $comments->fetch()) :?>
         <div class="section-comments">
             <p>
                 <strong>
                     <?= htmlspecialchars($allcomments['pseudo']) ?>
-                </strong> 
+                </strong>
                 le <?= $allcomments['date_fr'] ?>
             </p>
             <p><?= nl2br(htmlspecialchars($allcomments['comment'])) ?></p>
