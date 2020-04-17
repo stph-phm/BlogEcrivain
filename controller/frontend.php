@@ -24,11 +24,12 @@ function article()
 
 function addComment($article_id, $pseudo, $comment )
 {
+
     $commentManager = new \OpenClassrooms\Blog\Model\CommentManager();
 
     $addLinesComment = $commentManager->getAddComments($article_id, $pseudo, $comment);
 
-    if ($addLinesComment === true) {
+    if ($addLinesComment === false) {
         throw new Exception(' Impossible d\'ajouter le commentaire !');
     }
     else {
