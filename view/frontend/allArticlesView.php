@@ -16,7 +16,7 @@
         <!--header-->
 
         <div class="list-article">
-            <?php while ($allArticles = $req->fetch()): ?>
+            <?php foreach ($articles as $allArticles) { ?>
             <section>
                 <div class="header-section">
 
@@ -29,14 +29,11 @@
                 </div>
             </section>
             <?php 
-                endwhile;
-                $req->closeCursor();
+            }
             ?>
         </div><!--/.list-article-->
 
-        <footer>
-            <p> Site réalisé par Stéphanie Pham dans le cadre de la formation Openclassrooms</p>
-        </footer>
+
     </div><!--/.global-->
 
     <?php $content = ob_get_clean(); ?>

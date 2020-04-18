@@ -9,5 +9,8 @@
 
 <body>
     <?= $content; ?>
+    <footer>
+            <p> Site réalisé par Stéphanie Pham dans le cadre de la formation Openclassrooms</p>
+        </footer>
 </body>
 </html>

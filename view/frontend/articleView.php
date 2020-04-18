@@ -9,12 +9,10 @@
         <article>
             <h2>
                 <?= htmlspecialchars($article['title']) ?>
-                <em>le <?= $article['date_fr'] ?></em>
             </h2>
 
-            <p>
-                <?= nl2br($article['content']) ?>
-            </p>
+            <p> <?= nl2br($article['content']) ?> </p>
+            <p> publié le : <?= $article['date_fr'] ?></p>
         </article>
     </div><!--news-->
     
@@ -37,20 +35,20 @@
             </form>
         </div><!--form-comment-->
 
-        <?php while ($allcomments = $comments->fetch()) :?>
+        <?php foreach ($comments as $allComments) { ?>
         <div class="section-comments">
             <p>
                 <strong>
-                    <?= htmlspecialchars($allcomments['pseudo']) ?>
+                    <?= htmlspecialchars($allComments['pseudo']) ?>
                 </strong>
-                le <?= $allcomments['date_fr'] ?>
+                le <?= $allComments['date_fr'] ?>
             </p>
-            <p><?= nl2br(htmlspecialchars($allcomments['comment'])) ?></p>
+            <p><?= nl2br(htmlspecialchars($allComments['comment'])) ?></p>
         </div>
     </section>
 </div><!--global-->
 
-<?php endwhile; ?>
+        <?php }?>
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php include 'template.php'; ?>
