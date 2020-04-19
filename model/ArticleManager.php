@@ -5,6 +5,12 @@ include_once 'model/Manager.php';
 
 class ArticleManager extends Manager 
 {
+    public $article_id;
+
+    /**
+     * Get all articles in database articles
+     * @return $article
+     */
     public function getAllArticles()
     {
         $db = $this->dbConnect();
@@ -15,6 +21,11 @@ class ArticleManager extends Manager
         return $allArticles;
     }
 
+    /**
+     * Get 1 article accordin to the ID passed in param
+     * @param $article_id
+     * @return $article
+     */
     public function getArticle($article_id)
     {
         $db = $this->dbConnect();
