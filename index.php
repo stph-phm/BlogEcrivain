@@ -1,5 +1,6 @@
 <?php 
-include 'controller/frontend.php';
+include 'controller/Frontend.php';
+
 $action = '';
 if (isset($_GET['action'])) {
     $action = trim($_GET['action']);
@@ -8,18 +9,24 @@ if (isset($_GET['action'])) {
 
 switch ($action) {
     case 'allArticle':
-        allArticles();
+        $frontend = new Frontend;
+        $frontend->allArticles();
         break;
     case 'article';
-        article();
+        $frontend = new Frontend;
+        $frontend->article();
         break;
     case 'addComment':
-        addComment($article_id, $pseudo, $comment);
-        break;   
+        $frontend = new Frontend;
+        $frontend->addComment($_GET['id'], $_POST['pseudo'], $_POST['comment']); // Changement de param $article_id, $pseudo, $comment => error ne reconnait pas les variables 
+        break; 
     default:
-        allArticles();
+        $frontend = new Frontend;
+        $frontend->allArticles();
         break;
 }
+
+
 
 // try {
 //     if (isset($_GET['action'])) {

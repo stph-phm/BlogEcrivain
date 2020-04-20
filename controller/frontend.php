@@ -17,7 +17,7 @@ class Frontend {
     {
     $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
     $articles = $articleManager->getAllArticles();
-    
+
     include 'view/frontend/allArticlesView.php';
     }
 
