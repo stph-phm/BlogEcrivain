@@ -1,5 +1,7 @@
 <?php 
-include 'controller/Frontend.php';
+include_once 'controller/Article.php';
+include_once 'controller/Comment.php';
+
 
 $action = '';
 if (isset($_GET['action'])) {
@@ -9,24 +11,24 @@ if (isset($_GET['action'])) {
 
 switch ($action) {
     case 'allArticle':
-        $frontend = new Frontend;
-        $frontend->allArticles();
+        $listArticle = new  \OpenClassrooms\Blog\Controller\Article;
+        $listArticle->allArticles();
         break;
-    case 'article';
-        $frontend = new Frontend;
-        $frontend->article();
+    case 'article':
+        $listArticle = new \OpenClassrooms\Blog\Controller\Article;
+        $listArticle->article();
         break;
     case 'addComment':
-        $frontend = new Frontend;
-        $frontend->addComment($_GET['id'], $_POST['pseudo'], $_POST['comment']); // Changement de param $article_id, $pseudo, $comment => error ne reconnait pas les variables 
+        $comment = new \OpenClassrooms\Blog\Controller\Comment;
+        $comment->addComment($_GET['id'], $_POST['pseudo'], $_POST['comment']); // Changement de param $article_id, $pseudo, $comment => error ne reconnait pas les variables 
         break; 
+
+
     default:
-        $frontend = new Frontend;
-        $frontend->allArticles();
+        $listArticle = new \OpenClassrooms\Blog\Controller\Article;
+        $listArticle->allArticles();
         break;
 }
-
-
 
 // try {
 //     if (isset($_GET['action'])) {
