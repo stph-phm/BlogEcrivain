@@ -5,9 +5,11 @@ include_once 'model/Manager.php';
 
 class CommentManager extends Manager
 {
+    public $comment_id;
     public $article_id;
     public $pseudo;
     public $comment;
+    public $reported;
 
     /**
      * Get all comments in database in comments
@@ -37,5 +39,38 @@ class CommentManager extends Manager
         $addLinesComment = $comments->execute(array("article_id" => $article_id, "pseudo" => $pseudo, 'comment' => $comment)); 
 
         return $addLinesComment;
+    }
+
+    /**
+     * Report comments 
+     * @param $comment_id (int)
+     */
+    public function reportComments($comment_id)
+    {
+        $db = $this->dbConnect();
+        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
+        $reqComment->execute([$comment_id]);
+    }
+
+    /**
+     * Ignore comment report
+     * @param $comment_id (int)
+     */
+    public function ignoreComments($comment_id)
+    {
+        $db = $this->dbConnect();
+        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
+        $reqComment->execute([$comment_id]);
+    }
+
+    /**
+     * Delete comments 
+     * @param $comment_id (int)
+     */
+    public function deleteComments($comment_id)
+    {
+        $db = $this->dbConnect();
+        $reqComment = $db->prepare('DELETE FROM comments WHERE id = ?');
+        $reqComment->execute([$comment_id]);
     }
 }
