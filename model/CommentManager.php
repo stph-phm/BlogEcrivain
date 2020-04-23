@@ -45,11 +45,11 @@ class CommentManager extends Manager
      * Report comments 
      * @param $comment_id (int)
      */
-    public function reportComments($comment_id)
+    public function reportComments($comment_id, $reported )
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
-        $reqComment->execute([$comment_id]);
+        $reqComment->execute(array("id" => $comment_id, "report" => $reported));
     }
 
     /**

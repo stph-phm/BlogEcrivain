@@ -1,5 +1,4 @@
 <?php
-
 namespace OpenClassrooms\Blog\Model;
 
 class Manager 

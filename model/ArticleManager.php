@@ -14,7 +14,7 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order DESC');
+        $articles = $db->query('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order');
         
         $allArticles = $articles->fetchAll();
 
@@ -46,7 +46,7 @@ class ArticleManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order DESC LIMIT 1');
 
-        $req->execute(array());
+        $lastArticle->execute(array());
         $article = $req->fetch();
 
         return $article;
@@ -67,7 +67,7 @@ class ArticleManager extends Manager
      * Edit an article 
      * @param $article_id (int), $title, $content
      */
-    public function editArticle($article_id, $title, $content)
+    public function editArticles($article_id, $title, $content)
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare(
