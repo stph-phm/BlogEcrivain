@@ -1,7 +1,7 @@
 <?php $title = "Homepage" ?>
 
 <?php ob_start(); ?>
-    <div class="global">
+    <div class="container global">
         <div class="header">
             <header>
                 <div class="image-header">
@@ -32,8 +32,6 @@
             }
             ?>
         </div><!--/.list-article-->
-
-
     </div><!--/.global-->
 
     <?php $content = ob_get_clean(); ?>
