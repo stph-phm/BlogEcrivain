@@ -25,11 +25,31 @@ switch ($action) {
     case 'reportComment':
         $comment = new \OpenClassrooms\Blog\Controller\Comment;
         $comment->reportComment($_GET['id'], $_POST['report']);
-    case 'admin':
-        $dashboard = new  \OpenClassrooms\Blog\Controller\Article;        
-        $dashboard->managerReportComment();
+    case 'login':
+        //affiche la page de connexion 
+        // dirige le lien de admin
         break;
-
+    case 'admin':
+        //zffiche les tableau article et commentaire signalés 
+    break;
+    case 'create':
+        // Ajouter une nouvelle article 
+        break;
+    case 'see':
+        // envoie le lien pour voir l'article 
+        break;
+    case 'edit':
+        // modifier l'article
+        break;
+    case 'deleteArticle':
+        //supprime l'article avec ses commentaires 
+        break;
+    case 'ignore':
+        // ignorer les commentaire signalés
+        break;
+    case 'deleteComments':
+        // supprimer les commentaires signalés
+        break;
     default:
         $listArticle = new \OpenClassrooms\Blog\Controller\Article;
         $listArticle->allArticles();
