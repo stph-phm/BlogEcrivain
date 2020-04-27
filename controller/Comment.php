@@ -29,10 +29,10 @@ class Comment {
                 header('Location: index.php?action=article&id=' .$article_id);
             }
             else {
-                echo 'Veuillez remplir les champs ';
+                throw new \Exception('Veuillez remplir les champs ');
             }
             if ($addLinesComment === false) {
-                echo 'Impossible d\'ajouter les commentaires';
+                throw new \Exception('Impossible d\'ajouter les commentaires');
             } 
         }
     }

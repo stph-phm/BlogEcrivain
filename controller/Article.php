@@ -34,7 +34,7 @@ class Article {
             $comments = $commentManager->getAllComments($_GET['id']);
         } 
         else {
-            echo('Aucun identifiant de billet envoyé');
+            throw new \Exception('Aucun identifiant de billet envoyé');
         }
         include 'view/frontend/articleView.php';
     }
