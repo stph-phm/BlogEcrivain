@@ -1,15 +1,16 @@
 <?php
-namespace OpenClassrooms\Blog\Model;
+namespace App\Blog\Model;
 
 include_once 'model/Manager.php';
 
 class CommentManager extends Manager
 {
-    public $comment_id;
-    public $article_id;
+    public $id;
     public $pseudo;
     public $comment;
+    public $date_com;
     public $reported;
+    public $article_id;
 
     /**
      * Get all comments in database in comments
@@ -45,32 +46,36 @@ class CommentManager extends Manager
      * Report comments 
      * @param $comment_id (int)
      */
-    public function reportComments($comment_id, $reported )
+    public function reportComments($article_id, $reported )
     {
         $db = $this->dbConnect();
-        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
-        $reqComment->execute(array("id" => $comment_id, "report" => $reported));
+        $sql = 'UPDATE comments SET reported = 1 WHERE id = ?';
+        echo $sql;
+        $params = array($comment_id, $reported);
+        var_dump($params);
+        $reqComment = $db->prepare($sql);
+        $reqComment->execute($params);
     }
 
     /**
      * Ignore comment report
      * @param $comment_id (int)
      */
-    public function ignoreComments($comment_id)
+    public function validateComment($id)
     {
         $db = $this->dbConnect();
-        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
-        $reqComment->execute([$comment_id]);
+        $reqComment = $db->prepare('UPDATE comments SET reported = 0 WHERE id = ?');
+        $reqComment->execute([$id]);
     }
 
     /**
      * Delete comments 
      * @param $comment_id (int)
      */
-    public function deleteComments($comment_id)
+    public function deleteComments($id)
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('DELETE FROM comments WHERE id = ?');
-        $reqComment->execute([$comment_id]);
+        $reqComment->execute([$id]);
     }
 }

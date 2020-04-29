@@ -1,6 +1,11 @@
-<?php 
+<?php
+namespace OpenClassrooms\Blog;
+use App\Blog\Controller\User;
+use App\Blog\Controller\Article;
+use App\Blog\Controller\Comments;
+
 include_once 'controller/Article.php';
-include_once 'controller/Comment.php';
+include_once 'controller/Comments.php';
 
 
 $action = '';
@@ -11,29 +16,32 @@ if (isset($_GET['action'])) {
 try {
     switch ($action) {
         case 'allArticle':
-            $listArticle = new  \OpenClassrooms\Blog\Controller\Article;
+            $listArticle = new Article;
             $listArticle->allArticles();
             break;
         case 'article':
-            $listArticle = new \OpenClassrooms\Blog\Controller\Article;
+            $listArticle = new Article;
             $listArticle->article();
             break;
         case 'addComment':
-            $comment = new \OpenClassrooms\Blog\Controller\Comment;
-            $comment->addComment(); // Changement de param $article_id, $pseudo, $comment => error ne reconnait pas les variables 
+            $comment = new Comments;
+            $comment->addComment(); 
             break; 
         case 'reportComment':
-            $comment = new \OpenClassrooms\Blog\Controller\Comment;
-            $comment->reportComment($_GET['id'], $_POST['report']);
+            $comment = new Comments;
+            $comment->reportComment();
         case 'login':
-            //affiche la page de connexion 
-            // dirige le lien de admin
+            $user = new User;
+            $user->login();
             break;
         case 'admin':
+            $user = new User;
+            $user->dashboard();
             //zffiche les tableau article et commentaire signalés 
         break;
         case 'create':
             // Ajouter une nouvelle article 
+            
             break;
         case 'see':
             // envoie le lien pour voir l'article 
@@ -51,7 +59,7 @@ try {
             // supprimer les commentaires signalés
             break;
         default:
-            $listArticle = new \OpenClassrooms\Blog\Controller\Article;
+            $listArticle = new  Article;
             $listArticle->allArticles();
             break;
     }

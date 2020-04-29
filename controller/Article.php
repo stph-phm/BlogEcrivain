@@ -1,5 +1,10 @@
 <?php 
-namespace OpenClassrooms\Blog\Controller;
+
+namespace App\Blog\Controller;
+
+use App\Blog\Model\ArticleManager;
+use App\Blog\Model\CommentManager;
+
 
 include_once 'model/ArticleManager.php';
 include_once 'model/CommentManager.php';
@@ -13,10 +18,10 @@ class Article {
      */
     public function allArticles()
     {
-    $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+    $articleManager = new ArticleManager();
     $articles = $articleManager->getAllArticles();
 
-    include 'view/frontend/allArticlesView.php';
+    include 'view/allArticlesView.php';
     }
 
     /**
@@ -26,8 +31,8 @@ class Article {
      */
     public function article()
     {
-        $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
-        $commentManager = new \OpenClassrooms\Blog\Model\CommentManager();
+        $articleManager = new ArticleManager();
+        $commentManager = new CommentManager();
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article = $articleManager->getArticle($_GET['id']);
@@ -36,7 +41,7 @@ class Article {
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
         }
-        include 'view/frontend/articleView.php';
+        include 'view/articleView.php';
     }
         
     
@@ -48,7 +53,11 @@ class Article {
         // Lorsqu'on click sur le button create => vérifie si les champs sont bien remplis 
         // appelle la méthode pour aouter les nouveaux articles 
         // redirige le lien en adminView avec un message ? 
-        $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+        $articleManager = new ArticleManager();
+
+        $title = trim(htmlspecialchars($_POST['title'])); 
+        $content = tril($_POST['content']);
+
         if (isset($_POST['add'])) {
             $articleManager->createArticle($_POST['title'], $_POST['content']);
             header('Location: index.php?action=addArticle');
@@ -62,8 +71,12 @@ class Article {
         // si les champs sont remplis 
         // lorsqu'on click sur $_POST['submit_edit'] => appels la méthode 
         // redirige le lien en adminView avec un message ? 
-        $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+        $articleManager = new ArticleManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
+
+            $title = trim(htmlspecialchars($_POST['title']));
+            $content = trim($_POST['content']);
+
             if (!empty($_POST['title']) && !empty($_POST['content'])) {
                 if ($_POST['edit']) {
                     $articleManager->editArticles($_GET['id'], $_POST['title'], $_POST['content']);
@@ -72,7 +85,7 @@ class Article {
                 }
             }
         }
-        include 'model/frontend/editView.php';
+        include 'model/editView.php';
     }
 
     public function deleteArticle()
@@ -81,8 +94,11 @@ class Article {
         // appele la méthode et supprime l'article & les commentaires 
         // une alerte pour confirmer la supression ? 
         // redirige le lien en adminViex avec un message ? 
-        $articleManager = new \OpenClassrooms\Blog\Model\ArticleManager();
+        $articleManager = new ArticleManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
+            $delete = $_POST['deleteArticle'];
+            $id = $_GET['id'];
+
             if (isset($_POST['deleteArticle'])) {
                 $deleteComment->deleteArticle($_GET['id']);
             }

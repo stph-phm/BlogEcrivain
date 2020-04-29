@@ -1,5 +1,5 @@
 <?php
-namespace OpenClassrooms\Blog\Model;
+namespace App\Blog\Model;
 
 include_once 'model/Manager.php';
 

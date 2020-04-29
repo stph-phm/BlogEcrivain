@@ -1,11 +1,15 @@
 <?php
-namespace OpenClassrooms\Blog\Model;
+namespace App\Blog\Model;
+
+
 
 include_once 'model/Manager.php';
 
 class ArticleManager extends Manager 
 {
     public $article_id;
+    public $title;
+    public $content;
 
     /**
      * Get all articles in database articles
@@ -71,9 +75,7 @@ class ArticleManager extends Manager
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare(
-            'UPDATE articles 
-            SET title= :title, content = :content, date_article = NOW() 
-            WHERE id = :id ');
+            'UPDATE articles SET title= :title, content = :content, date_article = NOW() WHERE id = :id ');
         $reqArticle->execute(array("id" => $article_id, "title" => $title, "content" => $content));
     }
 
