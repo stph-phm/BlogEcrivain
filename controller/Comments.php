@@ -1,6 +1,6 @@
 <?php 
-namespace App\Blog\Controller;
-use App\Blog\Model\CommentManager;
+namespace App\Controller;
+
 
 include_once 'model/ArticleManager.php';
 include_once 'model/CommentManager.php';
@@ -45,19 +45,20 @@ class Comments {
         $commentManager = new CommentManager();
         $article_id = trim($_GET['id']); 
         $reported   = $_POST['report'];
-        $allComments['reported'] = null; 
+
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             if (isset($_POST['report'])) {
-                if ($allComments == 0) {
+               
                     $reportComment = $commentManager->reportComments($article_id, $reported);
-                }
+            
 
                 header('Location: index.php?action=article&id=' .$article_id);
             }
         }
     }
 
+  
     public function validateReportCom()
     {
         $commentManager = new CommentManager();
@@ -71,6 +72,7 @@ class Comments {
         }
     }
 
+    
 
    // Gestion des commentaires signalée
     // ignorer ou supprimer les commentaires signalés

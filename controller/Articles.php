@@ -1,17 +1,18 @@
 <?php 
 
-namespace App\Blog\Controller;
+namespace App\Controller;
 
-use App\Blog\Model\ArticleManager;
-use App\Blog\Model\CommentManager;
+use App\Model\ArticleManager;
+use App\Model\CommentManager;
+
+
 
 
 include_once 'model/ArticleManager.php';
 include_once 'model/CommentManager.php';
 
 class Article {
-    public $article_id;
-    
+   
     /**
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 
@@ -56,7 +57,7 @@ class Article {
         $articleManager = new ArticleManager();
 
         $title = trim(htmlspecialchars($_POST['title'])); 
-        $content = tril($_POST['content']);
+        $content = trim($_POST['content']);
 
         if (isset($_POST['add'])) {
             $articleManager->createArticle($_POST['title'], $_POST['content']);
@@ -100,7 +101,7 @@ class Article {
             $id = $_GET['id'];
 
             if (isset($_POST['deleteArticle'])) {
-                $deleteComment->deleteArticle($_GET['id']);
+              
             }
         }
     }

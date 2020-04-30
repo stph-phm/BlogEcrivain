@@ -1,9 +1,6 @@
 <?php
-namespace App\Blog\Controller;
+namespace App\Controller;
 
-use App\Blog\Model\UserManager;
-use App\Blog\Model\ArticleManager;
-use App\Blog\Model\CommentManager;
 
 include_once 'model/UserManager.php';
 
@@ -12,7 +9,7 @@ class User {
     public function login() 
     {
         $userManager = new UserManager();
-        $userManager->username($username);
+        $userManager->username();
 
      
             header('Location: index.php?action=admin');
