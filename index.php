@@ -1,11 +1,15 @@
 <?php
 namespace OpenClassrooms\Blog;
+
 use App\Blog\Controller\User;
 use App\Blog\Controller\Article;
 use App\Blog\Controller\Comments;
 
+
+
 include_once 'controller/Article.php';
 include_once 'controller/Comments.php';
+include_once 'controller/User.php';
 
 
 $action = '';
