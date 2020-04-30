@@ -57,6 +57,20 @@ class CommentManager extends Manager
         $reqComment->execute($params);
     }
 
+
+    /**
+     * Get all report comments 
+     * @return $reqComment
+     */
+    public function getAllReported()
+    {
+        $db = $this->dbConnect();
+        $reqComment = $db->query('SELECT * FROM comments WHERE reported = 1');
+
+        return $reqComment->fetchAll();
+    }
+
+
     /**
      * Ignore comment report
      * @param $comment_id (int)
