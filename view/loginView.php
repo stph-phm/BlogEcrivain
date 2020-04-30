@@ -4,7 +4,7 @@
     <div class="global">
         <h1>Se connecter </h1>
 
-        <form action="#" method="post">
+        <form action="index.php?action=admin" method="post">
             <div>
                 <label for="username">Votre identifiant : </label>
                 <input type="text" name="username" id="username"> <br>

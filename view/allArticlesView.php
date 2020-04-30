@@ -12,8 +12,7 @@
                     doloremque voluptate consequatur vitae incidunt, ea ducimus atque iusto, harum eligendi repellat
                     laboriosam labore ipsam beatae aspernatur dolor. RESUMER DE L'HISTOIRE</p>
             </header>
-        </div>
-        <!--header-->
+        </div><!--header-->
 
         <div class="list-article">
             <?php foreach ($articles as $allArticles) { ?>

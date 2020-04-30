@@ -7,7 +7,7 @@
     <h1>Billet simple pour l'Alaska</h1>
     <p><a href="index.php">Retour à la liste des chapitres:</a></p>
 
-    <div class="news">
+    <div class="container news">
         <article>
             <h2>
                 <?= htmlspecialchars($article['title']) ?>
@@ -50,15 +50,9 @@
             <p>
                 <?= nl2br(htmlspecialchars($allComments['comment'])) ?>
             </p>
-
-            <?php if ($allComments['reported'] == 0) { ?>
-                <form action="index.php?action=reportComment&amp;id=<?= $allComments['id'] ?>" method="post">
+                <form action="index.php?action=reportComment&amp;id=<?= $article['id'] ?>" method="post">
                     <button type="submit" name="report">Signaler</button>
                 </form>
-            <?php } else { ?>
-            <p> Le commentaire est signalé </p>
-            <?php } ?>  
-            
         </div>
     </section>
 </div>
