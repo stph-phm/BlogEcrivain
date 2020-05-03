@@ -1,5 +1,7 @@
 <?php
-namespace App\Blog\Model;
+namespace App\Model;
+
+use App\Model\Manager;
 
 include_once 'model/Manager.php';
 

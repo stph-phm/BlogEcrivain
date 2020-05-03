@@ -1,5 +1,7 @@
 <?php
-namespace App\Blog\Model;
+namespace App\Model;
+
+use App\Model\Manager;
 
 include_once 'model/Manager.php';
 
@@ -51,7 +53,7 @@ class CommentManager extends Manager
         $db = $this->dbConnect();
         $sql = 'UPDATE comments SET reported = 1 WHERE id = ?';
         echo $sql;
-        $params = array($comment_id, $reported);
+        $params = array($article_id, $reported);
         var_dump($params);
         $reqComment = $db->prepare($sql);
         $reqComment->execute($params);

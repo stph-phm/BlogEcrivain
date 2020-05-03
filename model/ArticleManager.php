@@ -1,7 +1,8 @@
 <?php
-namespace App\Blog\Model;
 
+namespace App\Model;
 
+use App\Model\Manager;
 
 include_once 'model/Manager.php';
 
@@ -20,9 +21,7 @@ class ArticleManager extends Manager
         $db = $this->dbConnect();
         $articles = $db->query('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order');
         
-        $allArticles = $articles->fetchAll();
-
-        return $allArticles;
+        return $articles;
     }
 
     /**
@@ -50,7 +49,7 @@ class ArticleManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order DESC LIMIT 1');
 
-        $lastArticle->execute(array());
+        $req->execute(array());
         $article = $req->fetch();
 
         return $article;
