@@ -1,15 +1,12 @@
 <?php
-namespace OpenClassrooms\Blog;
 
-use App\Blog\Controller\User;
-use App\Blog\Controller\Article;
-use App\Blog\Controller\Comments;
+use App\Controller\Users;
+use App\Controller\Articles;
+use App\Controller\Comments;
 
-
-
-include_once 'controller/Article.php';
+include_once 'controller/Articles.php';
 include_once 'controller/Comments.php';
-include_once 'controller/User.php';
+include_once 'controller/Users.php';
 
 
 $action = '';
@@ -20,12 +17,13 @@ if (isset($_GET['action'])) {
 try {
     switch ($action) {
         case 'allArticle':
-            $listArticle = new Article;
-            $listArticle->allArticles();
+            $listsArticle = new Articles;
+            $listsArticle->allArticles();
+
             break;
         case 'article':
-            $listArticle = new Article;
-            $listArticle->article();
+            $article = new Articles;
+            $article->article();
             break;
         case 'addComment':
             $comment = new Comments;
@@ -35,11 +33,11 @@ try {
             $comment = new Comments;
             $comment->reportComment();
         case 'login':
-            $user = new User;
+            $user = new Users;
             $user->login();
             break;
         case 'admin':
-            $user = new User;
+            $user = new Users;
             $user->dashboard();
             //zffiche les tableau article et commentaire signalés 
         break;
@@ -63,11 +61,11 @@ try {
             // supprimer les commentaires signalés
             break;
         default:
-            $listArticle = new  Article;
+            $listArticle = new  Articles;
             $listArticle->allArticles();
             break;
     }
-} catch (Exception $e) {
+} catch (\Exception $e) {
     echo 'Erreur : ' .$e->getMessage();
 }
 
