@@ -1,15 +1,21 @@
 <?php
 namespace App\Controller;
 
+use App\Model\UserManager;
+use App\Model\ArticleManager;
+use App\Model\CommentManager;
+
+
+
 
 include_once 'model/UserManager.php';
 
-class User {
+class Users {
      // Connecter 
     public function login() 
     {
         $userManager = new UserManager();
-        $userManager->username();
+        $userManager->username($username);
 
      
             header('Location: index.php?action=admin');

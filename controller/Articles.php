@@ -11,7 +11,7 @@ use App\Model\CommentManager;
 include_once 'model/ArticleManager.php';
 include_once 'model/CommentManager.php';
 
-class Article {
+class Articles {
    
     /**
       * Instantiating the ArticleManager object
