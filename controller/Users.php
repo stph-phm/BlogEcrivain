@@ -7,9 +7,6 @@ use App\Model\CommentManager;
 
 
 
-
-include_once 'model/UserManager.php';
-
 class Users {
      // Connecter 
     public function login() 

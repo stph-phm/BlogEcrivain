@@ -1,9 +1,7 @@
 <?php 
 namespace App\Controller;
 
-
-include_once 'model/ArticleManager.php';
-include_once 'model/CommentManager.php';
+use App\Model\CommentManager;
 
 class Comments {
     public $article_id;
@@ -62,12 +60,13 @@ class Comments {
     public function validateReportCom()
     {
         $commentManager = new CommentManager();
-        $validate = $_POST['validate']; 
+       
 
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            if (isset($validate)) {
-                $commentManager->validateComment($comment_id);
+            if (isset($_POST['validate'])) {
+                 $validate = $_POST['validate']; 
+                $commentManager->validateComment();
             }
         }
     }
@@ -83,7 +82,7 @@ class Comments {
         // redirige le lien tableau de bord ? 
         $commentManager = new CommentManager();
         if (isset($_POST['report'])) {
-            $commentManager->ignoreComments($comment_id, $reported);
+            $commentManager->ignoreComments();
         }
         
 

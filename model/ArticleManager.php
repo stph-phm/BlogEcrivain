@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-include_once 'model/Manager.php';
 
 class ArticleManager extends Manager 
 {

@@ -6,11 +6,6 @@ use App\Model\ArticleManager;
 use App\Model\CommentManager;
 
 
-
-
-include_once 'model/ArticleManager.php';
-include_once 'model/CommentManager.php';
-
 class Articles {
    
     /**
