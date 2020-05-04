@@ -1,12 +1,10 @@
 <?php
 
+include_once 'vendor/autoload.php';
+
 use App\Controller\Users;
 use App\Controller\Articles;
 use App\Controller\Comments;
-
-include_once 'controller/Articles.php';
-include_once 'controller/Comments.php';
-include_once 'controller/Users.php';
 
 
 $action = '';
