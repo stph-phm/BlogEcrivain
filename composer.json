@@ -1,0 +1,15 @@
+ {
+    "name": "stephanie/blog-ecrivain",
+    "authors": [
+        {
+            "name": "Stephanie",
+            "email": "phamstephanie18@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\" : ""
+        }
+    },
+    "require": {}
+}
