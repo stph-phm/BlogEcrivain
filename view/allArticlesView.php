@@ -15,11 +15,11 @@
         </div><!--header-->
 
         <div class="list-article">
-            <?php foreach ($allArticles as $articles) { ?>
+            <?php foreach ($allArticles as  $listsArticle) { ?>
             <section>
                 <div class="header-section">
 
-                    <a href="index.php?action=article&amp;id=<?= $allArticles['id'] ?>"> <h3> <?= htmlspecialchars($allArticles['title']) ?> </h3></a>
+                    <a href="index.php?action=article&amp;id=<?= $articles['id'] ?>"> <h3> <?= htmlspecialchars($articles['title']) ?> </h3></a>
                     <p> <?= $article['date_fr'] ?> </p>
                 </div>
 

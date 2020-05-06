@@ -11,3 +11,11 @@ img {
     width: auto;
     /*background-color: #343a40;*/
 }
+
+nav {
+    margin-bottom: 2em;
+}
+
+footer {
+    margin-top: 2em;
+}

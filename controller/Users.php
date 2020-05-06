@@ -9,20 +9,21 @@ use App\Model\CommentManager;
 
 class Users {
      // Connecter 
-    public function login() 
+    public function connectUser() 
     {
         $userManager = new UserManager();
-        $userManager->username($username);
-
-     
-            header('Location: index.php?action=admin');
         
-       
+        if (isset($_POST['submit_connect'])) {
+            $username = $_POST['identifiant'];
+            $connect = $userManager->username($username);    
+
+
+        }
         // vérifie si le button login existe 
         // Test si les champs sont remplis
         // verifie si le $_POST['username'] == username de la BDD  && $_POST['password'] == password_user de la BDD 
         // envoie la page adminView
-        include 'model/connectView.php';
+    include 'view/connectView.php';
     }
 
     //Afficher le tableau de bord

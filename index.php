@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 include_once 'vendor/autoload.php';
 
@@ -30,9 +30,14 @@ try {
         case 'reportComment':
             $comment = new Comments;
             $comment->reportComment();
-        case 'login':
-            $user = new Users;
-            $user->login();
+            break;
+        case 'connectUser':
+            $connectUser = new Users;
+            $connectUser->connectUser();
+            break;
+        case 'register':
+            $rehisterUser = new Users;
+            $rehisterUser->connectUser();
             break;
         case 'admin':
             $user = new Users;
@@ -41,7 +46,6 @@ try {
         break;
         case 'create':
             // Ajouter une nouvelle article 
-            
             break;
         case 'see':
             // envoie le lien pour voir l'article 

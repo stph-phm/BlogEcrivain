@@ -1,7 +1,7 @@
 <?php $title = "Connect" ?>
 
 <?php ob_start(); ?>
-    <div class="global">
+    <div class="global_connect">
         <h1>Se connecter </h1>
 
         <form action="index.php?action=admin" method="post">
@@ -13,6 +13,8 @@
             </div>
                 <input type="button" name="submit" value="Se connecter">
         </form>
+
+        <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
     </div><!--/.global-->
 
     <?php $content = ob_get_clean(); ?>
