@@ -10,6 +10,8 @@ class ArticleManager extends Manager
     public $article_id;
     public $title;
     public $content;
+    public $date_article;
+    public $chapter_order;
 
     /**
      * Get all articles in database articles
@@ -18,9 +20,13 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order');
-        
-        return $articles;
+        $articles = $db->query('SELECT id, chapter_order, title, content,DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr 
+        FROM articles 
+        ORDER BY chapter_order ');
+
+        $allArticles = $articles->fetchAll();
+
+        return $allArticles;
     }
 
     /**

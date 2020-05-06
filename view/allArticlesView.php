@@ -15,7 +15,7 @@
         </div><!--header-->
 
         <div class="list-article">
-            <?php foreach ($listsArticle as $articles) { ?>
+            <?php foreach ($allArticles as $articles) { ?>
             <section>
                 <div class="header-section">
 

@@ -16,8 +16,9 @@ class Articles {
     {
     $articleManager = new ArticleManager();
     $articles = $articleManager->getAllArticles();
-
+    
     include 'view/allArticlesView.php';
+
     }
 
     /**
