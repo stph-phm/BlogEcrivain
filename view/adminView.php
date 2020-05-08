@@ -1,6 +1,7 @@
 <?php $title = "Tableau de bord ";  ?>
 <?php ob_start(); ?>
-<div class="global_dashboard ">
+<div class="global dashboard ">
+    
     <h1>Bonjour</h1>
     <p><a href="index.php">Retour index</a></p>
     <div class="container-dashboard">

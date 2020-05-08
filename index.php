@@ -36,8 +36,8 @@ try {
             $connectUser->connectUser();
             break;
         case 'register':
-            $rehisterUser = new Users;
-            $rehisterUser->connectUser();
+            $registerUser = new Users;
+            $registerUser->registerUser();
             break;
         case 'admin':
             $user = new Users;

@@ -38,7 +38,7 @@ class CommentManager extends Manager
     public function getAddComments($article_id, $pseudo, $comment)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments(article_id, pseudo, comment, date_com) VALUES (:article_id, :pseudo, :pseudo, NOW())');
+        $comments = $db->prepare('INSERT INTO comments(article_id, pseudo, comment, date_com) VALUES (:article_id, :pseudo, :comment, NOW())');
         $addLinesComment = $comments->execute(array("article_id" => $article_id, "pseudo" => $pseudo, 'comment' => $comment)); 
 
         return $addLinesComment;

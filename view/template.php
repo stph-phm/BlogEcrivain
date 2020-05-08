@@ -16,6 +16,7 @@
 
     <?= $content; ?>
 
+
     <?php include 'Include/footer.php'; ?>
 
 

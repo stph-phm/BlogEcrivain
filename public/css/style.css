@@ -6,7 +6,7 @@ img {
     width: 90%;
 }
 
-.global_dashboard {
+.global {
     padding: 3em;
     width: auto;
     /*background-color: #343a40;*/
@@ -18,4 +18,8 @@ nav {
 
 footer {
     margin-top: 2em;
+}
+
+.connect {
+    height: 48em ;
 }

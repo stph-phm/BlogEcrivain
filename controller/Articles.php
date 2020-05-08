@@ -97,7 +97,6 @@ class Articles {
             $id = $_GET['id'];
 
             if (isset($_POST['deleteArticle'])) {
-              
             }
         }
     }

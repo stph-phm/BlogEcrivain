@@ -17,12 +17,15 @@ class Comments {
     public function addComment()
     {
         $commentManager = new CommentManager();
-        $article_id = trim($_GET['id']);
-        $pseudo     = trim(htmlspecialchars($_POST['pseudo']));
-        $comment    = trim(htmlspecialchars($_POST['comment']));
 
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            if (!empty($_POST['pseudo']) && !empty($_POST['comment'])) {
+            
+            $article_id = trim($_GET['id']);
+            $pseudo     = trim(htmlspecialchars($_POST['pseudo']));
+            $comment    = trim(htmlspecialchars($_POST['comment']));
+
+            if (!empty($pseudo) && !empty($comment)) {
+
                 $addLinesComment = $commentManager->getAddComments($article_id, $pseudo, $comment);
                 
                 header('Location: index.php?action=article&id=' .$article_id);
@@ -47,7 +50,6 @@ class Comments {
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             if (isset($_POST['report'])) {
-               
                     $reportComment = $commentManager->reportComments($article_id, $reported);
             
 

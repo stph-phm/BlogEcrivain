@@ -14,11 +14,12 @@ class UserManager extends Manager
     public $password_user;
     
 
-    public function username($username) {
+    public function loginUser($username, $password_user) {
         $db =  $this->dbConnect();
-        $reqUser = $db->prepare('SELECT id, username, password_user,  DATE_FORMAT(date_user, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM  users');
+        $reqUser = $db->prepare('SELECT * FROM  users WHERE username = ? AND password_user = ?');
 
-        $reqUser->execute(array("username" => $username));
+        $reqUser->execute(array("username" => $username, "password_user" => $password_user));
+        
         $user = $reqUser->fetch();
 
         return $user;
@@ -27,11 +28,12 @@ class UserManager extends Manager
     /**
      * Ajout des comptes visiteur 
      */
-    public function addUser($username,$status_user,$email_user, $password_user) 
+    public function addUser($username,$email_user, $password_user) 
     {
         $db = $this->dbConnect();
-        $reqUser = $db->prepare('INSERT INTO users(username,status_user email_user, password_user, date_user) VALUES (:username, 0 :email_user, :password_user, NOW())');
-        $reqUser->execute(array("username" => $username, "status_user" => $status_user, "email_user"  => $email_user, "password_user" => $password_user ));
+        $reqUser = $db->prepare('INSERT INTO users(username,email_user, password_user, date_user) VALUES (:username,:email_user, :password_user, NOW())');
+        
+        $reqUser->execute(array("username" => $username,  "email_user"  => $email_user, "password_user" => $password_user ));
     }
 
     /**
@@ -60,9 +62,11 @@ class UserManager extends Manager
      */
     public function getAllVisitor()
     {
-         $db = $this->dbConnect();
+        $db = $this->dbConnect();
         $reqUser = $db->query('SELECT * FROM users');
 
+        $listVisitor = $reqUser->fetchAll();
+        return $listVisitor;
     }
 
 }

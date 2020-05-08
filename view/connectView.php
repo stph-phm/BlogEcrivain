@@ -1,10 +1,10 @@
 <?php $title = "Connect" ?>
 
 <?php ob_start(); ?>
-    <div class="global_connect">
+    <div class="global connect">
         <h1>Se connecter </h1>
 
-        <form action="index.php?action=admin" method="post">
+        <form action="#" method="post">
             <div>
                 <label for="username">Votre identifiant : </label>
                 <input type="text" name="username" id="username"> <br>
