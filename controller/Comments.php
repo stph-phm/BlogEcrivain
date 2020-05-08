@@ -2,8 +2,9 @@
 namespace App\Controller;
 
 use App\Model\CommentManager;
+use App\Controller\Controller;
 
-class Comments {
+class Comments extends Controller {
     public $article_id;
     public $pseudo;
     public $comment;

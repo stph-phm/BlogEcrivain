@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
+use App\Controller\Controller;
 
 
-class Articles {
-   
+class Articles extends Controller {
+
     /**
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 

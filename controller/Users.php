@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
+use App\Controller\Controller;
 
 
 
-class Users
+class Users extends Controller 
 {
     // Connecter 
     public function connectUser()
@@ -16,17 +17,19 @@ class Users
         $userManager = new UserManager();
 
         if (isset($_POST['submit'])) {
-            $password = sha1($_POST['password']);
-            $username = htmlspechials($_POST['identifiant']);
 
-            if (!empty($username) && !empty($password))  {
+            $password = sha1($_POST['password']); 
+            $username = htmlspecialchars($_POST['identifiant']);
+
+            if (!empty($username) && !empty($password)) {
                 // Si username $username == username de la Bdd && $password == password_user de la bdd 
+                header('Location: index.php?action=admin');
             } else {
                 throw new \Exception("Veuillez remplir les champs pour vous connecter ! ");
                 
             }
 
-            // $connect = $userManager->username($username);
+            // $connect = $userManager->loginUser($username, $password);
         }
         
         include 'view/connectView.php';
@@ -37,47 +40,38 @@ class Users
     {
         $userManager = new UserManager();
 
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-
+        if (isset($register)) { 
             $username       = trim(htmlspecialchars($_POST['username']));
             $email_user     = trim(htmlspecialchars($_POST['email']));
-            $password_user  = sha1(trim($_POST['password']));
-            $password2      = sha1(trim($_POST['password2'])); // password_hach & password_verify & crypt 
+            $password_user  = trim($_POST['password']);
+            $password2      = trim($_POST['password2']); // password_hach & password_verify & crypt 
             $register       = $_POST['register']; // buton inscrire 
 
-            if (isset($register)) { 
-                if (!empty($username) && !empty($email_user) && !empty($password_user) && !empty($password2)) {
-
-                    if (strlen($username) <= 16 ) {
-                        if (filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                            if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email_user)) {
-                                if ($password_user == $password2) {
+            if (!empty($username) && !empty($email_user) && !empty($password_user) && !empty($password2)) {
+                if (strlen($username) <= 16 ) {
+                    if (filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                        if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email_user)) {
+                            if ($password_user == $password2) {
                                     
-                                    $createUser = $userManager->addUser($username, $email_user, $password_user);
+                                $createUser = $userManager->addUser($username, $email_user, $password_user);
 
-                                    header('Location: index.php?action=connectUser');
-                                } else {
-                                    throw new \Exception("Vos mots de passe ne se correspondent pas");
-                                    
-                                }
+                                header('Location: index.php?action=connectUser');
                             } else {
-                                throw new \Exception("Votre adresse mail n'est pas valide ");
+                                throw new \Exception("Vos mots de passe ne se correspondent pas");
                             }
                         } else {
-                            throw new \Exception("Votre adresse e-mail n'est pas valide");
-
+                            throw new \Exception("Votre adresse mail n'est pas valide ");
                         }
                     } else {
-                        throw new \Exception("L'identifiant est trop long...");
-                        
+                        throw new \Exception("Votre adresse e-mail n'est pas valide");
                     }
                 } else {
-                    throw new \Exception("Veuillez remplir tous les champs ! ");
+                    throw new \Exception("L'identifiant est trop long...");            
                 }
-                
+            } else {
+                throw new \Exception("Veuillez remplir tous les champs ! ");
             }
         }
-
         include 'view/registerView.php';
     }
 
@@ -90,6 +84,7 @@ class Users
         $i = 1;
         $articleManager = new ArticleManager();
         $commentManager = new CommentManager();
+
         $dashboard = $articleManager->getAllArticles();
         $dashboard = $commentManager->getAllReported();
         include 'view/adminView.php';
