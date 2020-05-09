@@ -16,7 +16,7 @@ class Articles extends Controller {
     public function allArticles()
     {
     $articleManager = new ArticleManager();
-    $articles = $articleManager->getAllArticles();
+    $listArticles = $articleManager->getAllArticles();
     
     include 'view/allArticlesView.php';
 
