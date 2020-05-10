@@ -40,38 +40,41 @@ class Users extends Controller
     {
         $userManager = new UserManager();
 
-        if (isset($register)) { 
-            $username       = trim(htmlspecialchars($_POST['username']));
-            $email_user     = trim(htmlspecialchars($_POST['email']));
-            $password_user  = trim($_POST['password']);
-            $password2      = trim($_POST['password2']); // password_hach & password_verify & crypt 
-            $register       = $_POST['register']; // buton inscrire 
+    if (isset($_POST['register'])) {
+        $username   = trim(htmlspecialchars($_POST['username']));
+        $email      = trim(htmlspecialchars($_POST['email']));
+        $password   = trim($_POST['password']);
+        $password2  = trim($_POST['password2']);
 
-            if (!empty($username) && !empty($email_user) && !empty($password_user) && !empty($password2)) {
-                if (strlen($username) <= 16 ) {
-                    if (filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                        if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email_user)) {
-                            if ($password_user == $password2) {
-                                    
-                                $createUser = $userManager->addUser($username, $email_user, $password_user);
+        $mailExiste = $userManager->validateEmail();
 
-                                header('Location: index.php?action=connectUser');
-                            } else {
-                                throw new \Exception("Vos mots de passe ne se correspondent pas");
-                            }
+        if (!empty($username) && !empty($email) && !empty($password) && !empty($password2)) {
+            if (strlen($username) <= 16) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    if ( $mailExiste['id'] == 0 ) {
+                        if ($password == $password2) {
+                            \password_hash($password ,PASSWORD_DEFAULT, );
+                            
+                            $mailValidation = $userManager->addUser($username, $email, $password);
                         } else {
-                            throw new \Exception("Votre adresse mail n'est pas valide ");
+                            throw new Exception( "Les mots de passe ne correspondent pas ");
                         }
                     } else {
-                        throw new \Exception("Votre adresse e-mail n'est pas valide");
+                        throw new \Exception("Ce mail existe déjà");
                     }
                 } else {
-                    throw new \Exception("L'identifiant est trop long...");            
+                    throw new \Exception("Votre adresse e-mail n'est pas valide");
                 }
             } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
+                throw new \Exception('Votre identifiant est trop long ! Votre identifiant dois avoir moins de 16 caractères !  ');
+                
             }
+        } else {
+            throw new \Exception('Veuillez remplir tous les champs !');
+            
         }
+
+    }
         include 'view/registerView.php';
     }
 
