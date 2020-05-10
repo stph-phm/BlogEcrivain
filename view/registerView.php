@@ -4,7 +4,7 @@
     <div class="global connect">
         <h1>Espace membre - inscription </h1>
 
-        <form action="index.php?action=registerUser" method="post">
+        <form action="" method="post">
             <div>
                 <label for="username">Votre identifiant : </label>
                 <input type="text" name="username" id="username"> <br>
@@ -20,7 +20,7 @@
                 <input type="password" name="password2" id="password2">
             </div>
 
-            <button type="submit" name="register">S'inscrire</button>
+            <button type="submit" name="register"> S'inscrire</button>
 
         </form>
     </div><!--/.global-->
