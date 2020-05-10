@@ -37,6 +37,17 @@ class UserManager extends Manager
     }
 
     /**
+     * mail existe
+     */
+    public function validateEmail()
+    {
+        $db = $this->dbConnect();
+        $validate = $db->prepare('SELECT id, email_user FROM users where  email_user = ?');
+
+        $mailExist = $validate->fetch();
+        return $mailExist;        
+    }
+    /**
      * Changement de status de visiteur à admin
      */
     public function statusChangeInAdmin($status_user) 
