@@ -61,6 +61,9 @@ class Users extends Controller
         include 'View/registerView.php';
     }
 
+    /**
+     * 
+     */
     public function connectUser()
     {
         $userManager = new UserManager();
@@ -69,34 +72,43 @@ class Users extends Controller
             $email = trim(\htmlspecialchars($_POST['email']));
             $pswd = trim($_POST['pswd']);
 
-            $pswdVerify = \password_verify($pswd, $pswdHach);
-
             if (!empty($email) && !empty($pswd)) {
-                $userExist = $userManager->loginUser($email, $pswd); 
+                //$userExist = $userManager->loginUser($email, $pswd); 
+                //$pswdHach = \password_hash($pswd, PASSWORD_DEFAULT);
+                //$pswdVerify = \password_verify($pswd, $pswdHach);
 
-                if ($userExist == 1) {
-                    $userInfo = $userManager->getProfilUser();
+                //if ($userExist == 1) {
+                    //$userInfo = $userManager->getProfilUser();
 
-                    $_SESSION['id'] = $userInfo['id'];
-                    $_SESSION['username'] = $userInfo['username'];
-                    $_SESSION['email'] = $userInfo['email_user'];
+                    //$_SESSION['id'] = $userInfo['id'];
+                    //$_SESSION['username'] = $userInfo['username'];
+                    //$_SESSION['email'] = $userInfo['email_user'];
                     
                     \header('Location: index.php?action=profilUSer');
-                } else {
-                    throw new \Exception("Adresse mail ou mot de passe incorrect ! ");
+                //} else {
+                    //throw new \Exception("Adresse mail ou mot de passe incorrect ! ");
                     
-                }
+                //}
             } else {
                 throw new \Exception("Tous les champs doivent être remplis !");
                 
             }
         }
-        include 'View/connectView.php';
+        include 'view/connectView.php';
     }
 
     public function profilUser() 
     {
         $userManager = new UserManager();
-        include 'View/profilView.php';
+
+
+        include 'View/registerView.php';
+    }
+
+    public function dashboard()
+    {
+        $dashboard = $commentManager->getAllReported();
+
+        include 'View/adminView.php';
     }
 }
