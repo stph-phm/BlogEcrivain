@@ -38,6 +38,10 @@ try {
             $registerUser = new Users;
             $registerUser->registerUser();
             break;
+        case 'profilUser':
+            $profiluser = new Users;
+            $profiluser->profilUser();
+            break;
         case 'admin':
             $user = new Users;
             $user->dashboard();
