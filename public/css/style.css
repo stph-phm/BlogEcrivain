@@ -23,3 +23,19 @@ footer {
 .connect {
     height: 48em ;
 }
+
+.text-center {
+    text-align: center;
+}
+
+.form-div{
+    background-color: gainsboro;
+    margin: 50px auto;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+}
+
+form {
+    margin: 10px 5px;
+}

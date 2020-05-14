@@ -1,4 +1,4 @@
- <?php
+<?php
 
 include_once 'vendor/autoload.php';
 
@@ -17,7 +17,6 @@ try {
         case 'allArticle':
             $listsArticle = new Articles;
             $listsArticle->allArticles();
-
             break;
         case 'article':
             $article = new Articles;

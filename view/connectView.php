@@ -1,21 +1,22 @@
 <?php $title = "Connect" ?>
 
 <?php ob_start(); ?>
-    <div class="global connect">
-        <h1>Se connecter </h1>
+<div class="global connect text-center">
+    <h1>Espace membre - connexion </h1>
 
-        <form action="#" method="post">
+    <div class="form-div text-center">
+        <form action="" method="post">
             <div>
-                <label for="username">Votre identifiant : </label>
-                <input type="text" name="username" id="username"> <br>
-                <label for="password">Votre mot de passe : </label>
-                <input type="password" name="password" id="password">
+                <label for="email">Votre adresse e-mail : </label>
+                <input type="mail" class="form-control" name="email" id="email"> <br>
+                <label for="pswd">Votre mot de passe : </label>
+                <input type="password" class="form-control" name="pswd" id="pswd"> <br>
             </div>
-                <input type="button" name="submit" value="Se connecter">
+            <button type="submit" class="btn btn-primary" name="connect">Se connecter</button>
         </form>
-
+    </div>
         <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
-    </div><!--/.global-->
+</div><!--/.global-->
 
     <?php $content = ob_get_clean(); ?>
     <?php include 'template.php'; ?>

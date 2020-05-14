@@ -1,32 +1,31 @@
 <?php $title = "Inscription" ?>
 
 <?php ob_start(); ?>
-    <div class="global connect">
-        <h1>Espace membre - inscription </h1>
+<div class="global connect text-center">
+    <h1>Espace membre - inscription </h1>
 
+    <div class="form-div text-center">
         <form action="" method="post">
             <div>
                 <label for="username">Votre identifiant : </label>
-                <input type="text" name="username" id="username"> <br>
+                <input type="text" class="form-control" name="username" id="username">
 
                 <label for="email">Votre e-mail : </label>
-                <input type="email" name="email" id="email"> <br>
+                <input type="email" class="form-control" name="email" id="email">
 
-                <label for="password">Votre mot de passe : </label>
-                <input type="password" name="password" id="password"> <br>
+                <label for="pswd">Votre mot de passe : </label>
+                <input type="password" class="form-control" name="pswd" id="pswd">
 
-                
-                <label for="password">Confirmez votre mot de passe : </label>
-                <input type="password" name="password2" id="password2">
+
+                <label for="pswd2">Confirmez votre mot de passe : </label>
+                <input type="password" class="form-control" name="pswd2" id="pswd2"> <br>
             </div>
 
-            <button type="submit" name="register"> S'inscrire</button>
-
+            <button type="submit" class="btn btn-primary" name="register"> S'inscrire</button>
         </form>
-    </div><!--/.global-->
+    </div>
 
-    <?php $content = ob_get_clean(); ?>
-    <?php include 'template.php'; ?>
-
-
-
+    <a href="index.php?action=connectUser"> Un compte ? Connectez-vous </a>
+</div><!--/.global-->
+<?php $content = ob_get_clean(); ?>
+<?php include 'template.php'; ?>
