@@ -97,6 +97,15 @@ class UserManager extends Manager
         $reqUser->execute(array("status_user" => $status_user));
     } 
 
+    public function getAllUserAdmin()
+    {
+        $db = $this->dbConnect();
+        $reqUser = $db->query('SELECT * FROM users WHERE status_user = 1');
+
+        $listUserAdmin = $reqUser->fetchAll();
+        return $listUserAdmin;
+    }
+
 
     /**
      * Récupère tous les user non admin 
@@ -104,7 +113,7 @@ class UserManager extends Manager
     public function getAllVisitor()
     {
         $db = $this->dbConnect();
-        $reqUser = $db->query('SELECT * FROM users');
+        $reqUser = $db->query('SELECT * FROM users WHERE status_user = 0');
 
         $listVisitor = $reqUser->fetchAll();
         return $listVisitor;
