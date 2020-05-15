@@ -41,4 +41,4 @@
 
 
 <?php $content = ob_get_clean(); ?>
-<?php include 'template.php'; ?>
+<?php include 'layout.php'; ?>
