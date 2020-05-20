@@ -7,16 +7,15 @@ use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Controller\Controller;
 
-
-
 class Users extends Controller 
 {
     /**
-     * Vérifie si le button register existe 
-     * Sécurisé les variables 
-     * Plusieurs vérifications : 
-     * Des champs remplis, le nombre de caractères, vérifier l'adresse mail et unique et les mots de passe 
-     * appelle 2 méthodes checkMail et addUser 
+     * Check if the register butto, exists
+     * Secrure the variables by calling different mothods in the Controller class 
+     * and using 2 functions the strlen and hashing the password 
+     * several test :  
+     * empty filds, number of caractères, existings username, valid mails and existing mails
+     * call the method to insert a new user
      */
     public function registerUser()
     {
@@ -24,35 +23,45 @@ class Users extends Controller
         
         if (isset($_POST['register'])) {
             
-            $username = \trim(\htmlspecialchars($_POST['username']));
-            $email = \trim(htmlspecialchars($_POST['email']));
-            $pswd = \trim($_POST['pswd']);
-            $pswd2 = \trim($_POST['pswd2']);
+            $username = $this->str_secur($_POST['username']);
+            $email = $this->str_secur($_POST['email']);
+            $pswd = $this->trim_secur($_POST['pswd']);
+            $pswd2 =  $this->trim_secur($_POST['pswd2']);
+            $usernameLentght = \strlen($username);
+            $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
 
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
-                $usernameLentght = \strlen($username);
-
                 if ($usernameLentght <= 20) {
-                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $mailExist = $userManager->checkMail($email);
 
-                        if ($mailExist == 0) {
-                            $pswdHach = \password_hash($pswd, PASSWORD_DEFAULT);
+                    $userExist = $userManager->getUsernameExist($username);
+                    if ($userExist == 0 ) {
+                        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-                            if ($pswd == $pswd2) {
-                                $insertUser = $userManager->addUser($username, $email, $pswdHach);
-                                \header('Location: index.php?action=connectUser');
+                            $mailExist = $userManager->getMailExist($email);
+                            if ($mailExist == 0) {
+                                if ($pswd == $pswd2) {
+
+                                    $inserUser = $userManager->insertNewUser($username, $email, $pswdHach);
+                                    header('Location: index.php?action=connectUser');
+
+                                } else {
+                                    throw new \Exception("Les mots de passe ne se correspondent pas !");
+                                }
                             } else {
-                                throw new \Exception("Les mots de passe ne correspondent pas ! ");
+                                throw new \Exception("Votre adresse mail est déjà utilisé ! ");
+                                
                             }
                         } else {
-                            throw new \Exception("Votre adresse mail déjà utilisé");
+                            throw new \Exception("Votre adresse mail n'est pas valide !");
+                            
                         }
-                    }else {
-                        throw new \Exception("Votre adresse mail n'est pas valide");
+                    } else {
+                        throw new \Exception("Votre identifiant est deja pris, veuillez choisir un nouveau");
+                        
                     }
                 } else {
-                    throw new \Exception("Votre identifiant doit avoir 20 caractères ! ");
+                    throw new \Exception("Votre identifiant doit avoir moins de 20 caractères ! ");
+                    
                 }
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
@@ -67,33 +76,29 @@ class Users extends Controller
     public function connectUser()
     {
         $userManager = new UserManager();
-
         if (isset($_POST['connect'])) {
-            $email = trim(\htmlspecialchars($_POST['email']));
-            $pswd = trim($_POST['pswd']);
+            $email = $this->str_secur($_POST['email']);
+            $pswd = $this->trim_secur($_POST['pswd']);
+            $user = $userManager->getUserbyMail($email);
+            $pswdCorrect = password_verify($pswd, $user['password_user']);
 
             if (!empty($email) && !empty($pswd)) {
-                //$userExist = $userManager->loginUser($email, $pswd); 
-                //$pswdHach = \password_hash($pswd, PASSWORD_DEFAULT);
-                //$pswdVerify = \password_verify($pswd, $pswdHach);
-
-                //if ($userExist == 1) {
-                    //$userInfo = $userManager->getProfilUser();
-
-                    //$_SESSION['id'] = $userInfo['id'];
-                    //$_SESSION['username'] = $userInfo['username'];
-                    //$_SESSION['email'] = $userInfo['email_user'];
+                if ($pswd == $pswdCorrect) {
                     
-                    \header('Location: index.php?action=profilUSer');
-                //} else {
-                    //throw new \Exception("Adresse mail ou mot de passe incorrect ! ");
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['username'] = $user['user'];
+                    $_SESSION['email'] = $user['email'];
+                    \header('Location: index.php?action=profilUser&id='.$_SESSION['id']);
+                } else {
+                    throw new \Exception("Vos identifiants ou mots de passe incorrect ! ");
                     
-                //}
+                }
             } else {
-                throw new \Exception("Tous les champs doivent être remplis !");
+                throw new \Exception("Veuillez remplir tous les champs ! ");
                 
             }
         }
+
         include 'view/connectView.php';
     }
 
@@ -101,14 +106,19 @@ class Users extends Controller
     {
         $userManager = new UserManager();
 
-
-        include 'View/registerView.php';
+        if (isset($_GET['id']) && $_GET['id'] > 0 ){
+            $getID = \intval($_GET['id']);
+            $userInfo = $userManager->getUser($getID);
+        }
+        
+        include 'View/profilView.php';
     }
 
     public function dashboard()
     {
+        $commentManager = new CommentManager();
         $dashboard = $commentManager->getAllReported();
 
-        include 'View/adminView.php';
+        include 'View/admin/adminView.php';
     }
 }
