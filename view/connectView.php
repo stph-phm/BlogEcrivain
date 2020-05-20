@@ -8,14 +8,14 @@
         <form action="" method="post">
             <div>
                 <label for="email">Votre adresse e-mail : </label>
-                <input type="mail" class="form-control" name="email" id="email"> <br>
+                <input type="email" class="form-control" name="email" id="email"> <br>
                 <label for="pswd">Votre mot de passe : </label>
                 <input type="password" class="form-control" name="pswd" id="pswd"> <br>
             </div>
             <button type="submit" class="btn btn-primary" name="connect">Se connecter</button>
         </form>
     </div>
-        <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
+    <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
 </div><!--/.global-->
 
     <?php $content = ob_get_clean(); ?>
