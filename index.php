@@ -39,19 +39,25 @@ try {
             $registerUser->registerUser();
             break;
         case 'profilUser':
-            $profiluser = new Users;
-            $profiluser->profilUser();
+            $profilUSer = new Users;
+            $profilUSer->profilUser();
             break;
         case 'admin':
-            $user = new Users;
-            $user->dashboard();
-            //zffiche les tableau article et commentaire signalés 
+            $dashboard = new Users;
+            $dashboard->dashboard();
         break;
+        case 'validateReported':
+            $validateReported = new Comments;
+            $validateReported->validateReportCom();
+            break;
+        case 'deleteCommentReport':
+            $deleteComReported = new Comments;
+            $deleteComReported->deleteReportCom();
+            break;
         case 'create':
             // Ajouter une nouvelle article 
             break;
-        case 'see':
-            // envoie le lien pour voir l'article 
+        
             break;
         case 'edit':
             // modifier l'article
