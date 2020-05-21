@@ -7,6 +7,10 @@ use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Controller\Controller;
 
+
+
+
+
 class Users extends Controller 
 {
     /**
@@ -89,6 +93,7 @@ class Users extends Controller
                     $_SESSION['username'] = $user['user'];
                     $_SESSION['email'] = $user['email'];
                     \header('Location: index.php?action=profilUser&id='.$_SESSION['id']);
+                    die('OK');
                 } else {
                     throw new \Exception("Vos identifiants ou mots de passe incorrect ! ");
                     
@@ -107,18 +112,19 @@ class Users extends Controller
         $userManager = new UserManager();
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ){
-            $getID = \intval($_GET['id']);
-            $userInfo = $userManager->getUser($getID);
+            $userInfo = $userManager->getUser($_GET['id']);
+        } else {
+            throw new \Exception("Aucun identifiant d'utilisateur existe");
         }
-        
         include 'View/profilView.php';
     }
+
 
     public function dashboard()
     {
         $commentManager = new CommentManager();
-        $dashboard = $commentManager->getAllReported();
-
+        $listCommentsReport = $commentManager->getAllReported();
+        $i = 1;
         include 'View/admin/adminView.php';
     }
 }
