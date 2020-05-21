@@ -9,6 +9,7 @@ class Comments extends Controller {
     public $pseudo;
     public $comment;
     public $comment_id;
+    public $i;
     /**
      * Instantiating the CommentManager object
      * Check if we have received the ID in  parameter in the URL 
@@ -43,59 +44,41 @@ class Comments extends Controller {
      // Signaler les commentaires 
     public function reportComment()
     {
-
         $commentManager = new CommentManager();
-        $article_id = trim($_GET['id']); 
-        $reported   = $_POST['report'];
-
-
-        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            if (isset($_POST['report'])) {
-                    $reportComment = $commentManager->reportComments($article_id, $reported);
-            
-
-                header('Location: index.php?action=article&id=' .$article_id);
-            }
+        if (isset($_POST['see'])) {
+            die('OK');
         }
     }
 
-  
+    /**
+     * Instantiating the CommentManager object
+     * Check if we have received the ID in  parameter in the URL 
+     * Call validateComment method @param  $comment_id
+     */
     public function validateReportCom()
     {
         $commentManager = new CommentManager();
-       
-
-
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            if (isset($_POST['validate'])) {
-                 $validate = $_POST['validate']; 
-                $commentManager->validateComment();
-            }
-        }
-    }
+            $comment_id = trim($_GET['id']);
 
-    
-
-   // Gestion des commentaires signalée
-    // ignorer ou supprimer les commentaires signalés
-    public function managerReportComment()
-    {
-        // verifie si le button ignore existe 
-        // lorsqu'on click sur le button ignore => le commentaire ignorer ne sera plus signalé (il s'affiche plus dans le tableau)
-        // redirige le lien tableau de bord ? 
-        $commentManager = new CommentManager();
-        if (isset($_POST['report'])) {
-            $commentManager->ignoreComments();
-        }
-        
-
+            $validateReport = $commentManager->validateComment($comment_id);
             header('Location: index.php?action=admin');
-
-        // Vérifie si le button delete comment existe
-        // lorsqu'on click sur le button delete => supprime le commentaire 
-        // redirige le lien tableau de bord ? 
-        include 'view/adminView.php';
+        }
     }
 
+    /**
+     * Instantiating the CommentManager object
+     * Check if we have received the ID in  parameter in the URL 
+     * Call deleteComments method @param  $comment_id
+     */
+    public function deleteReportCom()
+    {
+        $commentManager = new CommentManager();
+        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
+            $comment_id = trim($_GET['id']);
 
+            $deleteCom = $commentManager->deleteComments($comment_id);
+            header('Location: index.php?action=admin');
+        }
+    }
 }
