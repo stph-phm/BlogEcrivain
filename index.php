@@ -58,9 +58,9 @@ try {
             $createArticle = new Articles;
             $createArticle->createArticle();
             break;
-        case 'addArticle':
-            $addArticle = new Articles;
-            $addArticle->addArticle();
+        case 'publishArticle':
+            $publishArticle = new Articles;
+            $publishArticle->addArticle();
             break;
         case 'edit':
             // modifier l'article

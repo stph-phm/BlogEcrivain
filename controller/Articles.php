@@ -41,7 +41,14 @@ class Articles extends Controller {
         }
         include 'view/articleView.php';
     }
-        
+    
+
+    public function createArticle()
+    {
+        $articleManager = new ArticleManager();
+        include 'View/admin/createArticleView.php';
+
+    }
     
     // Gestion des articles 
     // Ajouter, Voir, Modifier et supprimer un article
@@ -53,13 +60,31 @@ class Articles extends Controller {
         // redirige le lien en adminView avec un message ? 
         $articleManager = new ArticleManager();
 
-        $title = trim(htmlspecialchars($_POST['title'])); 
-        $content = trim($_POST['content']);
 
-        if (isset($_POST['add'])) {
-            $articleManager->createArticle($_POST['title'], $_POST['content']);
-            header('Location: index.php?action=addArticle');
+
+        if (isset($_POST['submit'])) {
+            $title = $this->str_secur($_POST['title']);
+            $chapterOrder = \intval($_POST['nbChap']);
+            $content = $this->trim_secur($_POST['content']);
+
+            if (!empty($title) && !empty($chapterOrder) && !empty($content)) {
+
+                $chapterExist = $articleManager->getChapterExist($chapterOrder);
+
+                if ($chapterExist == 0) {
+                    $insertArticle = $articleManager->getaddArticle($chapterOrder, $title, $content);
+                    header('Location: index.php?action=admin');
+                } else {
+                    throw new \Exception("Le numéro du chapitre existe déjà");
+                    
+                }
+            } else {
+                throw new \Exception("Veuillez remplir tous les champs ! ");
+                
+            }
         }
+
+        include 'View/admin/createArticleView.php';
     }
 
     public function editArticle()
@@ -83,7 +108,6 @@ class Articles extends Controller {
                 }
             }
         }
-        include 'model/editView.php';
     }
 
     public function deleteArticle()
