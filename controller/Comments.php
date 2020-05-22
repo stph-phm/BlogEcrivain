@@ -50,11 +50,6 @@ class Comments extends Controller {
         }
     }
 
-    /**
-     * Instantiating the CommentManager object
-     * Check if we have received the ID in  parameter in the URL 
-     * Call validateComment method @param  $comment_id
-     */
     public function validateReportCom()
     {
         $commentManager = new CommentManager();
@@ -66,11 +61,6 @@ class Comments extends Controller {
         }
     }
 
-    /**
-     * Instantiating the CommentManager object
-     * Check if we have received the ID in  parameter in the URL 
-     * Call deleteComments method @param  $comment_id
-     */
     public function deleteReportCom()
     {
         $commentManager = new CommentManager();

@@ -22,9 +22,10 @@ class CommentManager extends Manager
     public function getAllComments($article_id)
     {
         $db =  $this->dbConnect();
-        $comments = $db->prepare('SELECT id, pseudo, comment, DATE_FORMAT(date_com, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM comments WHERE article_id = ? ORDER BY date_com DESC ');
+        $comments = $db->prepare('SELECT id, pseudo, comment, DATE_FORMAT(date_com, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM comments WHERE article_id = :article_id ORDER BY date_com DESC ');
 
-        $comments->execute(array($article_id));
+        $comments->execute([
+            'article_id' => $article_id]);
         
         return $comments->fetchAll();
     }
@@ -39,7 +40,12 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
         $comments = $db->prepare('INSERT INTO comments(article_id, pseudo, comment, date_com) VALUES (:article_id, :pseudo, :comment, NOW())');
-        $addLinesComment = $comments->execute(array("article_id" => $article_id, "pseudo" => $pseudo, 'comment' => $comment)); 
+
+        $addLinesComment = $comments->execute([
+            "article_id" => $article_id, 
+            "pseudo" => $pseudo, 
+            'comment' => $comment
+            ]); 
 
         return $addLinesComment;
     }
@@ -50,13 +56,13 @@ class CommentManager extends Manager
      */
     public function reportComments($article_id, $reported )
     {
+
         $db = $this->dbConnect();
-        $sql = 'UPDATE comments SET reported = 1 WHERE id = ?';
-        echo $sql;
-        $params = array($article_id, $reported);
-        var_dump($params);
-        $reqComment = $db->prepare($sql);
-        $reqComment->execute($params);
+        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
+        $reqComment->execute([
+            'id' => $article_id,
+            'reported' => $reported
+        ]);
     }
 
 
@@ -69,7 +75,9 @@ class CommentManager extends Manager
         $db = $this->dbConnect();
         $reqComment = $db->query('SELECT * FROM comments WHERE reported = 1');
 
-        return $reqComment->fetchAll();
+        $listCommentsReport = $reqComment->fetchAll();
+
+        return $listCommentsReport;
     }
 
 
@@ -81,7 +89,9 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('UPDATE comments SET reported = 0 WHERE id = ?');
-        $reqComment->execute([$id]);
+
+        $validateReport =  $reqComment->execute([$id]);
+
     }
 
     /**
@@ -92,6 +102,7 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('DELETE FROM comments WHERE id = ?');
-        $reqComment->execute([$id]);
+        
+        $deleteCom = $reqComment->execute([$id]);
     }
 }

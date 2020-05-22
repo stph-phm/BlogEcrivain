@@ -127,4 +127,6 @@ class Users extends Controller
         $i = 1;
         include 'View/admin/adminView.php';
     }
+
+    
 }
