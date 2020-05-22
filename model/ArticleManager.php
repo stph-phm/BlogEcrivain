@@ -64,11 +64,28 @@ class ArticleManager extends Manager
      * Create a new article 
      * @param $title, $content
      */
-    public function createArticle($title, $content)
+    public function getaddArticle($chapter_order, $title, $content)
     {
         $db = $this->dbConnect();
-        $reqArticle = $db->prepare('INSERT INTO articles(title,content, date_article) VALUES(:title, :content, NOW())');
-        $reqArticle->execute(array("title" => $title, "content" => $content));
+        $reqArticle = $db->prepare('INSERT INTO articles(chapter_order,title,content, date_article) VALUES(:chapter_title,:title, :content, NOW())');
+
+        $insertArticle =  $reqArticle->execute([
+            'chapter_order' => $chapter_order,
+            'title' => $title,
+            'content' => $content
+        ]);
+    }
+
+    public function getChapterExist($chapter_order)
+    {
+        $db = $this->dbConnect();
+        $reqArticle = $db->prepare('SELECT * FROM articles WHERE chapter_order = :chapter_order');
+        $reqArticle->execute([
+            'chapter_order' => $chapter_order
+        ]);
+        $chapterExist = $reqMail->rowCount();
+        
+        return $chapterExist;
     }
 
     /**
