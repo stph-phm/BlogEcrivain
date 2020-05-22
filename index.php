@@ -54,10 +54,13 @@ try {
             $deleteComReported = new Comments;
             $deleteComReported->deleteReportCom();
             break;
-        case 'create':
-            // Ajouter une nouvelle article 
+        case 'createArticle':
+            $createArticle = new Articles;
+            $createArticle->createArticle();
             break;
-        
+        case 'addArticle':
+            $addArticle = new Articles;
+            $addArticle->addArticle();
             break;
         case 'edit':
             // modifier l'article
