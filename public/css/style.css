@@ -39,3 +39,22 @@ footer {
 form {
     margin: 10px 5px;
 }
+
+.form_header{
+    display: flex;
+}
+.title, .nbChap{
+    margin-right: 1em;
+}
+
+.nbChap{
+    width: 10em;
+}
+
+#nbChap{
+    width: 10%;
+}
+
+.newArticle{
+    font-size: medium;
+}
