@@ -111,11 +111,8 @@ class Users extends Controller
     {
         $userManager = new UserManager();
 
-        if (isset($_GET['id']) && $_GET['id'] > 0 ){
-            $userInfo = $userManager->getUser($_GET['id']);
-        } else {
-            throw new \Exception("Aucun identifiant d'utilisateur existe");
-        }
+
+            $userInfo = $userManager->getUser();
         include 'View/profilView.php';
     }
 
@@ -128,5 +125,11 @@ class Users extends Controller
         include 'View/admin/adminView.php';
     }
 
-    
+    public function listsArticleNav()
+    {
+        $articleManager = new ArticleManager();
+        $allArticles = $articleManager->getAllArticles();
+
+        include 'View/Include/nav.php';
+    }
 }

@@ -12,9 +12,13 @@
                     Tous les chapitres 
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
+
+                <?php foreach ($allArticles as $allArticles) { ?>
+                    <p> <?= $allArticles['title'] ?> </p>
+                <?php } ?> 
+                    
                     <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="index.php?action=manageArticle">Gestion des articles</a>
                 </div>
             </li>
             <li class="nav-item">
