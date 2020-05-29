@@ -1,4 +1,6 @@
 <?php
+session_start();
+ini_set("display_errors", E_ALL);
 
 include_once 'vendor/autoload.php';
 
@@ -58,21 +60,26 @@ try {
             $createArticle = new Articles;
             $createArticle->createArticle();
             break;
-        case 'publishArticle':
-            $publishArticle = new Articles;
-            $publishArticle->addArticle();
+        case 'manageArticle':
+            $manageArticle = new Articles;
+            $manageArticle->manageArticle();
             break;
+        case 'addArticle':
+            $addArticle = new Articles;
+            $addArticle->addArticle();
+            break;
+        case 'allArticleNav':
+            $articlesNav = new Users;
+            $articlesNav->listsArticleNav();
         case 'edit':
             // modifier l'article
+            $editArticle = new Articles;
+            $editArticle->editArticle();
             break;
         case 'deleteArticle':
+            $deleteArticle = new Articles;
+            $deleteArticle->deleteArticle();
             //supprime l'article avec ses commentaires 
-            break;
-        case 'ignore':
-            // ignorer les commentaire signalés
-            break;
-        case 'deleteComments':
-            // supprimer les commentaires signalés
             break;
         default:
             $listArticle = new  Articles;
