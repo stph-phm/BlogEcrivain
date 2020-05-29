@@ -20,7 +20,7 @@
                 <div class="header-section">
 
                     <a href="index.php?action=article&amp;id=<?= $allArticles['id'] ?>"> <h3> <?= htmlspecialchars($allArticles['title']) ?> </h3></a>
-                    <p> <?= $allArticles['date_fr'] ?> </p>
+                    <p> <?= date_format(date_create($allArticles['date_article']), 'd/m/Y à H:i') ?> </p>
                 </div>
 
                 <div class="content-section">

@@ -9,56 +9,59 @@
 
     <div class="container news">
         <article>
-            <h2>
+            <h2 class="text-center">
                 <?= htmlspecialchars($article['title']) ?>
             </h2>
 
             <p> <?= nl2br($article['content']) ?> </p>
-            <p> publié le : <?= $article['date_fr'] ?></p>
+            <p class="text-right"> publié le : <?= $article['date_fr'] ?></p>
         </article>
-    </div>
-    <!--news-->
+    </div><!--news-->
 
     <section>
-        <h2>Commentaires</h2>
+        <h2>Commentaire</h2>
 
-        <div class="form-comment">
-            <form action="index.php?action=addComment&amp;id=<?= $article['id'] ?>" method="post">
-                <div>
-                    <label for="pseudo">Pseudo : </label> <br>
-                    <input type="text" name="pseudo" id="pseudo">
-                </div>
-                <div>
-                    <label for="comment">Commentaire : </label> <br>
-                    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
-                </div>
-                <div>
-                    <input type="submit" value="Commenter">
-                </div>
-            </form>
-        </div>
-        <!--form-comment-->
+        <form action="index.php?action=addComment&amp;id= <?= $article['id'] ?>" method="POST">
+            <div class="form-group">
+                <label for="pseudo">pseudo</label>
+                <input type="text" class="form-control" id="pseudo" name="pseudo">
+            </div>
+            <div class="form-group">
+                <label for="comment">Commentaire</label>
+                <textarea class="form-control" id="comment" rows="3" name="comment"></textarea>
+            </div>
 
-        <?php foreach ($comments as $allComments) { ?>
-        <div class="container section-comments">
-            <p>
-                <strong>
-                    <?= htmlspecialchars($allComments['pseudo']) ?>
-                </strong>
-                le <?= $allComments['date_fr'] ?> :
-            </p>
-            <p>
-                <?= nl2br(htmlspecialchars($allComments['comment'])) ?>
-            </p>
-                <form action="index.php?action=reportComment&amp;id=<?= $article['id'] ?>" method="post">
-                    <button type="submit" name="report">Signaler</button>
-                </form>
+            <button class ="btn btn-primary" type="submit" name="submit">Commenter</button>
+        </form>
+
+        <?php foreach ($listComments as $comments) { ?>
+        <div class="comments">
+            <div class="pseudo-partComment d-flex p-2 ">
+                <p>
+                    <strong> <?= $comments['pseudo'] ?> </strong>
+                    <?= date_format(date_create($comments['date_comment']), 'd/m/Y à H:i') ?> : &nbsp;
+                </p>
+
+                <p>
+                    <?php 
+                        if ($comments['reported'] == 0) { ?>
+                            <form action="index.php?action=reportComment&amp;id= <?= $article['id'] ?>" method="post">
+                                <button type="submit"><span><i class="fas fa-flag"></i></span>&nbsp; Signaler</button>
+                            </form>
+                            <!--<a class="btn btn-secondary btn-sm" href="index.php?action=reportComment&amp;id= <?= $comments['id'] ?>"><span><i class="fas fa-flag"></i></span>&nbsp; Signaler</a>-->
+                </p>
+                    <?php } else { ?>
+                            <p class="text-danger"><span><i class="fas fa-flag"></i></span>&nbsp;Signalé</p> 
+                    <?php } ?><!--else-->
+            </div>
+
+            <p> <?=  $comments['comment'] ?> </p>
+            <hr>
         </div>
+        <?php } ?><!--foreach-->
     </section>
-</div>
-<!--global-->
+</div><!--global-->
 
-<?php }?>
 <?php $content = ob_get_clean(); ?>
 
 <?php include 'template.php'; ?>
