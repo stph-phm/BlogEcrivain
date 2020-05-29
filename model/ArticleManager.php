@@ -20,9 +20,9 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id, chapter_order, title, content,DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr 
+        $articles = $db->query('SELECT id,  title, content,date_article, date_modification
         FROM articles 
-        ORDER BY chapter_order ');
+        ORDER BY date_article');
 
         $allArticles = $articles->fetchAll();
 
@@ -37,7 +37,7 @@ class ArticleManager extends Manager
     public function getArticle($article_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles WHERE id = ?');
+        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' )AS date_fr FROM articles WHERE id = ?');
 
         $req->execute(array($article_id));
         $article = $req->fetch();
@@ -64,29 +64,17 @@ class ArticleManager extends Manager
      * Create a new article 
      * @param $title, $content
      */
-    public function getaddArticle($chapter_order, $title, $content)
+    public function getAddArticle($title, $content)
     {
         $db = $this->dbConnect();
-        $reqArticle = $db->prepare('INSERT INTO articles(chapter_order,title,content, date_article) VALUES(:chapter_title,:title, :content, NOW())');
+        $reqArticle = $db->prepare('INSERT INTO articles (title,content, date_article) VALUES(:title, :content, NOW())');
 
         $insertArticle =  $reqArticle->execute([
-            'chapter_order' => $chapter_order,
             'title' => $title,
             'content' => $content
         ]);
     }
 
-    public function getChapterExist($chapter_order)
-    {
-        $db = $this->dbConnect();
-        $reqArticle = $db->prepare('SELECT * FROM articles WHERE chapter_order = :chapter_order');
-        $reqArticle->execute([
-            'chapter_order' => $chapter_order
-        ]);
-        $chapterExist = $reqMail->rowCount();
-        
-        return $chapterExist;
-    }
 
     /**
      * Edit an article 
@@ -96,22 +84,28 @@ class ArticleManager extends Manager
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare(
-            'UPDATE articles SET title= :title, content = :content, date_article = NOW() WHERE id = :id ');
-        $reqArticle->execute(array("id" => $article_id, "title" => $title, "content" => $content));
+            'UPDATE articles SET title = :title, content = :content, date_modification = NOW() 
+            WHERE id = :id ');
+        $edit = $reqArticle->execute([
+            "id" => $article_id, 
+            "title" => $title, 
+            "content" => $content
+            ]);
     }
 
     /**
      * Delete an article 
      * @param $article_id
      */
-    public function deleteArticle($article_id)
+    public function getDeleteArticle($article_id)
     {
         $db = $this->dbConnect();
 
         $reqArticle = $db->prepare('DELETE FROM articles WHERE id = ?'); 
-        $reqArticle->execute(array($article_id));
+        $deleteArticle = $reqArticle->execute(array($article_id));
 
         $reqArticle = $db->prepare('DELETE FROM comments WHERE id = ?'); 
-        $reqArticle->execute(array($article_id));
+        $deleteArticle = $reqArticle->execute(array($article_id));
+
     }
 }

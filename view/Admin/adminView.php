@@ -1,5 +1,6 @@
 <?php $title = "Tableau de bord ";  ?>
 <?php ob_start(); ?>
+
 <div class="Ajouter un nouvel article ">
     <div class="global">
         <h1>Bonjour </h1>

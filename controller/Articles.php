@@ -19,7 +19,6 @@ class Articles extends Controller {
     $listArticles = $articleManager->getAllArticles();
     
     include 'view/allArticlesView.php';
-
     }
 
     /**
@@ -33,58 +32,46 @@ class Articles extends Controller {
         $commentManager = new CommentManager();
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            $article = $articleManager->getArticle($_GET['id']);
-            $comments = $commentManager->getAllComments($_GET['id']);
+            $article_id = $this->trim_secur($_GET['id']);
+
+            $article = $articleManager->getArticle($article_id);
+            $listComments = $commentManager->getAllComments($article_id);
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
         }
-        include 'view/articleView.php';
+        include 'view/articleView.php';   
     }
     
 
     public function createArticle()
     {
         $articleManager = new ArticleManager();
-        include 'View/admin/createArticleView.php';
 
+        if (isset($_POST['submit'])) {
+            $title = $this->str_secur($_POST['title']);
+            $content = $this->str_secur($_POST['content']);
+
+            if (!empty($title) && !empty($content)) {
+                $insertArticle = $articleManager->getAddArticle($title, $content);
+                \header('Location: index.php?action=admin');
+            } else {
+                throw new \Exception("Veuillez remplir tous les champs ! ");
+            }
+        }
+        include 'View/admin/createArticleView.php';
     }
     
     // Gestion des articles 
     // Ajouter, Voir, Modifier et supprimer un article
-    public function addArticle() {
 
-        // verifie si id est en paramètre de l'URL ? (vérifie si on a bien récupérer l'id en URL)
-        // Lorsqu'on click sur le button create => vérifie si les champs sont bien remplis 
-        // appelle la méthode pour aouter les nouveaux articles 
-        // redirige le lien en adminView avec un message ? 
+    public function manageArticle()
+    {
         $articleManager = new ArticleManager();
+        $allArticles = $articleManager->getAllArticles();
 
-
-
-        if (isset($_POST['submit'])) {
-            $title = $this->str_secur($_POST['title']);
-            $chapterOrder = \intval($_POST['nbChap']);
-            $content = $this->trim_secur($_POST['content']);
-
-            if (!empty($title) && !empty($chapterOrder) && !empty($content)) {
-
-                $chapterExist = $articleManager->getChapterExist($chapterOrder);
-
-                if ($chapterExist == 0) {
-                    $insertArticle = $articleManager->getaddArticle($chapterOrder, $title, $content);
-                    header('Location: index.php?action=admin');
-                } else {
-                    throw new \Exception("Le numéro du chapitre existe déjà");
-                    
-                }
-            } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
-                
-            }
-        }
-
-        include 'View/admin/createArticleView.php';
+        $i = 1; 
+        include 'view/admin/manageArticleView.php';
     }
 
     public function editArticle()
@@ -95,34 +82,31 @@ class Articles extends Controller {
         // lorsqu'on click sur $_POST['submit_edit'] => appels la méthode 
         // redirige le lien en adminView avec un message ? 
         $articleManager = new ArticleManager();
+        
         if (isset($_GET['id']) && $_GET['id'] > 0) {
+            $getID = $this->trim_secur($_GET['id']); 
+            $title = $this->str_secur($_POST['title']);
+            $content = $this->str_secur($_POST['content']);
 
-            $title = trim(htmlspecialchars($_POST['title']));
-            $content = trim($_POST['content']);
-
-            if (!empty($_POST['title']) && !empty($_POST['content'])) {
-                if ($_POST['edit']) {
-                    $articleManager->editArticles($_GET['id'], $_POST['title'], $_POST['content']);
-                    
-                    header('Location: index.php?action=edit');
-                }
+            if (!empty($title) && !empty($content)) {
+                die('OK');
             }
-        }
+        } throw new \Exception("Aucun identifiant de billet envoyé");
+        
+        include 'view/admin/editView.php';
+        
     }
 
     public function deleteArticle()
     {
-        // Vérifie si le button delete existe bien (dans le tableau admin)
-        // appele la méthode et supprime l'article & les commentaires 
-        // une alerte pour confirmer la supression ? 
-        // redirige le lien en adminViex avec un message ? 
         $articleManager = new ArticleManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $delete = $_POST['deleteArticle'];
-            $id = $_GET['id'];
+            $getID = $this->trim_secur($_GET['id']);
 
-            if (isset($_POST['deleteArticle'])) {
-            }
+            $deleteArticle = $articleManager->getDeleteArticle($getID);
+            header('Location: index.php?action=manageArticle');
+        } else {
+            throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }
 }
