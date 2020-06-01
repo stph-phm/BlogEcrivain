@@ -35,7 +35,7 @@ class Articles extends Controller {
             $article_id = $this->trim_secur($_GET['id']);
 
             $article = $articleManager->getArticle($article_id);
-            $listComments = $commentManager->getAllComments($article_id);
+            $listComment = $commentManager->getListComment($article_id);
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
@@ -53,7 +53,7 @@ class Articles extends Controller {
             $content = $this->str_secur($_POST['content']);
 
             if (!empty($title) && !empty($content)) {
-                $insertArticle = $articleManager->getAddArticle($title, $content);
+                $insertArticle = $articleManager->addNewArticle($title, $content);
                 \header('Location: index.php?action=admin');
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
@@ -90,6 +90,7 @@ class Articles extends Controller {
 
             if (!empty($title) && !empty($content)) {
                 die('OK');
+                $edit = $articleManager->editArticle($getID, $title, $content);
             }
         } throw new \Exception("Aucun identifiant de billet envoyé");
         
@@ -103,7 +104,7 @@ class Articles extends Controller {
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getID = $this->trim_secur($_GET['id']);
 
-            $deleteArticle = $articleManager->getDeleteArticle($getID);
+            $deleteArticle = $articleManager->deleteArticle($getID);
             header('Location: index.php?action=manageArticle');
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");

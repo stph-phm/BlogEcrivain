@@ -5,17 +5,21 @@ namespace App\Controller;
 use App\Model\UserManager;
 
 class Controller {
-    public $tring;
     // methodes pour savoir si le membre est connecter 
     public function is_connected()
     {
-        $userManager = new UserManager();
+        if (!empty($_SESSION['id'])) {
+            die('OK');
+        } else {
+            header('Location: index.php');
+        }
+        return !empty($_SESSION['id']); 
     }
 
     // méthode pour savoir si il est admin 
     public function is_admin()
     {
-        $userManager = new UserManager();
+        
     }
 
     public function str_secur($string)

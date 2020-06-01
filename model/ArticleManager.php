@@ -24,9 +24,9 @@ class ArticleManager extends Manager
         FROM articles 
         ORDER BY date_article');
 
-        $allArticles = $articles->fetchAll();
+        $listArticle = $articles->fetchAll();
 
-        return $allArticles;
+        return $listArticle;
     }
 
     /**
@@ -64,7 +64,7 @@ class ArticleManager extends Manager
      * Create a new article 
      * @param $title, $content
      */
-    public function getAddArticle($title, $content)
+    public function addNewArticle($title, $content)
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare('INSERT INTO articles (title,content, date_article) VALUES(:title, :content, NOW())');
@@ -80,7 +80,7 @@ class ArticleManager extends Manager
      * Edit an article 
      * @param $article_id (int), $title, $content
      */
-    public function editArticles($article_id, $title, $content)
+    public function editArticle($article_id, $title, $content)
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare(
@@ -97,7 +97,7 @@ class ArticleManager extends Manager
      * Delete an article 
      * @param $article_id
      */
-    public function getDeleteArticle($article_id)
+    public function deleteArticle($article_id)
     {
         $db = $this->dbConnect();
 

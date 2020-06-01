@@ -26,7 +26,7 @@ class Comments extends Controller {
             $comment = $this->str_secur($_POST['comment']);
 
             if (!empty($pseudo) && !empty($comment)) {
-                $addLinesComment = $commentManager->getAddComments($pseudo, $comment, $getID);
+                $addLinesComment = $commentManager->addNewComment($pseudo, $comment, $getID);
 
                 if ($addLinesComment === true) {
                     \header('Location: index.php?action=article&id='.$getID);
@@ -46,11 +46,11 @@ class Comments extends Controller {
     {
         $commentManager = new CommentManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getID = $this->trim_secur($_GET['id']);
+            $getId = $this->trim_secur($_GET['id']);
 
-            $commentReported = $commentManager->getReportComments($getID);
-            
-            \header('Location: index.php?action=article&id=' .$getID);
+            $commentReported = $commentManager->reportComment($getId);
+            // $comment = $commentManager->getCommentById($getId);
+            \header('Location: index.php?action=article&id=' .$getId);
             
         } 
 
@@ -62,7 +62,7 @@ class Comments extends Controller {
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
 
-            $validateReport = $commentManager->getValidateComment($comment_id);
+            $validateReport = $commentManager->validateReport($comment_id);
             header('Location: index.php?action=admin');
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
@@ -75,7 +75,7 @@ class Comments extends Controller {
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
 
-            $deleteCom = $commentManager->getDeleteComments($comment_id);
+            $deleteCom = $commentManager->deleteComment($comment_id);
             header('Location: index.php?action=admin');
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");

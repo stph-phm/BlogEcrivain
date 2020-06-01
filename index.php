@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
 
 try {
     switch ($action) {
-        case 'allArticle':
+        case 'listArticle':
             $listsArticle = new Articles;
             $listsArticle->allArticles();
             break;
@@ -32,7 +32,7 @@ try {
             $comment = new Comments;
             $comment->reportComment();
             break;
-        case 'connectUser':
+        case 'login':
             $connectUser = new Users;
             $connectUser->connectUser();
             break;

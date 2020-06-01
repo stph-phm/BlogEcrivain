@@ -13,7 +13,7 @@ class UserManager extends Manager
     public $email_user;
     public $password_user;
 
-    public function getUsernameExist($username)
+    public function ifUsernameExist($username)
     {
         $db = $this->dbConnect();
         $reqUsername = $db->prepare('SELECT * FROM users WHERE username = :username');
@@ -25,7 +25,7 @@ class UserManager extends Manager
         return $userExist;
     }
 
-    public function getMailExist($email_user)
+    public function ifMailExist($email_user)
     {
         $db = $this->dbConnect();
         $reqMail = $db->prepare('SELECT * FROM users WHERE email_user = :email_user');
@@ -37,7 +37,7 @@ class UserManager extends Manager
         return $mailExist;
     }
 
-    public function insertNewUser($username,$email_user, $password_user)
+    public function addNewUser($username,$email_user, $password_user)
     {
         $db = $this->dbConnect();
         $reqUSer = $db->prepare('INSERT INTO users(username, email_user, password_user, date_user) 
@@ -51,7 +51,7 @@ class UserManager extends Manager
         return $insertUser;
     }
 
-    public function getUserbyMail($email_user)
+    public function userByEmail($email_user)
     {
         $db = $this->dbConnect();
         $reqMail = $db->prepare('SELECT id, username, password_user FROM users WHERE email_user = :email_user');
@@ -64,7 +64,7 @@ class UserManager extends Manager
         return $user;
     }
 
-    public function getUser($user_id)
+    public function userById($user_id)
     {
         $db = $this->dbConnect();
         $reqUSer = $db->prepare('SELECT id, username, is_admin, DATE_FORMAT(date_user, \'%d/%m/%Y à %Hh%imin\' ) AS creation_user  FROM user WHERE id = ?');

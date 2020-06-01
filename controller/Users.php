@@ -37,15 +37,15 @@ class Users extends Controller
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
                 if ($usernameLentght <= 20) {
 
-                    $userExist = $userManager->getUsernameExist($username);
+                    $userExist = $userManager->ifUsernameExist($username);
                     if ($userExist == 0 ) {
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-                            $mailExist = $userManager->getMailExist($email);
+                            $mailExist = $userManager->ifMailExist($email);
                             if ($mailExist == 0) {
                                 if ($pswd == $pswd2) {
 
-                                    $inserUser = $userManager->insertNewUser($username, $email, $pswdHach);
+                                    $inserUser = $userManager->addNewUser($username, $email, $pswdHach);
                                     header('Location: index.php?action=connectUser');
 
                                 } else {
@@ -83,7 +83,7 @@ class Users extends Controller
         if (isset($_POST['connect'])) {
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
-            $user = $userManager->getUserbyMail($email);
+            $user = $userManager->userByEmail($email);
             $pswdCorrect = password_verify($pswd, $user['password_user']);
 
             if (!empty($email) && !empty($pswd)) {
@@ -112,7 +112,7 @@ class Users extends Controller
         $userManager = new UserManager();
 
 
-            $userInfo = $userManager->getUser();
+            $userInfo = $userManager->userById();
         include 'View/profilView.php';
     }
 

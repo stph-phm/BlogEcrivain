@@ -19,16 +19,16 @@ class CommentManager extends Manager
      * @param $article_id (int)
      * @return array $comments
      */
-    public function getAllComments($article_id)
+    public function getListComment($article_id)
     {
         $db =  $this->dbConnect();
         $reqComment = $db->prepare('SELECT id, pseudo, comment,  reported, date_comment FROM comments WHERE article_id = ? ORDER BY date_comment DESC ');
         
         $reqComment->execute([$article_id]);
 
-        $listComments = $reqComment->fetchAll();
+        $listComment = $reqComment->fetchAll();
         
-        return $listComments;
+        return $listComment;
     }
 
 
@@ -38,7 +38,7 @@ class CommentManager extends Manager
      * @param $article_id (int), $pseudo (var), $comment (text)
      * @return array $addLinesComment
      */
-    public function getAddComments($pseudo, $comment, $article_id)
+    public function addNewComment($pseudo, $comment, $article_id)
     {
         $db = $this->dbConnect();
         $comments = $db->prepare('INSERT INTO comments(pseudo, comment,reported, date_comment, article_id) VALUES (:pseudo, :comment, 0, NOW(), :article_id)');
@@ -52,12 +52,14 @@ class CommentManager extends Manager
         return $addLinesComment;
     }
 
+    //getcommentbyid
+    
 
     /**
      * Report comments 
      * @param $comment_id (int)
      */
-    public function getReportComments($id)
+    public function reportComment($id)
     {
 
         $db = $this->dbConnect();
@@ -85,7 +87,7 @@ class CommentManager extends Manager
      * Ignore comment report
      * @param $comment_id (int)
      */
-    public function getValidateComment($id)
+    public function validateReport($id)
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('UPDATE comments SET reported = 0 WHERE id = ?');
@@ -97,7 +99,7 @@ class CommentManager extends Manager
      * Delete comments 
      * @param $comment_id (int)
      */
-    public function getDeleteComments($id)
+    public function deleteComment($id)
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare('DELETE FROM comments WHERE id = ?');

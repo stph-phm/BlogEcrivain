@@ -15,16 +15,16 @@
         </div><!--header-->
 
         <div class="list-article">
-            <?php foreach ($listArticles as  $allArticles) { ?>
+            <?php foreach ($listArticle as  $allArticle) { ?>
             <section>
                 <div class="header-section">
 
-                    <a href="index.php?action=article&amp;id=<?= $allArticles['id'] ?>"> <h3> <?= htmlspecialchars($allArticles['title']) ?> </h3></a>
-                    <p> <?= date_format(date_create($allArticles['date_article']), 'd/m/Y à H:i') ?> </p>
+                    <a href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>"> <h3> <?= htmlspecialchars($allArticle['title']) ?> </h3></a>
+                    <p> <?= date_format(date_create($allArticle['date_article']), 'd/m/Y à H:i') ?> </p>
                 </div>
 
                 <div class="content-section">
-                    <p> <?= nl2br(substr($allArticles['content'],0,390)) ?>... <a href="index.php?action=article&amp;id=<?= $allArticles['id'] ?>">Lire la suite</a> </p>
+                    <p> <?= nl2br(substr($allArticle['content'],0,390)) ?>... <a href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">Lire la suite</a> </p>
                 </div>
             </section>
             <?php 

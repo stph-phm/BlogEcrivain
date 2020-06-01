@@ -14,18 +14,18 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($allArticles as $articles) { ?>
+                <?php foreach ($allArticle as $article) { ?>
                 <tr>
                     <td> <?= $i++ ?></td>
-                    <td><?= htmlspecialchars($articles['title']) ?> </td>
-                    <td><?= nl2br(substr($articles['content'], 0, 150)) ?> </td>
-                    <td> <?= date_format(date_create($articles['date_article']), 'd/m/Y') ?> </td>
+                    <td><?= htmlspecialchars($article['title']) ?> </td>
+                    <td><?= nl2br(substr($article['content'], 0, 150)) ?> </td>
+                    <td> <?= date_format(date_create($article['date_article']), 'd/m/Y') ?> </td>
                     <td class="table-action">
-                        <a href="index.php?action=article&amp;id= <?= $articles['id'] ?>">Voir</a>
+                        <a href="index.php?action=article&amp;id= <?= $article['id'] ?>">Voir</a>
 
-                        <a href="index.php?action=edit&amp;id= <?= $articles['id'] ?>" >Modifier</a>
+                        <a href="index.php?action=edit&amp;id= <?= $article['id'] ?>" >Modifier</a>
 
-                        <a href="index.php?action=deleteArticle&amp;id= <?= $articles['id'] ?>">Supprimer</a>
+                        <a href="index.php?action=deleteArticle&amp;id= <?= $article['id'] ?>">Supprimer</a>
                     </td>
                 </tr>
                 <?php 

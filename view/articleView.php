@@ -34,28 +34,26 @@
             <button class ="btn btn-primary" type="submit" name="submit">Commenter</button>
         </form>
 
-        <?php foreach ($listComments as $comments) { ?>
+        <?php foreach ($listComment as $comment) { ?>
         <div class="comments">
             <div class="pseudo-partComment d-flex p-2 ">
                 <p>
-                    <strong> <?= $comments['pseudo'] ?> </strong>
-                    <?= date_format(date_create($comments['date_comment']), 'd/m/Y à H:i') ?> : &nbsp;
+                    <strong> <?= $comment['pseudo'] ?> </strong>
+                    <?= date_format(date_create($comment['date_comment']), 'd/m/Y à H:i') ?> : &nbsp;
                 </p>
 
                 <p>
                     <?php 
-                        if ($comments['reported'] == 0) { ?>
-                            <form action="index.php?action=reportComment&amp;id= <?= $article['id'] ?>" method="post">
-                                <button type="submit"><span><i class="fas fa-flag"></i></span>&nbsp; Signaler</button>
-                            </form>
-                            <!--<a class="btn btn-secondary btn-sm" href="index.php?action=reportComment&amp;id= <?= $comments['id'] ?>"><span><i class="fas fa-flag"></i></span>&nbsp; Signaler</a>-->
+                        if ($comment['reported'] == 0) { ?>
+                            
+                        <a class="btn btn-secondary btn-sm" href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>"><span><i class="fas fa-flag"></i></span>&nbsp; Signaler</a>
                 </p>
                     <?php } else { ?>
                             <p class="text-danger"><span><i class="fas fa-flag"></i></span>&nbsp;Signalé</p> 
                     <?php } ?><!--else-->
             </div>
 
-            <p> <?=  $comments['comment'] ?> </p>
+            <p> <?=  $comment['comment'] ?> </p>
             <hr>
         </div>
         <?php } ?><!--foreach-->
