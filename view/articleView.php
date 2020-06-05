@@ -18,12 +18,15 @@
         </article>
     </div><!--news-->
 
-    <section>
+    <?php 
+    if ($_SESSION == 0 ) { ?>
+            <section>
         <h2>Commentaire</h2>
 
-        <form action="index.php?action=addComment&amp;id= <?= $article['id'] ?>" method="POST">
+        <form action="index.php?action=addComment&amp;id= <?= $article['id'] ?>&amp;id=<?= $userInfo['id'] ?>" method="POST">
             <div class="form-group">
                 <label for="pseudo">pseudo</label>
+                
                 <input type="text" class="form-control" id="pseudo" name="pseudo">
             </div>
             <div class="form-group">
@@ -58,6 +61,13 @@
         </div>
         <?php } ?><!--foreach-->
     </section>
+    <?php 
+    } 
+    else { ?>
+        <p>Connectez-vous, pour pouvoir commenter</p> <a href="index.php?action=login"> se connecter</a>
+    <?php 
+    } ?>
+
 </div><!--global-->
 
 <?php $content = ob_get_clean(); ?>

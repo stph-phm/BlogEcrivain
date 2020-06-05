@@ -4,10 +4,9 @@
 
 
     <div class="global">
-        <h1>Bonjour <?= $userInfo['username']  ?> </h1>
-
-        <p>adresse mail : <?= $userInfo['email_user'] ?></p>
-        <p>date de creation : <?= $userInfo['creation_user'] ?> </p>
+        <h1>Bonjour <?= $_SESSION['id']?> <?= $userInfo['id'] ?></h1>
+        <p>adresse mail :</p>
+        <p>date de creation :  </p>
     </div>
 
 

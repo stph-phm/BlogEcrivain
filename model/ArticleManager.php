@@ -20,7 +20,7 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id,  title, content,date_article, date_modification
+        $articles = $db->query('SELECT id,  title, content,date_article, date_edit
         FROM articles 
         ORDER BY date_article');
 

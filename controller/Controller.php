@@ -8,18 +8,23 @@ class Controller {
     // methodes pour savoir si le membre est connecter 
     public function is_connected()
     {
-        if (!empty($_SESSION['id'])) {
-            die('OK');
+        if (isset($_SESSION['isConnected']) === 1) {
+        
         } else {
-            header('Location: index.php');
+            \header('Location: index.php');
         }
-        return !empty($_SESSION['id']); 
+
+        //return $_SESSION['isConnected'] === 1
     }
 
     // méthode pour savoir si il est admin 
     public function is_admin()
     {
-        
+        if (isset($_SESSION['isAdmin']) === 1) {
+            $isConnected = is_admin();
+        } else {
+            \header('Location: index.php');
+        }
     }
 
     public function str_secur($string)

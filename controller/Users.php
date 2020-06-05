@@ -24,6 +24,7 @@ class Users extends Controller
     public function registerUser()
     {
         $userManager = new UserManager();
+
         
         if (isset($_POST['register'])) {
             
@@ -85,22 +86,31 @@ class Users extends Controller
             $pswd = $this->trim_secur($_POST['pswd']);
             $user = $userManager->userByEmail($email);
             $pswdCorrect = password_verify($pswd, $user['password_user']);
+    
 
             if (!empty($email) && !empty($pswd)) {
                 if ($pswd == $pswdCorrect) {
                     
+                    
                     $_SESSION['id'] = $user['id'];
-                    $_SESSION['username'] = $user['user'];
-                    $_SESSION['email'] = $user['email'];
+                    $hashSession = hash("sha256", $_SESSION['id']);
+                    $userInfo = $userManager->getUserById($_SESSION['id']);
+                    // $_SESSION['id'] = array(
+                    // 'id' = $userInfo['id'],
+                    // 'username' = $userInfo['username'],
+                    // 'email' = $userInfo['email_user'],
+                    // 'is_admin' = $userInfo['is_admin']
+                    // 
+                    // );
+                    $_SESSION['isConnected'] = 1;
+                    $_SESSION['isAdmin'] = 0;
+                    print_r($_SESSION);
                     \header('Location: index.php?action=profilUser&id='.$_SESSION['id']);
-                    die('OK');
                 } else {
                     throw new \Exception("Vos identifiants ou mots de passe incorrect ! ");
-                    
                 }
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
-                
             }
         }
 
@@ -110,9 +120,10 @@ class Users extends Controller
     public function profilUser() 
     {
         $userManager = new UserManager();
-
-
-            $userInfo = $userManager->userById();
+        if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
+            $sessionId = $this->trim_secur($_SESSION['id']);
+            $userInfo = $userManager->getUserById($sessionId);
+        }
         include 'View/profilView.php';
     }
 
@@ -125,10 +136,10 @@ class Users extends Controller
         include 'View/admin/adminView.php';
     }
 
-    public function listsArticleNav()
+    public function listArticleNav()
     {
         $articleManager = new ArticleManager();
-        $allArticles = $articleManager->getAllArticles();
+        $allArticle = $articleManager->getAllArticles();
 
         include 'View/Include/nav.php';
     }

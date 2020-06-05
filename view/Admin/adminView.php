@@ -8,7 +8,6 @@
     <div class="container-dashboard">
         <div class="title_admin">
             <h2 class="text-center mb-2">Les commentaires signalée </h2>
-            <a href="index.php?action=createArticle" class="btn btn-success mb-4"> Ajouter un article <span><i class="fas fa-plus"></i> </span></a>
         </div>
 
         <table class="table">

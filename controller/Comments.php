@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controller;
 
+use App\Model\UserManager;
 use App\Model\CommentManager;
 use App\Controller\Controller;
 
@@ -19,24 +20,30 @@ class Comments extends Controller {
     public function addComment()
     {
         $commentManager = new CommentManager();
+        $userManager = new UserManager();
 
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getID = $this->trim_secur($_GET['id']);
-            $pseudo = $this->str_secur($_POST['pseudo']);
             $comment = $this->str_secur($_POST['comment']);
+            $pseudo =$this->str_secur($_POST['pseudo']);
 
-            if (!empty($pseudo) && !empty($comment)) {
-                $addLinesComment = $commentManager->addNewComment($pseudo, $comment, $getID);
+            $userInfo = $userManager->getUserById($pseudo);
+            
+            if (!empty($comment)) {
+                $addLinesComment = $commentManager->addNewComment($comment, $getID, $userInfo);
 
                 if ($addLinesComment === true) {
                     \header('Location: index.php?action=article&id='.$getID);
-                } else {
-                    throw new \Exception('Impossible d\'ajouter le commentaire !');
+                } 
+                else {
+                    throw new \Exception("Impossible d'ajouter le commentaire !");
                 }
-            } else {
+            } 
+            else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
             }
-        } else {
+        } 
+        else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }

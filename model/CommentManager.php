@@ -8,23 +8,24 @@ include_once 'model/Manager.php';
 class CommentManager extends Manager
 {
     public $id;
-    public $pseudo;
     public $comment;
     public $date_com;
     public $reported;
     public $article_id;
+    public $user_id;
 
     /**
      * Get all comments in database in comments
      * @param $article_id (int)
      * @return array $comments
      */
-    public function getListComment($article_id)
+    public function getListComment($article_id, $user_id)
     {
         $db =  $this->dbConnect();
-        $reqComment = $db->prepare('SELECT id, pseudo, comment,  reported, date_comment FROM comments WHERE article_id = ? ORDER BY date_comment DESC ');
+        $reqComment = $db->prepare('SELECT id, username as pseudo, comment,  reported, date_comment FROM comments, users WHERE article_id = ?, user_id = ? ORDER BY date_comment DESC ');
+
         
-        $reqComment->execute([$article_id]);
+        $reqComment->execute([$article_id, $user_id]);
 
         $listComment = $reqComment->fetchAll();
         
@@ -38,21 +39,32 @@ class CommentManager extends Manager
      * @param $article_id (int), $pseudo (var), $comment (text)
      * @return array $addLinesComment
      */
-    public function addNewComment($pseudo, $comment, $article_id)
+    public function addNewComment($comment, $article_id, $user_id)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments(pseudo, comment,reported, date_comment, article_id) VALUES (:pseudo, :comment, 0, NOW(), :article_id)');
+        $comments = $db->prepare('INSERT INTO comments(comment,reported, date_comment, article_id, user_id) VALUES (:pseudo, :comment, 0, NOW(), :article_id, :user_id)');
 
         $addLinesComment = $comments->execute([
-            'pseudo' => $pseudo,
             'comment' => $comment,
-            'article_id' => $article_id
+            'article_id' => $article_id,
+            'user_id' => $user_id
             ]); 
 
         return $addLinesComment;
     }
 
-    //getcommentbyid
+    //getcommentbyid 
+    public function getCommentById($id)
+    {
+        $db = $this->dbConnect();
+        $reqComment = $db->query('SELECT * FROM comments WHERE article_id = ?');
+
+        $reqComment->execute([$id]);
+
+        $commentById = $reqComment->fecth();
+
+        return $commentById;
+    }
     
 
     /**

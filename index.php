@@ -77,6 +77,10 @@ try {
             $deleteArticle->deleteArticle();
             //supprime l'article avec ses commentaires 
             break;
+        case 'nav':
+            $listArticle = new Users;
+            $listArticle->listArticleNav();
+            break;
         default:
             $listArticle = new  Articles;
             $listArticle->allArticle();

@@ -13,6 +13,17 @@ class UserManager extends Manager
     public $email_user;
     public $password_user;
 
+    public function getUser()
+    {
+        $db = $this->dbConnect();
+        $reqUSer = $db->query('SELECT id, username, email_user, is_admin, date_user
+        FROM users');
+
+        $user = $reqUSer->fetchAll();
+
+        return $user;
+    }
+
     public function ifUsernameExist($username)
     {
         $db = $this->dbConnect();
@@ -64,10 +75,10 @@ class UserManager extends Manager
         return $user;
     }
 
-    public function userById($user_id)
+    public function getUserById($user_id)
     {
         $db = $this->dbConnect();
-        $reqUSer = $db->prepare('SELECT id, username, is_admin, DATE_FORMAT(date_user, \'%d/%m/%Y à %Hh%imin\' ) AS creation_user  FROM user WHERE id = ?');
+        $reqUSer = $db->prepare('SELECT id, username, email_user, is_admin, date_user  FROM user WHERE id = ?');
         $reqUSer->execute([$user_id]);
 
         $userInfo = $reqUSer->fetch();

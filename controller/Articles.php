@@ -35,7 +35,7 @@ class Articles extends Controller {
             $article_id = $this->trim_secur($_GET['id']);
 
             $article = $articleManager->getArticle($article_id);
-            $listComment = $commentManager->getListComment($article_id);
+            $listComment = $commentManager->getListComment($article_id, $_SESSION['id']);
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
@@ -68,7 +68,7 @@ class Articles extends Controller {
     public function manageArticle()
     {
         $articleManager = new ArticleManager();
-        $allArticles = $articleManager->getAllArticles();
+        $listArticle = $articleManager->getAllArticles();
 
         $i = 1; 
         include 'view/admin/manageArticleView.php';
