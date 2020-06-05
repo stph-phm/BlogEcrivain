@@ -22,7 +22,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?action=connectUser">Connexion</a>
+                <a class="nav-link" href="index.php?action=login">Connexion</a>
             </li>
         </ul>
     </div>

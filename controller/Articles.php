@@ -13,10 +13,10 @@ class Articles extends Controller {
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 
      */
-    public function allArticles()
+    public function allArticle()
     {
     $articleManager = new ArticleManager();
-    $listArticles = $articleManager->getAllArticles();
+    $listArticle = $articleManager->getAllArticles();
     
     include 'view/allArticlesView.php';
     }
@@ -44,7 +44,7 @@ class Articles extends Controller {
     }
     
 
-    public function createArticle()
+    public function addArticle()
     {
         $articleManager = new ArticleManager();
 

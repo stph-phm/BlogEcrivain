@@ -25,7 +25,7 @@
         </form>
     </div>
 
-    <a href="index.php?action=connectUser"> Un compte ? Connectez-vous </a>
+    <a href="index.php?action=login"> Un compte ? Connectez-vous </a>
 </div><!--/.global-->
 <?php $content = ob_get_clean(); ?>
 <?php include 'template.php'; ?>

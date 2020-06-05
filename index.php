@@ -17,8 +17,8 @@ if (isset($_GET['action'])) {
 try {
     switch ($action) {
         case 'listArticle':
-            $listsArticle = new Articles;
-            $listsArticle->allArticles();
+            $listArticle = new Articles;
+            $listArticle->allArticle();
             break;
         case 'article':
             $article = new Articles;
@@ -56,17 +56,13 @@ try {
             $deleteComReported = new Comments;
             $deleteComReported->deleteReportCom();
             break;
-        case 'createArticle':
+        case 'newArticle':
             $createArticle = new Articles;
-            $createArticle->createArticle();
+            $createArticle->addArticle();
             break;
         case 'manageArticle':
             $manageArticle = new Articles;
             $manageArticle->manageArticle();
-            break;
-        case 'addArticle':
-            $addArticle = new Articles;
-            $addArticle->addArticle();
             break;
         case 'allArticleNav':
             $articlesNav = new Users;
@@ -83,7 +79,7 @@ try {
             break;
         default:
             $listArticle = new  Articles;
-            $listArticle->allArticles();
+            $listArticle->allArticle();
             break;
     }
 } catch (\Exception $e) {
