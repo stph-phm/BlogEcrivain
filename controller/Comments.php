@@ -21,16 +21,19 @@ class Comments extends Controller {
     {
         $commentManager = new CommentManager();
         $userManager = new UserManager();
-
+        $isConnected = $this->is_connected();
+        
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getID = $this->trim_secur($_GET['id']);
             $comment = $this->str_secur($_POST['comment']);
             $pseudo =$this->str_secur($_POST['pseudo']);
 
-            $userInfo = $userManager->getUserById($pseudo);
-            
+
             if (!empty($comment)) {
-                $addLinesComment = $commentManager->addNewComment($comment, $getID, $userInfo);
+                $userInfo = $userManager->getUserById($pseudo);
+                $username = $_SESSION['userId'] = $userInfo;
+
+                $addLinesComment = $commentManager->addNewComment($comment, $getID, $_SESSION['id']);
 
                 if ($addLinesComment === true) {
                     \header('Location: index.php?action=article&id='.$getID);
@@ -51,6 +54,7 @@ class Comments extends Controller {
      // Signaler les commentaires 
     public function reportComment()
     {
+        $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getId = $this->trim_secur($_GET['id']);
@@ -65,6 +69,7 @@ class Comments extends Controller {
 
     public function validateReportCom()
     {
+        $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
@@ -78,6 +83,7 @@ class Comments extends Controller {
 
     public function deleteReportCom()
     {
+        $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
@@ -87,5 +93,14 @@ class Comments extends Controller {
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
+    }
+
+        public function dashboard()
+    {
+        $isAdmin = $this->is_admin();
+        $commentManager = new CommentManager();
+        $listCommentsReport = $commentManager->getAllReported();
+        $i = 1;
+        include 'View/admin/adminView.php';
     }
 }

@@ -19,13 +19,13 @@ class CommentManager extends Manager
      * @param $article_id (int)
      * @return array $comments
      */
-    public function getListComment($article_id, $user_id)
+    public function getListComment($article_id)
     {
         $db =  $this->dbConnect();
-        $reqComment = $db->prepare('SELECT id, username as pseudo, comment,  reported, date_comment FROM comments, users WHERE article_id = ?, user_id = ? ORDER BY date_comment DESC ');
+        $reqComment = $db->prepare('SELECT comments.id as id, users.username as pseudo, comment, reported, date_comment FROM comments, users WHERE article_id = ? ORDER BY date_comment DESC');
 
-        
-        $reqComment->execute([$article_id, $user_id]);
+
+        $reqComment->execute([$article_id]);
 
         $listComment = $reqComment->fetchAll();
         
@@ -36,7 +36,7 @@ class CommentManager extends Manager
 
     /**
      * Add comments 
-     * @param $article_id (int), $pseudo (var), $comment (text)
+     * @param $comment, $article_id, $user_id
      * @return array $addLinesComment
      */
     public function addNewComment($comment, $article_id, $user_id)
@@ -58,9 +58,7 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
         $reqComment = $db->query('SELECT * FROM comments WHERE article_id = ?');
-
         $reqComment->execute([$id]);
-
         $commentById = $reqComment->fecth();
 
         return $commentById;
