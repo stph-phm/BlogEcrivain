@@ -40,7 +40,7 @@ try {
             $registerUser = new Users;
             $registerUser->registerUser();
             break;
-        case 'profilUser':
+        case 'profil':
             $profilUSer = new Users;
             $profilUSer->profilUser();
             break;
@@ -80,6 +80,10 @@ try {
         case 'nav':
             $listArticle = new Users;
             $listArticle->listArticleNav();
+            break;
+        case 'logout':
+            $logout = new Users;
+            $logout->logoutUser();
             break;
         default:
             $listArticle = new  Articles;

@@ -7,10 +7,6 @@ use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Controller\Controller;
 
-
-
-
-
 class Users extends Controller 
 {
     /**
@@ -24,20 +20,16 @@ class Users extends Controller
     public function registerUser()
     {
         $userManager = new UserManager();
-
-        
         if (isset($_POST['register'])) {
             
             $username = $this->str_secur($_POST['username']);
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
             $pswd2 =  $this->trim_secur($_POST['pswd2']);
-            $usernameLentght = \strlen($username);
-            $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
-
+            $usernameLength = \strlen($username);
+            
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
-                if ($usernameLentght <= 20) {
-
+                if ($usernameLength <= 20) {
                     $userExist = $userManager->ifUsernameExist($username);
                     if ($userExist == 0 ) {
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -46,9 +38,10 @@ class Users extends Controller
                             if ($mailExist == 0) {
                                 if ($pswd == $pswd2) {
 
+                                    $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
                                     $inserUser = $userManager->addNewUser($username, $email, $pswdHach);
-                                    header('Location: index.php?action=connectUser');
 
+                                    header('Location: index.php?action=connectUser');
                                 } else {
                                     throw new \Exception("Les mots de passe ne se correspondent pas !");
                                 }
@@ -65,7 +58,7 @@ class Users extends Controller
                         
                     }
                 } else {
-                    throw new \Exception("Votre identifiant doit avoir moins de 20 caractères ! ");
+                    throw new \Exception("Votre identifiant doit avoir moins de 20 caractères !");
                     
                 }
             } else {
@@ -85,29 +78,18 @@ class Users extends Controller
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
             $user = $userManager->userByEmail($email);
-            $pswdCorrect = password_verify($pswd, $user['password_user']);
+            
     
-
             if (!empty($email) && !empty($pswd)) {
-                if ($pswd == $pswdCorrect) {
-                    
-                    
-                    $_SESSION['id'] = $user['id'];
-                    $hashSession = hash("sha256", $_SESSION['id']);
-                    $userInfo = $userManager->getUserById($_SESSION['id']);
-                    // $_SESSION['id'] = array(
-                    // 'id' = $userInfo['id'],
-                    // 'username' = $userInfo['username'],
-                    // 'email' = $userInfo['email_user'],
-                    // 'is_admin' = $userInfo['is_admin']
-                    // 
-                    // );
-                    $_SESSION['isConnected'] = 1;
-                    $_SESSION['isAdmin'] = 0;
-                    print_r($_SESSION);
-                    \header('Location: index.php?action=profilUser&id='.$_SESSION['id']);
+                $pswdCorrect = password_verify($pswd, $user['password_user']);
+
+                if ($pswdCorrect) {
+                    $userInfo = $userManager->getUserById($_SESSION['userId']);
+                    $_SESSION['userId'] = $user['id'];
+                    $hashSession = hash("sha256", $_SESSION['userId']);
+                    \header('Location: index.php');
                 } else {
-                    throw new \Exception("Vos identifiants ou mots de passe incorrect ! ");
+                    throw new \Exception(" Vos identifiants incorrects ! ");
                 }
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
@@ -117,30 +99,22 @@ class Users extends Controller
         include 'view/connectView.php';
     }
 
+
     public function profilUser() 
     {
         $userManager = new UserManager();
-        if (isset($_SESSION['id']) && $_SESSION['id'] > 0) {
-            $sessionId = $this->trim_secur($_SESSION['id']);
+        
+        if (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
+            $sessionId = $this->trim_secur($_SESSION['userId']);
             $userInfo = $userManager->getUserById($sessionId);
+            $isConnect = $this->is_connected();
+            $isAdmin = $this->is_admin();
         }
         include 'View/profilView.php';
     }
 
-
-    public function dashboard()
+    public function logoutUser()
     {
-        $commentManager = new CommentManager();
-        $listCommentsReport = $commentManager->getAllReported();
-        $i = 1;
-        include 'View/admin/adminView.php';
-    }
-
-    public function listArticleNav()
-    {
-        $articleManager = new ArticleManager();
-        $allArticle = $articleManager->getAllArticles();
-
-        include 'View/Include/nav.php';
+        include 'view/Include/nav.php';
     }
 }

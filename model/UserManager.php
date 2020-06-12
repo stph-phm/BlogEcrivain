@@ -78,7 +78,7 @@ class UserManager extends Manager
     public function getUserById($user_id)
     {
         $db = $this->dbConnect();
-        $reqUSer = $db->prepare('SELECT id, username, email_user, is_admin, date_user  FROM user WHERE id = ?');
+        $reqUSer = $db->prepare('SELECT id, username, email_user, is_admin, date_user  FROM users WHERE id = ?');
         $reqUSer->execute([$user_id]);
 
         $userInfo = $reqUSer->fetch();
