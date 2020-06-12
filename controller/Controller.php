@@ -8,22 +8,24 @@ class Controller {
     // methodes pour savoir si le membre est connecter 
     public function is_connected()
     {
-        if (isset($_SESSION['isConnected']) === 1) {
-        
+        if (isset($_SESSION['userId'])) {
+            return true;
         } else {
-            \header('Location: index.php');
+            return false;
         }
-
-        //return $_SESSION['isConnected'] === 1
     }
 
     // méthode pour savoir si il est admin 
     public function is_admin()
     {
-        if (isset($_SESSION['isAdmin']) === 1) {
-            $isConnected = is_admin();
+        if ($this->is_connected()) {
+            if (isset($_SESSION['userId']['is_admin'])) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            \header('Location: index.php');
+            return false;
         }
     }
 
@@ -35,5 +37,10 @@ class Controller {
     public function trim_secur($string)
     {
         return trim($string);
+    }
+
+    public function nl2br_secur($string)
+    {
+        return nl2br($string);
     }
 }
