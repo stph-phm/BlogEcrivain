@@ -20,7 +20,7 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id,  title, content,date_article, date_edit
+        $articles = $db->query('SELECT id,  title, content,date_article
         FROM articles 
         ORDER BY date_article');
 
@@ -64,7 +64,7 @@ class ArticleManager extends Manager
      * Create a new article 
      * @param $title, $content
      */
-    public function addNewArticle($title, $content)
+    public function addArticle($title, $content)
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare('INSERT INTO articles (title,content, date_article) VALUES(:title, :content, NOW())');
@@ -84,15 +84,16 @@ class ArticleManager extends Manager
     {
         $db = $this->dbConnect();
         $reqArticle = $db->prepare(
-            'UPDATE articles SET title = :title, content = :content, date_modification = NOW() 
+            'UPDATE articles 
+            SET title = :title, content = :content
             WHERE id = :id ');
         $edit = $reqArticle->execute([
             "id" => $article_id, 
-            "title" => $title, 
+            "title" => $title,
             "content" => $content
             ]);
     }
-
+    
     /**
      * Delete an article 
      * @param $article_id

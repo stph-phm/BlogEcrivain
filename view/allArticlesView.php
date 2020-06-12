@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="content-section">
-                    <p> <?= nl2br(substr($allArticle['content'],0,390)) ?>... <a href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">Lire la suite</a> </p>
+                    <p> <?= substr($allArticle['content'],0,390) ?>... <a href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">Lire la suite</a> </p>
                 </div>
             </section>
             <?php 

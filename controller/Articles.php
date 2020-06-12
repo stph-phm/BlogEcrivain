@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Controller\Controller;
 
 
 class Articles extends Controller {
-
     /**
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 
@@ -30,12 +30,13 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
         $commentManager = new CommentManager();
-
+        $userManager = new UserManager();
+        
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
-
+            $isAdmin = $this->is_connected();
             $article = $articleManager->getArticle($article_id);
-            $listComment = $commentManager->getListComment($article_id, $_SESSION['id']);
+            $listComment = $commentManager->getListComment($article_id);
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
@@ -43,18 +44,24 @@ class Articles extends Controller {
         include 'view/articleView.php';   
     }
     
-
+    /**
+     * Ajouter un article 
+     * Instanciation de l'ArticleMAnager
+     * 
+     */
     public function addArticle()
     {
         $articleManager = new ArticleManager();
 
+        $isAdmin = $this->is_admin();
+
         if (isset($_POST['submit'])) {
             $title = $this->str_secur($_POST['title']);
-            $content = $this->str_secur($_POST['content']);
+            $content = $this->nl2br_secur($_POST['content']);
 
             if (!empty($title) && !empty($content)) {
-                $insertArticle = $articleManager->addNewArticle($title, $content);
-                \header('Location: index.php?action=admin');
+                $insertArticle = $articleManager->addArticle($title, $content);
+                \header('Location: index.php?action=manageArticle');
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
             }
@@ -63,43 +70,47 @@ class Articles extends Controller {
     }
     
     // Gestion des articles 
-    // Ajouter, Voir, Modifier et supprimer un article
-
+    // Voir, Modifier et supprimer un article
     public function manageArticle()
     {
-        $articleManager = new ArticleManager();
-        $listArticle = $articleManager->getAllArticles();
 
-        $i = 1; 
+            $isAdmin  = $this->is_admin();
+        $articleManager = new ArticleManager();
+            $listArticle = $articleManager->getAllArticles();
+
+            $i = 1; 
         include 'view/admin/manageArticleView.php';
     }
 
+    /**
+     * Modifier un article
+     */
     public function editArticle()
     {
-        // Verifie si le button edit existe bien (dans le tableau admin)
-        // affiche le formulaire avec le titre et content en session ? 
-        // si les champs sont remplis 
-        // lorsqu'on click sur $_POST['submit_edit'] => appels la méthode 
-        // redirige le lien en adminView avec un message ? 
         $articleManager = new ArticleManager();
-        
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getID = $this->trim_secur($_GET['id']); 
+        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
+            $getId = $this->trim_secur($_GET['id']);
             $title = $this->str_secur($_POST['title']);
-            $content = $this->str_secur($_POST['content']);
+            $content = $this->nl2br_secur($_POST['content']);
+            $isAdmin = $this->is_admin();
 
-            if (!empty($title) && !empty($content)) {
-                die('OK');
-                $edit = $articleManager->editArticle($getID, $title, $content);
-            }
+            $edit = $articleManager->editArticle($getId, $title, $content);
+            header('Location: index.php?action=manageArticle');
+            
+
         } throw new \Exception("Aucun identifiant de billet envoyé");
         
+
         include 'view/admin/editView.php';
-        
     }
 
+/**
+ * Delete article 
+ * 
+ */
     public function deleteArticle()
     {
+        $isAdmin = $this->is_admin();
         $articleManager = new ArticleManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getID = $this->trim_secur($_GET['id']);
@@ -109,5 +120,18 @@ class Articles extends Controller {
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
+    }
+
+    
+    /**
+     * List all article in the Nav
+     */
+    public function listArticleNav()
+    {
+        $isAdmin = $this->is_admin();
+        $articleManager = new ArticleManager();
+        $allArticle = $articleManager->getAllArticles();
+
+        include 'View/Include/nav.php';
     }
 }
