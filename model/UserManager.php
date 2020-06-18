@@ -58,7 +58,6 @@ class UserManager extends Manager
             'email_user'        => $email_user, 
             'password_user'     => $password_user 
         ]);
-
         return $insertUser;
     }
 

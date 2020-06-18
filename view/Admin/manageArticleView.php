@@ -3,13 +3,7 @@
 <div class="global manage_article ">
 
     <?php if ($isAdmin) { ?>
-
-    <div class="alert alert-danger" role="alert">
-        <h1 class="text-center">Accès refuser ! </h1>
-    </div>
-
-    <?php 
-    } else { ?>
+    
     <h1>Gestion des articles </h1>
     <table class="table">
         <thead class="table">
@@ -47,7 +41,6 @@
                 ?>
         </tbody>
     </table>
-
 
     <?php 
     } 

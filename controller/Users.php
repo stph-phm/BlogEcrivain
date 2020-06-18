@@ -103,10 +103,13 @@ class Users extends Controller
     public function profilUser() 
     {
         $userManager = new UserManager();
+        $commentManager = new CommentManager();
         
         if (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
             $sessionId = $this->trim_secur($_SESSION['userId']);
             $userInfo = $userManager->getUserById($sessionId);
+            $listCommentsReport = $commentManager->getAllReported();
+            $i = 1;
             $isConnect = $this->is_connected();
             $isAdmin = $this->is_admin();
         }
@@ -115,6 +118,9 @@ class Users extends Controller
 
     public function logoutUser()
     {
+        $_SESSION = array();
+        session_destroy();
+        \header("Location: index.php?action=login");
         include 'view/Include/nav.php';
     }
 }
