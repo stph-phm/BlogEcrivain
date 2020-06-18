@@ -17,6 +17,7 @@ class Articles extends Controller {
     {
     $articleManager = new ArticleManager();
     $listArticle = $articleManager->getAllArticles();
+    $newArticle = $articleManager->getNewArticle();
     
     include 'view/allArticlesView.php';
     }
@@ -34,7 +35,7 @@ class Articles extends Controller {
         
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
-            $isAdmin = $this->is_connected();
+            $isConnected = $this->is_connected();
             $article = $articleManager->getArticle($article_id);
             $listComment = $commentManager->getListComment($article_id);
         } 
@@ -73,12 +74,14 @@ class Articles extends Controller {
     // Voir, Modifier et supprimer un article
     public function manageArticle()
     {
-
-            $isAdmin  = $this->is_admin();
-        $articleManager = new ArticleManager();
+        $isAdmin  = $this->is_admin();
+        if ($isAdmin) {
+            $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
-
             $i = 1; 
+        } else {
+            \header('Location: index.php');
+        }
         include 'view/admin/manageArticleView.php';
     }
 
@@ -88,19 +91,31 @@ class Articles extends Controller {
     public function editArticle()
     {
         $articleManager = new ArticleManager();
-        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
+        
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getId = $this->trim_secur($_GET['id']);
-            $title = $this->str_secur($_POST['title']);
-            $content = $this->nl2br_secur($_POST['content']);
+            $article = $articleManager->getArticle($getId);
             $isAdmin = $this->is_admin();
 
-            $edit = $articleManager->editArticle($getId, $title, $content);
-            header('Location: index.php?action=manageArticle');
-            
+            if ($isAdmin) {
+                if (isset($_POST['submit'])) {
+                    $title = $this->str_secur($_POST['title']);
+                    $content = $this->nl2br_secur($_POST['content']);
 
-        } throw new \Exception("Aucun identifiant de billet envoyé");
-        
-
+                    if (!empty($title) && !empty($content)) {
+                        $edit = $articleManager->editArticle($getId, $title, $content);
+ 
+                        header('Location: index.php?action=manageArticle');
+                    } else {
+                        throw new \Exception("Veuillez remplir tous les champs ! ");
+                    }
+                }
+            }else {
+                \header('Location: index.php');
+            }
+        } else {
+            throw new \Exception("Aucun identifiant de billet envoyé");
+        }
         include 'view/admin/editView.php';
     }
 
@@ -128,9 +143,14 @@ class Articles extends Controller {
      */
     public function listArticleNav()
     {
+        $isConnected =$this->is_connected();
         $isAdmin = $this->is_admin();
-        $articleManager = new ArticleManager();
-        $allArticle = $articleManager->getAllArticles();
+
+        if ($isConnected && $isAdmin) {
+            $articleManager = new ArticleManager();
+            $allArticle = $articleManager->getAllArticles();
+        }
+        
 
         include 'View/Include/nav.php';
     }

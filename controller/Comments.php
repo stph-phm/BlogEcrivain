@@ -24,27 +24,21 @@ class Comments extends Controller {
         $isConnected = $this->is_connected();
         
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getID = $this->trim_secur($_GET['id']);
+            $getId = $this->trim_secur($_GET['id']);
             $comment = $this->str_secur($_POST['comment']);
-            $pseudo =$this->str_secur($_POST['pseudo']);
-
+            $sessionId = $this->trim_secur($_SESSION['userId']);
 
             if (!empty($comment)) {
-                $userInfo = $userManager->getUserById($pseudo);
-                $username = $_SESSION['userId'] = $userInfo;
-
-                $addLinesComment = $commentManager->addNewComment($comment, $getID, $_SESSION['id']);
-
-                if ($addLinesComment === true) {
-                    \header('Location: index.php?action=article&id='.$getID);
-                } 
-                else {
-                    throw new \Exception("Impossible d'ajouter le commentaire !");
-                }
-            } 
-            else {
+                $addLinesComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
+                \header('Location: index.php?action=article&id='.$getId);
+            } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
+                
             }
+            //Afficher l'username dans input pseudo pour ajouter le commentaire 
+            //$sessionId = $this->trim_secur($_SESSION['userId']);
+            //$userInfo = $userManager->getUserById($sessionId);
+
         } 
         else {
             throw new \Exception("Aucun identifiant de billet envoyé");

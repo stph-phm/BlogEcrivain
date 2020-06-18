@@ -22,16 +22,19 @@ class CommentManager extends Manager
     public function getListComment($article_id)
     {
         $db =  $this->dbConnect();
-        $reqComment = $db->prepare('SELECT comments.id as id, users.username as pseudo, comment, reported, date_comment FROM comments, users WHERE article_id = ? ORDER BY date_comment DESC');
-
+        $reqComment = $db->prepare(
+            'SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
+            FROM comments 
+            INNER JOIN users 
+            ON comments.user_id = users.id 
+            WHERE article_id = ?
+            ORDER BY date_comment DESC ');
 
         $reqComment->execute([$article_id]);
 
         $listComment = $reqComment->fetchAll();
-        
         return $listComment;
     }
-
 
 
     /**
@@ -39,10 +42,12 @@ class CommentManager extends Manager
      * @param $comment, $article_id, $user_id
      * @return array $addLinesComment
      */
-    public function addNewComment($comment, $article_id, $user_id)
+    public function addComment($comment, $article_id, $user_id)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments(comment,reported, date_comment, article_id, user_id) VALUES (:pseudo, :comment, 0, NOW(), :article_id, :user_id)');
+        $comments = $db->prepare(
+            'INSERT INTO comments(comment,reported, date_comment, article_id, user_id) 
+            VALUES (:comment, 0, NOW(), :article_id, :user_id)');
 
         $addLinesComment = $comments->execute([
             'comment' => $comment,
@@ -57,7 +62,11 @@ class CommentManager extends Manager
     public function getCommentById($id)
     {
         $db = $this->dbConnect();
-        $reqComment = $db->query('SELECT * FROM comments WHERE article_id = ?');
+        $reqComment = $db->query(
+            'SELECT * 
+            FROM comments 
+            WHERE article_id = ?');
+            
         $reqComment->execute([$id]);
         $commentById = $reqComment->fecth();
 
@@ -73,7 +82,10 @@ class CommentManager extends Manager
     {
 
         $db = $this->dbConnect();
-        $reqComment = $db->prepare('UPDATE comments SET reported = 1 WHERE id = ?');
+        $reqComment = $db->prepare(
+            'UPDATE comments 
+            SET reported = 1 
+            WHERE id = ?');
         $commentReported = $reqComment->execute([$id]);
     }
 
@@ -85,7 +97,12 @@ class CommentManager extends Manager
     public function getAllReported()
     {
         $db = $this->dbConnect();
-        $reqComment = $db->query('SELECT * FROM comments WHERE reported = 1');
+        $reqComment = $db->query(
+            'SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
+            FROM comments 
+            INNER JOIN users 
+            ON comments.user_id = users.id 
+            WHERE reported = 1');
 
         $listCommentsReport = $reqComment->fetchAll();
 
@@ -100,7 +117,10 @@ class CommentManager extends Manager
     public function validateReport($id)
     {
         $db = $this->dbConnect();
-        $reqComment = $db->prepare('UPDATE comments SET reported = 0 WHERE id = ?');
+        $reqComment = $db->prepare(
+            'UPDATE comments 
+            SET reported = 0 
+            WHERE id = ?');
 
         $validateReport =  $reqComment->execute([$id]);
     }
@@ -112,7 +132,9 @@ class CommentManager extends Manager
     public function deleteComment($id)
     {
         $db = $this->dbConnect();
-        $reqComment = $db->prepare('DELETE FROM comments WHERE id = ?');
+        $reqComment = $db->prepare(
+            'DELETE FROM comments 
+            WHERE id = ?');
         
         $deleteCom = $reqComment->execute([$id]);
     }
