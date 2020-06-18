@@ -1,8 +1,7 @@
 <?php $title = "Modifier le chapitre :" ;  ?>
 <?php ob_start(); ?>
 
-<?php 
-if (!$isAdmin) { ?>
+
 <div class="global dashboard ">
     <h1>Modifier un article </h1>
 
@@ -21,20 +20,11 @@ if (!$isAdmin) { ?>
             <textarea id="default" class="form-control" name="content" id="content" rows="18"
                 name="content"><?= $article['content'] ?></textarea>
         </div>
-        <input type="submit" value="Modifier">
-        
 
+        <button class="btn btn-primary" type="submit" name="submit">Modifier</button>
+        
     </form>
 </div>
-<?php } else { ?>
-<div class="alert alert-danger" role="alert">
-    <h1 class="text-center">Accès refuser</h1>
-</div>
-<?php
-}
-?>
-
-
 
 <?php $content = ob_get_clean(); ?>
 <?php include 'layout.php'; ?>

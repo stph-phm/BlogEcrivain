@@ -20,9 +20,10 @@ class ArticleManager extends Manager
     public function getAllArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query('SELECT id,  title, content,date_article
-        FROM articles 
-        ORDER BY date_article');
+        $articles = $db->query(
+            'SELECT id,  title, content,date_article
+            FROM articles 
+            ORDER BY date_article');
 
         $listArticle = $articles->fetchAll();
 
@@ -37,7 +38,10 @@ class ArticleManager extends Manager
     public function getArticle($article_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' )AS date_fr FROM articles WHERE id = ?');
+        $req = $db->prepare(
+            'SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' )AS date_fr 
+            FROM articles 
+            WHERE id = ?');
 
         $req->execute(array($article_id));
         $article = $req->fetch();
@@ -49,15 +53,17 @@ class ArticleManager extends Manager
      * Get last article in database articles 
      * @return $article 
      */
-    public function getLastArticle()
+    public function getNewArticle()
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, chapter_order, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' ) AS date_fr FROM articles ORDER BY chapter_order DESC LIMIT 1');
+        $reqArticle = $db->query(
+            'SELECT id,  title, content,date_article
+            FROM articles 
+            ORDER BY date_article DESC LIMIT 0,1');
 
-        $req->execute(array());
-        $article = $req->fetch();
+        $newArticle = $reqArticle->fetchAll();
 
-        return $article;
+        return $newArticle;
     }
 
     /**
@@ -67,7 +73,9 @@ class ArticleManager extends Manager
     public function addArticle($title, $content)
     {
         $db = $this->dbConnect();
-        $reqArticle = $db->prepare('INSERT INTO articles (title,content, date_article) VALUES(:title, :content, NOW())');
+        $reqArticle = $db->prepare(
+            'INSERT INTO articles (title,content, date_article) 
+            VALUES(:title, :content, NOW())');
 
         $insertArticle =  $reqArticle->execute([
             'title' => $title,
@@ -87,6 +95,7 @@ class ArticleManager extends Manager
             'UPDATE articles 
             SET title = :title, content = :content
             WHERE id = :id ');
+            
         $edit = $reqArticle->execute([
             "id" => $article_id, 
             "title" => $title,
@@ -107,6 +116,5 @@ class ArticleManager extends Manager
 
         $reqArticle = $db->prepare('DELETE FROM comments WHERE id = ?'); 
         $deleteArticle = $reqArticle->execute(array($article_id));
-
     }
 }
