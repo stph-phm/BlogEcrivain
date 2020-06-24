@@ -5,8 +5,8 @@
 
     <div class="jumbotron jumbotron-fluid rounded ">
         <div class="ml-5">
-            <h1 class="display-4">Billet simple pour l'Alaska</h1>
-            <p class="lead"><a href="index.php">Retour à la liste des chapitres:</a></p>
+            <h1 class="display-4 mb-3">Billet simple pour l'Alaska</h1>
+            <p class="lead mb-3"><a href="index.php">Retour à la liste des chapitres:</a></p>
         </div>
 
         <div class="container">
@@ -21,6 +21,17 @@
     </div>
 </div>
 
+<div class="preview-next container">
+    <nav>
+        <ul class="pagination d-flex justify-content-between">
+            <li><a href="index.php?action=article&amp;id=<?= $article['id']-1 ?>" class="page-link">Précédent</a></li>
+            <li><a href="index.php?action=article&amp;id=<?= $article['id']+1 ?> " class="page-link">Suivant</a></li>
+
+        </ul>
+    </nav>
+</div>
+
+
 <?php 
     if ($isConnected) { ?>
 <section class="container">
@@ -34,16 +45,16 @@
         <input type="submit" value="Commentez">
     </form>
     <?php } else { ?>
-    <p></p>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <p class="lead"><a href="index.php?action=login">Connectez-vous pour pouvoir commenter</a>
+
+        <div class="jumbotron jumbotron-fluid container rounded">
+            <p class="lead text-center"> <a href="index.php?action=login" class="text-center">Connectez-vous pour pouvoir commenter</a>
             </p>
         </div>
-    </div>
+
     <?php  } ?>
+
     <?php foreach ($listComment as $comment) { ?>
-    <div class="comments">
+    <div class="comments container">
         <div class="pseudo-partComment d-flex p-2 ">
             <p>
                 <strong> <?= $comment['pseudo'] ?> </strong>
@@ -54,9 +65,8 @@
                 <?php 
                         if ($comment['reported'] == 0) { ?>
 
-                <a class="btn btn-secondary btn-sm"
-                    href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>" title="Signaler le commentaire"><span><i
-                            class="fas fa-flag"></i></span>&nbsp;</a>
+                <a class="btn btn-secondary btn-sm " href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>"
+                    title="Signaler le commentaire"><span><i class="fas fa-flag"></i></span>&nbsp;</a>
             </p>
             <?php } else { ?>
             <p class="text-danger"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
