@@ -4,7 +4,6 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-
 class ArticleManager extends Manager 
 {
     public $article_id;

@@ -26,46 +26,44 @@ class Users extends Controller
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
             $pswd2 =  $this->trim_secur($_POST['pswd2']);
-            $usernameLength = \strlen($username);
             
-            if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
-                if ($usernameLength <= 20) {
-                    $userExist = $userManager->ifUsernameExist($username);
+            if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {   
+                $userExist = $userManager->ifUsernameExist($username);
                     if ($userExist == 0 ) {
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
                             $mailExist = $userManager->ifMailExist($email);
                             if ($mailExist == 0) {
-                                if ($pswd == $pswd2) {
+                                if(strlen($pswd) >= 5) {
 
-                                    $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
-                                    $inserUser = $userManager->addNewUser($username, $email, $pswdHach);
+                                    if ($pswd == $pswd2) {
 
-                                    header('Location: index.php?action=connectUser');
-                                } else {
-                                    throw new \Exception("Les mots de passe ne se correspondent pas !");
+                                        $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
+                                        $inserUser = $userManager->addNewUser($username, $email, $pswdHach);
+
+                                        header('Location: index.php?action=connectUser');
+                                    } else {
+                                        throw new \Exception("Les mots de passe ne se correspondent pas !");
+                                    }
+                                } else{
+                                    throw new \Exception("Le mot de passe doivent faire plus de 5 caractères");
+                                    
                                 }
                             } else {
                                 throw new \Exception("Votre adresse mail est déjà utilisé ! ");
-                                
+                                    
                             }
                         } else {
                             throw new \Exception("Votre adresse mail n'est pas valide !");
-                            
                         }
                     } else {
                         throw new \Exception("Votre identifiant est deja pris, veuillez choisir un nouveau");
-                        
                     }
-                } else {
-                    throw new \Exception("Votre identifiant doit avoir moins de 20 caractères !");
-                    
-                }
             } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
-            }
+            throw new \Exception("Veuillez remplir tous les champs ! ");
         }
-        include 'View/registerView.php';
+    }
+        include 'view/registerView.php';
     }
 
     /**
@@ -113,7 +111,7 @@ class Users extends Controller
             $isConnect = $this->is_connected();
             $isAdmin = $this->is_admin();
         }
-        include 'View/profilView.php';
+        include 'view/profilView.php';
     }
 
     public function logoutUser()

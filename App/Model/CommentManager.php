@@ -3,8 +3,6 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-include_once 'model/Manager.php';
-
 class CommentManager extends Manager
 {
     public $id;

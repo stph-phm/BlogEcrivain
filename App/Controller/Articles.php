@@ -67,7 +67,7 @@ class Articles extends Controller {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
             }
         }
-        include 'View/admin/createArticleView.php';
+        include 'view/Admin/createArticleView.php';
     }
     
     // Gestion des articles 
@@ -75,14 +75,12 @@ class Articles extends Controller {
     public function manageArticle()
     {
         $isAdmin  = $this->is_admin();
-        if ($isAdmin) {
+
             $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
             $i = 1; 
-        } else {
-            \header('Location: index.php');
-        }
-        include 'view/admin/manageArticleView.php';
+
+        include 'view/Admin/manageArticleView.php';
     }
 
     /**
@@ -97,14 +95,13 @@ class Articles extends Controller {
             $article = $articleManager->getArticle($getId);
             $isAdmin = $this->is_admin();
 
-            if ($isAdmin) {
+            if (!$isAdmin) {
                 if (isset($_POST['submit'])) {
                     $title = $this->str_secur($_POST['title']);
                     $content = $this->nl2br_secur($_POST['content']);
 
                     if (!empty($title) && !empty($content)) {
                         $edit = $articleManager->editArticle($getId, $title, $content);
- 
                         header('Location: index.php?action=manageArticle');
                     } else {
                         throw new \Exception("Veuillez remplir tous les champs ! ");
@@ -116,7 +113,7 @@ class Articles extends Controller {
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
-        include 'view/admin/editView.php';
+        include 'view/Admin/editView.php';
     }
 
 /**
@@ -148,10 +145,10 @@ class Articles extends Controller {
 
         if ($isConnected && $isAdmin) {
             $articleManager = new ArticleManager();
-            $allArticle = $articleManager->getAllArticles();
+            $listArticle = $articleManager->getAllArticles();
         }
         
 
-        include 'View/Include/nav.php';
+        include 'view/Include/nav.php';
     }
 }

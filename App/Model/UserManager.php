@@ -3,8 +3,6 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-include_once 'model/Manager.php';
-
 class UserManager extends Manager 
 {
     public $user_id;

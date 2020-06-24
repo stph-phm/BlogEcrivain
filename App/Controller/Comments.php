@@ -56,7 +56,6 @@ class Comments extends Controller {
             $commentReported = $commentManager->reportComment($getId);
             // $comment = $commentManager->getCommentById($getId);
             \header('Location: index.php?action=article&id=' .$getId);
-            
         } 
 
     }
@@ -95,6 +94,6 @@ class Comments extends Controller {
         $commentManager = new CommentManager();
         $listCommentsReport = $commentManager->getAllReported();
         $i = 1;
-        include 'View/admin/adminView.php';
+        include 'View/Admin/adminView.php';
     }
 }
