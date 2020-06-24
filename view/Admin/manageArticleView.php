@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 <div class="global manage_article ">
 
-    <?php if ($isAdmin) { ?>
+    <?php if (!$isAdmin) { ?>
     
     <h1>Gestion des articles </h1>
     <table class="table">

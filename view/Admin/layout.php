@@ -16,12 +16,12 @@
 </head>
 
 <body background-color="blak">
-    <?php include 'View/Include/nav.php'; ?>
+    <?php include 'view/Include/nav.php'; ?>
 
     <?= $content; ?>
 
 
-    <?php include 'View/Include/footer.php'; ?>
+    <?php include 'view/Include/footer.php'; ?>
 
 
 

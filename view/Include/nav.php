@@ -23,44 +23,36 @@
                     <?php }?>
                 </div>
             </li>
+        </ul>
 
-        
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.php?action=manageArticle">Gestion des chapitres <span
+                        class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php?action=newArticle"><span>
+                        <i class="fas fa-plus"> &nbsp;</i></span>Ajouter un chapitre </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?action=profil"><span>
                         <i class="fas fa-user">&nbsp;</i></span>Votre profile</a>
             </li>
-     
-
-            <ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    <a class="btn btn-outline-primary my-2 my-sm-0" href="index.php?action=login"><span>
-                            <i class="fas fa-sign-in-alt"></i></span>&nbsp; Se connecter </a>
-                </li>
-            </ul>
-
- 
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=manageArticle">Gestion des chapitres <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=newArticle"><span>
-                            <i class="fas fa-plus"> &nbsp;</i></span>Ajouter un chapitre </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=profil"><span>
-                            <i class="fas fa-user">&nbsp;</i></span>Votre profile</a>
-                </li>
-
-                <ul class="navbar-nav px-3">
-                    <li class="nav-item text-nowrap">
-                        <a class="btn btn-outline-danger my-2 my-sm-0" href="index.php?action=logout"><span>
-                                <i class="fas fa-sign-out-alt"></i></span> &nbsp;Se déconnecter
-                        </a>
-                    </li>
-                </ul>
-            </ul>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="btn btn-outline-primary my-2 my-sm-0" href="index.php?action=login"><span>
+                        <i class="fas fa-sign-in-alt"></i></span>&nbsp; Se connecter </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="btn btn-outline-danger my-2 my-sm-0" href="index.php?action=logout"><span>
+                        <i class="fas fa-sign-out-alt"></i></span> &nbsp;Se déconnecter
+                </a>
+            </li>
+        </ul>
 
     </div>
 </nav>

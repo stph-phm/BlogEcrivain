@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="public/css/style.css">
     <!--FONTAWASOME-->
     <script src="https://kit.fontawesome.com/effe484f35.js" crossorigin="anonymous"></script>
+    <!--TinyMCE-->
+    <script src="https://cdn.tiny.cloud/1/zxws6oho4y58ubsdfptbp4gb3420xahucxayj6amm3ptdqxt/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <!--BOOSTRAP-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
