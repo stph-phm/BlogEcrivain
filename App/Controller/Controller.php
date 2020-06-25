@@ -19,7 +19,7 @@ class Controller {
     public function is_admin()
     {
         if ($this->is_connected()) {
-            if (isset($_SESSION['userId']['is_admin'])) {
+            if (isset($_SESSION['userId'])) {
                 return true;
             } else {
                 return false;
