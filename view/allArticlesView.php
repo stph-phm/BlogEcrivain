@@ -18,6 +18,8 @@
     </div>
     <!--header-->
 
+    <div class="title"><h1 class="text-center">Les derniers chapitres : </h1></div>
+
     <div class="row">
         <div class="new-article col-10 mx-auto">
             <?php foreach ($newArticle as  $lastArticle) { ?>

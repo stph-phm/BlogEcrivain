@@ -55,30 +55,42 @@ class Articles extends Controller {
         $articleManager = new ArticleManager();
 
         $isAdmin = $this->is_admin();
-
-        if (isset($_POST['submit'])) {
-            $title = $this->str_secur($_POST['title']);
-            $content = $this->nl2br_secur($_POST['content']);
-
-            if (!empty($title) && !empty($content)) {
-                $insertArticle = $articleManager->addArticle($title, $content);
-                \header('Location: index.php?action=manageArticle');
-            } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
+        
+        if($isAdmin) {
+            if (isset($_POST['submit'])) {
+                $title = $this->str_secur($_POST['title']);
+                $content = $this->nl2br_secur($_POST['content']);
+    
+                if (!empty($title) && !empty($content)) {
+                    $insertArticle = $articleManager->addArticle($title, $content);
+                    \header('Location: index.php?action=manageArticle');
+                } else {
+                    throw new \Exception("Veuillez remplir tous les champs ! ");
+                }
             }
+        } else {
+            header('Location: index.php');
         }
+
+        
         include 'view/Admin/createArticleView.php';
     }
     
     // Gestion des articles 
+    // test s'il est admin => peut faire la gestion sinon => envoie header
     // Voir, Modifier et supprimer un article
     public function manageArticle()
     {
         $isAdmin  = $this->is_admin();
 
+        if($isAdmin) {
             $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
             $i = 1; 
+        } else{
+            header('Location: index.php');
+        }
+            
 
         include 'view/Admin/manageArticleView.php';
     }
@@ -142,13 +154,9 @@ class Articles extends Controller {
     {
         $isConnected =$this->is_connected();
         $isAdmin = $this->is_admin();
-
-        if ($isConnected && $isAdmin) {
-            $articleManager = new ArticleManager();
-            $listArticle = $articleManager->getAllArticles();
-        }
+        $articleManager = new ArticleManager();
+        $listArticle = $articleManager->getAllArticles();
         
-
         include 'view/Include/nav.php';
     }
 }

@@ -45,7 +45,7 @@ try {
             $profilUSer->profilUser();
             break;
         case 'admin':
-            $dashboard = new Users;
+            $dashboard = new Comments;
             $dashboard->dashboard();
         break;
         case 'validateReported':
@@ -64,9 +64,6 @@ try {
             $manageArticle = new Articles;
             $manageArticle->manageArticle();
             break;
-        case 'allArticleNav':
-            $articlesNav = new Users;
-            $articlesNav->listsArticleNav();
         case 'edit':
             // modifier l'article
             $editArticle = new Articles;
@@ -78,7 +75,7 @@ try {
             //supprime l'article avec ses commentaires 
             break;
         case 'nav':
-            $listArticle = new Users;
+            $listArticle = new Articles;
             $listArticle->listArticleNav();
             break;
         case 'logout':

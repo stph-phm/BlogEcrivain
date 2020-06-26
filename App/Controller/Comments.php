@@ -94,6 +94,6 @@ class Comments extends Controller {
         $commentManager = new CommentManager();
         $listCommentsReport = $commentManager->getAllReported();
         $i = 1;
-        include 'View/Admin/adminView.php';
+        include 'view/Admin/adminView.php';
     }
 }
