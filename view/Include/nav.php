@@ -5,8 +5,11 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <?php  if (!$isAdmin) {  ?>
         <ul class="navbar-nav mr-auto">
+            <!--List Article -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -20,11 +23,11 @@
                     <a class="dropdown-item"
                         href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>"><?= htmlspecialchars($allArticle['title']) ?></a>
 
-                    <?php }?>
+                    <?php } ?>
                 </div>
             </li>
         </ul>
-
+        <?php } else { ?>
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -40,12 +43,17 @@
                         <i class="fas fa-user">&nbsp;</i></span>Votre profile</a>
             </li>
         </ul>
+
+        <?php } ?>
+
+        <?php if (!$isConnected) { ?>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a class="btn btn-outline-primary my-2 my-sm-0" href="index.php?action=login"><span>
                         <i class="fas fa-sign-in-alt"></i></span>&nbsp; Se connecter </a>
             </li>
         </ul>
+        <?php } else { ?>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a class="btn btn-outline-danger my-2 my-sm-0" href="index.php?action=logout"><span>
@@ -53,7 +61,8 @@
                 </a>
             </li>
         </ul>
+        <?php } ?>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
     </div>
 </nav>
