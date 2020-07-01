@@ -11,7 +11,7 @@
         <p>date de creation : <?= date_format(date_create($userInfo['date_user']), 'd/m/Y à H:i') ?> </p>
     </div>
 
-    <?php if ($userInfo['is_admin'] == 0) { ?>
+    <?php if ($userInfo['is_admin'] == 1) { ?>
     <div class="container-dashboard">
         <div class="title-table">
             <h2 class="text-center mb-3">Les commentaires signalée</h2>

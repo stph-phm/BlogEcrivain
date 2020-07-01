@@ -107,11 +107,12 @@ class Users extends Controller
             $sessionId = $this->trim_secur($_SESSION['userId']);
             $isConnect = $this->is_connected();
             $isAdmin = $this->is_admin();
+                $userInfo = $userManager->getUserById($sessionId);
+                $listCommentsReport = $commentManager->getAllReported();
+                $i = 1;
 
-            $userInfo = $userManager->getUserById($sessionId);
-            $listCommentsReport = $commentManager->getAllReported();
-            $i = 1;
         }
+        include 'view/profilView.php';
 
     }
 

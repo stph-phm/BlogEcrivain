@@ -9,8 +9,8 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-nav" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-nav" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Tous les chapires
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -18,15 +18,14 @@
                     <?php 
                     foreach ($listArticle as $allArticle) { ?>
 
-                    <a class="dropdown-item text-nav"
-                        href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">
+                    <a class="dropdown-item text-nav" href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">
                         <?= htmlspecialchars($allArticle['title']) ?></a>
                     <?php } ?>
                 </div>
             </li>
         </ul>
 
-
+        <?php if (isset($isAdmin)) { ?>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link text-nav" href="index.php?action=manageArticle">Gestion des chapitres <span
@@ -36,13 +35,18 @@
                 <a class="nav-link text-nav" href="index.php?action=newArticle"><span>
                         <i class="fas fa-plus"> &nbsp;</i></span>Ajouter un chapitre </a>
             </li>
+        </ul>
+        <?php } ?>
+
+
+
+        <?php if (isset($isConnected)) { ?>
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link text-nav" href="index.php?action=profil"><span>
                         <i class="fas fa-user">&nbsp;</i></span>Votre profile</a>
             </li>
         </ul>
-
-        <?php if (isset($isConnected)) { ?>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <a class="btn btn-outline-primary my-2 my-sm-0 text-nav" href="index.php?action=login"><span>
