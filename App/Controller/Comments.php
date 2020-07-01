@@ -54,10 +54,9 @@ class Comments extends Controller {
             $getId = $this->trim_secur($_GET['id']);
 
             $commentReported = $commentManager->reportComment($getId);
-            // $comment = $commentManager->getCommentById($getId);
-            \header('Location: index.php?action=article&id=' .$getId);
-        } 
-
+            $comment = $commentManager->getCommentById($getId);
+            \header('Location: index.php?action=article&id='.$comment['article_id']);
+        }
     }
 
     public function validateReportCom()
@@ -86,14 +85,5 @@ class Comments extends Controller {
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
-    }
-
-        public function dashboard()
-    {
-        $isAdmin = $this->is_admin();
-        $commentManager = new CommentManager();
-        $listCommentsReport = $commentManager->getAllReported();
-        $i = 1;
-        include 'view/Admin/adminView.php';
     }
 }

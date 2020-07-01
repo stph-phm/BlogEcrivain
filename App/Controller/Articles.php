@@ -13,13 +13,19 @@ class Articles extends Controller {
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 
      */
-    public function allArticle()
+    public function latestArticle()
     {
     $articleManager = new ArticleManager();
-    $listArticle = $articleManager->getAllArticles();
+    // $listArticle = $articleManager->getAllArticles();
     $newArticle = $articleManager->getNewArticle();
-    
-    include 'view/allArticlesView.php';
+        include 'view/homeView.php';
+    }
+
+    public function allArticle()
+    {
+        $articleManager = new ArticleManager();
+        $listArticle = $articleManager->getAllArticles();
+        include 'view/allArticle.php';
     }
 
     /**
@@ -35,7 +41,6 @@ class Articles extends Controller {
         
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
-            $isConnected = $this->is_connected();
             $article = $articleManager->getArticle($article_id);
             $listComment = $commentManager->getListComment($article_id);
         } 
@@ -83,15 +88,11 @@ class Articles extends Controller {
     {
         $isAdmin  = $this->is_admin();
 
-        if($isAdmin) {
+        if(isset($isAdmin)) {
             $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
             $i = 1; 
-        } else{
-            header('Location: index.php');
-        }
-            
-
+        } 
         include 'view/Admin/manageArticleView.php';
     }
 
@@ -134,7 +135,6 @@ class Articles extends Controller {
  */
     public function deleteArticle()
     {
-        $isAdmin = $this->is_admin();
         $articleManager = new ArticleManager();
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getID = $this->trim_secur($_GET['id']);
@@ -152,10 +152,14 @@ class Articles extends Controller {
      */
     public function listArticleNav()
     {
-        $isConnected =$this->is_connected();
+
+        $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
         $articleManager = new ArticleManager();
+        $userManager = new UserManager();
+
         $listArticle = $articleManager->getAllArticles();
+        $userInfo = $userManager->getUserById($_SESSION['userId']);
         
         include 'view/Include/nav.php';
     }

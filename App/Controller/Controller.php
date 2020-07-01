@@ -9,7 +9,14 @@ class Controller {
     public function is_connected()
     {
         if (isset($_SESSION['userId'])) {
-            return true;
+            $hashSession = $this->hashSession($_SESSION['userId']);
+
+            if ($hashSession == $_SESSION['hashUserId']) {
+
+                $userManager = new UserManager;
+                $userInfo = $userManager->getUserById($_SESSION['userId']);
+                return true;
+            }
         } else {
             return false;
         }
@@ -18,8 +25,12 @@ class Controller {
     // méthode pour savoir si il est admin 
     public function is_admin()
     {
+        
         if ($this->is_connected()) {
-            if (isset($_SESSION['userId'])) {
+            $userManager = new UserManager;
+            $userInfo = $userManager->getUserById($_SESSION['userId']);
+
+            if ($userInfo['is_admin'] == 1 ) {
                 return true;
             } else {
                 return false;
@@ -42,5 +53,9 @@ class Controller {
     public function nl2br_secur($string)
     {
         return nl2br($string);
+    }
+
+    public function hashSession($valeur) {
+        return hash("sha256", $valeur);
     }
 }

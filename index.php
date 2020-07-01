@@ -16,8 +16,12 @@ if (isset($_GET['action'])) {
 
 try {
     switch ($action) {
-        case 'listArticle':
-            $listArticle = new Articles;
+        case 'home':
+            $newArticle = new Articles;
+            $newArticle->latestArticle();
+            break;
+        case 'allArticle':
+            $listArticle = new Articles; 
             $listArticle->allArticle();
             break;
         case 'article':
@@ -44,10 +48,6 @@ try {
             $profilUSer = new Users;
             $profilUSer->profilUser();
             break;
-        case 'admin':
-            $dashboard = new Comments;
-            $dashboard->dashboard();
-        break;
         case 'validateReported':
             $validateReported = new Comments;
             $validateReported->validateReportCom();
@@ -83,8 +83,8 @@ try {
             $logout->logoutUser();
             break;
         default:
-            $listArticle = new  Articles;
-            $listArticle->allArticle();
+            $newArticle = new Articles;
+            $newArticle->latestArticle();
             break;
     }
 } catch (\Exception $e) {

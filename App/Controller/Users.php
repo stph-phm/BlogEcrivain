@@ -75,17 +75,17 @@ class Users extends Controller
         if (isset($_POST['connect'])) {
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
-            $user = $userManager->userByEmail($email);
-            
     
             if (!empty($email) && !empty($pswd)) {
+                $user = $userManager->userByEmail($email);
                 $pswdCorrect = password_verify($pswd, $user['password_user']);
 
                 if ($pswdCorrect) {
-                    $userInfo = $userManager->getUserById($_SESSION['userId']);
                     $_SESSION['userId'] = $user['id'];
-                    $hashSession = hash("sha256", $_SESSION['userId']);
-                    \header('Location: index.php');
+                    $hashSession = $this->hashSession($_SESSION['userId']); 
+
+                    $_SESSION['hashUserId'] = $hashSession;
+                    \header('Location: index.php?action=profil&id='. $_SESSION['userId']);
                 } else {
                     throw new \Exception(" Vos identifiants incorrects ! ");
                 }
@@ -105,13 +105,14 @@ class Users extends Controller
         
         if (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
             $sessionId = $this->trim_secur($_SESSION['userId']);
+            $isConnect = $this->is_connected();
+            $isAdmin = $this->is_admin();
+
             $userInfo = $userManager->getUserById($sessionId);
             $listCommentsReport = $commentManager->getAllReported();
             $i = 1;
-            $isConnect = $this->is_connected();
-            $isAdmin = $this->is_admin();
         }
-        include 'view/profilView.php';
+
     }
 
     public function logoutUser()
