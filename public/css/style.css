@@ -58,3 +58,13 @@ form {
 .newArticle{
     font-size: medium;
 }
+
+.card {
+    padding: 1em ;
+    width: 80%;
+    margin: 1.5em auto;
+    box-shadow: 3px 3px 5px 6px #ccc;
+}
+.text-center.mb-3 {
+    font-size: 3.5em;
+}
