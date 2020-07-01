@@ -22,7 +22,7 @@ class ArticleManager extends Manager
         $articles = $db->query(
             'SELECT id,  title, content,date_article
             FROM articles 
-            ORDER BY date_article');
+            ORDER BY date_article ASC');
 
         $listArticle = $articles->fetchAll();
 
@@ -58,7 +58,7 @@ class ArticleManager extends Manager
         $reqArticle = $db->query(
             'SELECT id,  title, content,date_article
             FROM articles 
-            ORDER BY date_article DESC LIMIT 0,1');
+            ORDER BY date_article DESC LIMIT 0,5');
 
         $newArticle = $reqArticle->fetchAll();
 

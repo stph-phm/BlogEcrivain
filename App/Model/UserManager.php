@@ -82,5 +82,4 @@ class UserManager extends Manager
 
         return $userInfo;
     }
-
 }
