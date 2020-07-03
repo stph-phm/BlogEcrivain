@@ -85,7 +85,12 @@ class Users extends Controller
                     $hashSession = $this->hashSession($_SESSION['userId']); 
 
                     $_SESSION['hashUserId'] = $hashSession;
+                    
                     \header('Location: index.php?action=profil&id='. $_SESSION['userId']);
+
+                    if ($this->is_admin) {
+                        header('Location: index.php?action=dashboard');
+                    }
                 } else {
                     throw new \Exception(" Vos identifiants incorrects ! ");
                 }
@@ -103,18 +108,15 @@ class Users extends Controller
         $userManager = new UserManager();
         $commentManager = new CommentManager();
         
-        if (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
-            $sessionId = $this->trim_secur($_SESSION['userId']);
-            $isConnect = $this->is_connected();
-            $isAdmin = $this->is_admin();
-                $userInfo = $userManager->getUserById($sessionId);
-                $listCommentsReport = $commentManager->getAllReported();
-                $i = 1;
-
+        if ($this->is_connected()) {
+            $isConnected = $this->is_connected();
+        } else {
+            \header("Location: index.php");
         }
         include 'view/profilView.php';
-
     }
+
+
 
     public function logoutUser()
     {

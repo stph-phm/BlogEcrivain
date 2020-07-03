@@ -15,9 +15,13 @@ class Controller {
 
                 $userManager = new UserManager;
                 $userInfo = $userManager->getUserById($_SESSION['userId']);
+                $this->$userInfo = true;
+                // $this->is_connected = true;
                 return true;
             }
         } else {
+            // $this->is_connected() = false;
+            $this->$userInfo = false;
             return false;
         }
     }
@@ -27,10 +31,9 @@ class Controller {
     {
         
         if ($this->is_connected()) {
-            $userManager = new UserManager;
-            $userInfo = $userManager->getUserById($_SESSION['userId']);
+            $this->$userInfo;
 
-            if ($userInfo['is_admin'] == 1 ) {
+            if ($this->$userInfo['is_admin'] == 1 ) {
                 return true;
             } else {
                 return false;

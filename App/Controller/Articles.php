@@ -59,9 +59,7 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
 
-        $isAdmin = $this->is_admin();
-        
-        if($isAdmin) {
+        if($this->is_admin()) {
             if (isset($_POST['submit'])) {
                 $title = $this->str_secur($_POST['title']);
                 $content = $this->nl2br_secur($_POST['content']);
@@ -92,10 +90,24 @@ class Articles extends Controller {
             $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
             $i = 1; 
-        } 
+        } else {
+            \header('Location: index.php');
+        }
         include 'view/Admin/manageArticleView.php';
     }
 
+    public function dashboard() {
+        if ($this->is_admin()) {
+        $listCommentsReport = $commentManager->getAllReported();
+        $i = 1;
+        } else {
+            \header("Location: index.php");
+        }
+
+        
+
+        include 'view/Admin/dashboardView.php';
+    }
     /**
      * Modifier un article
      */
@@ -108,7 +120,7 @@ class Articles extends Controller {
             $article = $articleManager->getArticle($getId);
             $isAdmin = $this->is_admin();
 
-            if (!$isAdmin) {
+            if ($isAdmin) {
                 if (isset($_POST['submit'])) {
                     $title = $this->str_secur($_POST['title']);
                     $content = $this->nl2br_secur($_POST['content']);

@@ -48,6 +48,10 @@ try {
             $profilUSer = new Users;
             $profilUSer->profilUser();
             break;
+        case 'dashboard':
+            $dashboard = new Articles;
+            $dashboard->dashboard();
+            break;
         case 'validateReported':
             $validateReported = new Comments;
             $validateReported->validateReportCom();
