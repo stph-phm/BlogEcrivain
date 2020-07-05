@@ -1,46 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light text-nav">
-    <a class="navbar-brand text-nav" href="index.php">Blog de Jean Forteroch</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.php">Blog de Jean Forteroch</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-nav" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Tous les chapires
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                    <?php 
-                    foreach ($listArticle as $allArticle) { ?>
-
-                    <a class="dropdown-item text-nav" href="index.php?action=article&amp;id=<?= $allArticle['id'] ?>">
-                        <?= htmlspecialchars($allArticle['title']) ?></a>
-                    <?php } ?>
-                </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">Page d'accueil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php?action=allArticle">Tous les chapitres </a>
             </li>
         </ul>
 
-        <?php if (isset($isAdmin)) { ?>
+        <?php if ($isAdmin) { ?>
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link text-nav"  href="index.php?action=dashboard">Tableau de bord</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link text-nav" href="index.php?action=manageArticle">Gestion des chapitres <span
                         class="sr-only">(current)</span></a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link text-nav" href="index.php?action=newArticle"><span>
                         <i class="fas fa-plus"> &nbsp;</i></span>Ajouter un chapitre </a>
             </li>
         </ul>
-        <?php } ?>
-
-
-
-        <?php if (isset($isConnected)) { ?>
+        <?php }  ?>
+        <?php if ($isConnected) { ?>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link text-nav" href="index.php?action=profil"><span>
@@ -49,21 +39,21 @@
         </ul>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="btn btn-outline-primary my-2 my-sm-0 text-nav" href="index.php?action=login"><span>
-                        <i class="fas fa-sign-in-alt"></i></span>&nbsp; Se connecter </a>
-            </li>
-        </ul>
-        <?php } else { ?>
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
                 <a class="btn btn-outline-danger my-2 my-sm-0 text-nav" href="index.php?action=logout"><span>
                         <i class="fas fa-sign-out-alt"></i></span> &nbsp;Se déconnecter
                 </a>
             </li>
         </ul>
-        <?php }  ?>
-
-
+        
+        <?php } else { ?>
+        
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="btn btn-outline-primary my-2 my-sm-0 text-nav" href="index.php?action=login"><span>
+                        <i class="fas fa-sign-in-alt"></i></span>&nbsp; Se connecter </a>
+            </li>
+        </ul>
+        <?php }?>
 
     </div>
 </nav>

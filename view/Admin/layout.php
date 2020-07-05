@@ -15,10 +15,10 @@
     <title> <?= $title; ?> </title>
 </head>
 
-<body background-color="blak">
+<body>
     <?php include 'view/Include/nav.php'; ?>
 
-    <?= $content; ?>
+    <?= $content ?>
 
 
     <?php include 'view/Include/footer.php'; ?>
