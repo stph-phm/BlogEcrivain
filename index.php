@@ -18,7 +18,7 @@ try {
     switch ($action) {
         case 'home':
             $newArticle = new Articles;
-            $newArticle->latestArticle();
+            $newArticle->home();
             break;
         case 'allArticle':
             $listArticle = new Articles; 
@@ -69,14 +69,12 @@ try {
             $manageArticle->manageArticle();
             break;
         case 'edit':
-            // modifier l'article
             $editArticle = new Articles;
             $editArticle->editArticle();
             break;
         case 'deleteArticle':
             $deleteArticle = new Articles;
             $deleteArticle->deleteArticle();
-            //supprime l'article avec ses commentaires 
             break;
         case 'nav':
             $listArticle = new Articles;
@@ -88,7 +86,7 @@ try {
             break;
         default:
             $newArticle = new Articles;
-            $newArticle->latestArticle();
+            $newArticle->home();
             break;
     }
 } catch (\Exception $e) {

@@ -5,25 +5,18 @@ namespace App\Controller;
 use App\Model\UserManager;
 
 class Controller {
+    public $userInfo;
+
     // methodes pour savoir si le membre est connecter 
     public function is_connected()
     {
-        if (isset($_SESSION['userId'])) {
-            $hashSession = $this->hashSession($_SESSION['userId']);
-
-            if ($hashSession == $_SESSION['hashUserId']) {
-
-                $userManager = new UserManager;
-                $userInfo = $userManager->getUserById($_SESSION['userId']);
-                $this->$userInfo = true;
-                // $this->is_connected = true;
-                return true;
-            }
+        if (isset($_SESSION['userId']) && $this->ifHashSession()) {
+            $userManager = new UserManager;
+            $this->userInfo = $userManager->getUserById($_SESSION['userId']);
         } else {
-            // $this->is_connected() = false;
-            $this->$userInfo = false;
-            return false;
+            $this->userInfo = false;
         }
+        return $this->userInfo;
     }
 
     // méthode pour savoir si il est admin 
@@ -31,9 +24,7 @@ class Controller {
     {
         
         if ($this->is_connected()) {
-            $this->$userInfo;
-
-            if ($this->$userInfo['is_admin'] == 1 ) {
+            if ($this->userInfo['is_admin'] == 1 ) {
                 return true;
             } else {
                 return false;
@@ -41,6 +32,17 @@ class Controller {
         } else {
             return false;
         }
+    }
+
+    public function ifHashSession() {
+
+        $hashSession = $this->hashSession($_SESSION['userId']);
+            if ($hashSession == $_SESSION['hashUserId']) {
+                return true;
+                
+            } else {
+                return false;
+            }
     }
 
     public function str_secur($string)

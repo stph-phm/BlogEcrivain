@@ -10,7 +10,7 @@ use App\Controller\Controller;
 class Users extends Controller 
 {
     /**
-     * Check if the register butto, exists
+     * Check if the button exists
      * Secrure the variables by calling different mothods in the Controller class 
      * and using 2 functions the strlen and hashing the password 
      * several test :  
@@ -24,12 +24,14 @@ class Users extends Controller
             
             $username = $this->str_secur($_POST['username']);
             $email = $this->str_secur($_POST['email']);
-            $pswd = $this->trim_secur($_POST['pswd']);
-            $pswd2 =  $this->trim_secur($_POST['pswd2']);
+            $pswd = $_POST['pswd'];
+            $pswd2 =  $_POST['pswd2'];
             
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {   
                 $userExist = $userManager->ifUsernameExist($username);
+                var_dump($userExist);
                     if ($userExist == 0 ) {
+
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
                             $mailExist = $userManager->ifMailExist($email);
@@ -66,8 +68,12 @@ class Users extends Controller
         include 'view/registerView.php';
     }
 
-    /**
-     * 
+    /** Check if the button connect
+     * Secrure the variables by calling different mothods in the Controller class 
+     * and using 
+     * several test :  
+     * empty $empty & $pswd
+     * verify 
      */
     public function connectUser()
     {
@@ -85,10 +91,14 @@ class Users extends Controller
                     $hashSession = $this->hashSession($_SESSION['userId']); 
 
                     $_SESSION['hashUserId'] = $hashSession;
+
+                    $userInfo = $this->userInfo;
+                    $isConnected = $this->is_connected();
+                    $isAdmin = $this->is_admin();
                     
                     \header('Location: index.php?action=profil&id='. $_SESSION['userId']);
 
-                    if ($this->is_admin) {
+                    if ($isAdmin) {
                         header('Location: index.php?action=dashboard');
                     }
                 } else {
@@ -98,26 +108,32 @@ class Users extends Controller
                 throw new \Exception("Veuillez remplir tous les champs ! ");
             }
         }
-
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/connectView.php';
     }
 
-
+    /**
+     * 
+     */
     public function profilUser() 
     {
         $userManager = new UserManager();
-        $commentManager = new CommentManager();
-        
         if ($this->is_connected()) {
-            $isConnected = $this->is_connected();
+            $userInfo = $this->userInfo['id'];
         } else {
             \header("Location: index.php");
         }
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/profilView.php';
     }
 
-
-
+    /**
+     * 
+     */
     public function logoutUser()
     {
         $_SESSION = array();

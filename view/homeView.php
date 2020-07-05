@@ -7,6 +7,7 @@
             <div class="image-header mb-3 text-center container">
                 <img src="public/image/image1.jpg" alt="route alaska" class="mb-4">
             </div>
+
             <div class="border text-center col mx-auto ">
                 <h1 class="text-center mt-3">Billet simple pour l'Alaska</h1>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, molestias amet assumenda

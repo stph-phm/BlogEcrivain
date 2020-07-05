@@ -13,11 +13,15 @@ class Articles extends Controller {
       * Instantiating the ArticleManager object
      * Call the getAllArticles method to display all articles 
      */
-    public function latestArticle()
+    public function home()
     {
-    $articleManager = new ArticleManager();
-    // $listArticle = $articleManager->getAllArticles();
-    $newArticle = $articleManager->getNewArticle();
+        $userManager = new UserManager();
+        $articleManager = new ArticleManager();
+        $newArticle = $articleManager->getNewArticle();
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
+
         include 'view/homeView.php';
     }
 
@@ -25,6 +29,9 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
         $listArticle = $articleManager->getAllArticles();
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/allArticle.php';
     }
 
@@ -47,6 +54,9 @@ class Articles extends Controller {
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
         }
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/articleView.php';   
     }
     
@@ -74,8 +84,9 @@ class Articles extends Controller {
         } else {
             header('Location: index.php');
         }
-
-        
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/Admin/createArticleView.php';
     }
     
@@ -84,28 +95,31 @@ class Articles extends Controller {
     // Voir, Modifier et supprimer un article
     public function manageArticle()
     {
-        $isAdmin  = $this->is_admin();
-
-        if(isset($isAdmin)) {
+        if($this->is_admin()) {
             $articleManager = new ArticleManager();
             $listArticle = $articleManager->getAllArticles();
             $i = 1; 
         } else {
             \header('Location: index.php');
         }
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/Admin/manageArticleView.php';
     }
 
     public function dashboard() {
+        $commentManager = new CommentManager();
+
         if ($this->is_admin()) {
         $listCommentsReport = $commentManager->getAllReported();
         $i = 1;
         } else {
             \header("Location: index.php");
         }
-
-        
-
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/Admin/dashboardView.php';
     }
     /**
@@ -164,15 +178,10 @@ class Articles extends Controller {
      */
     public function listArticleNav()
     {
-
+        $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
-        $articleManager = new ArticleManager();
-        $userManager = new UserManager();
 
-        $listArticle = $articleManager->getAllArticles();
-        $userInfo = $userManager->getUserById($_SESSION['userId']);
-        
         include 'view/Include/nav.php';
     }
-}
+} 
