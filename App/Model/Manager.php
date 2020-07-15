@@ -1,6 +1,6 @@
 <?php
 namespace App\Model;
-include_once 'base.php';
+include_once 'BaseModel.php';
 
 class Manager 
 {
@@ -14,6 +14,8 @@ class Manager
         //$db = new \PDO($host,$dbName, $charset, $userDb,  $pswdDb );
         return $db;
     }
+
+
 }
 
 

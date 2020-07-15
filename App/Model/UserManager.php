@@ -3,7 +3,7 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-class UserManager extends Manager 
+class UserManager extends BaseModel
 {
     public $user_id;
     public $username;
@@ -16,7 +16,7 @@ class UserManager extends Manager
      */
     public function getUser()
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqUSer = $db->query('
             SELECT *
             FROM users
@@ -31,7 +31,7 @@ class UserManager extends Manager
      */
     public function getIfUsernameExist($username)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqUsername = $db->prepare('
             SELECT * 
             FROM users 
@@ -49,7 +49,7 @@ class UserManager extends Manager
      */
     public function getIfMailExist($email_user)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqMail = $db->prepare('
         SELECT * 
         FROM users 
@@ -69,7 +69,7 @@ class UserManager extends Manager
      */
     public function addUSer($username,$email_user, $password_user)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqUSer = $db->prepare('
         INSERT INTO users(username, email_user, password_user, date_user) 
         VALUES (:username, :email_user, :password_user,NOW())');
@@ -87,7 +87,7 @@ class UserManager extends Manager
      */
     public function getUserByEmail($email_user)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqMail = $db->prepare('
             SELECT *
             FROM users 
@@ -106,7 +106,7 @@ class UserManager extends Manager
      */
     public function getUserById($user_id)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqUSer = $db->prepare('
             SELECT *
             FROM users 

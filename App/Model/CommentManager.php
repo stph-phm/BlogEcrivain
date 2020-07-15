@@ -3,7 +3,7 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-class CommentManager extends Manager
+class CommentManager extends BaseModel
 {
     public $comment_id;
     public $comment;
@@ -18,7 +18,7 @@ class CommentManager extends Manager
      */
     public function listComments($article_id)
     {
-        $db =  $this->dbConnect();
+        $db =  $this->getBdd();
         $reqComment = $db->prepare('
             SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
             FROM comments 
@@ -43,7 +43,7 @@ class CommentManager extends Manager
      */
     public function addComment($comment, $article_id, $user_id)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $comments = $db->prepare('
             INSERT INTO comments(comment,reported, date_comment, article_id, user_id) 
             VALUES (:comment, 0, NOW(), :article_id, :user_id)');
@@ -53,7 +53,6 @@ class CommentManager extends Manager
             'article_id' => $article_id,
             'user_id' => $user_id
         ]);
-
     }
 
     /**
@@ -62,11 +61,11 @@ class CommentManager extends Manager
      */
     public function getCommentById($comment_id)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqComment = $db->prepare('
             SELECT * 
             FROM comments 
-            WHERE id = ?
+            WHERE id = :id
         ');
         $reqComment ->execute([
             'id' => $comment_id
@@ -82,7 +81,7 @@ class CommentManager extends Manager
     public function reportComment($comment_id)
     {
 
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqComment = $db->prepare('
             UPDATE comments 
             SET reported = 1 
@@ -100,7 +99,7 @@ class CommentManager extends Manager
      */
     public function listReportedCom()
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqComment = $db->query('
             SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
             FROM comments 
@@ -118,7 +117,7 @@ class CommentManager extends Manager
      */
     public function validateComReported($comment_id)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqComment = $db->prepare(
             'UPDATE comments 
             SET reported = 0 
@@ -135,7 +134,7 @@ class CommentManager extends Manager
      */
     public function deleteComment($comment_id)
     {
-        $db = $this->dbConnect();
+        $db = $this->getBdd();
         $reqComment = $db->prepare(
             'DELETE FROM comments 
             WHERE id = :id');
