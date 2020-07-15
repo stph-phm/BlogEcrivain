@@ -2,8 +2,8 @@
     "name": "stephanie/blog-ecrivain",
     "authors": [
         {
-            "name": "Stephanie",
-            "email": "phamstephanie18@gmail.com"
+            "name": "Stph phm",
+            "email": "stephanie.pham.lnd@gmail.com"
         }
     ],
     "autoload": {
@@ -11,5 +11,7 @@
             "App\\" : "App/"
         }
     },
-    "require": {}
+    "require": {
+
+    }
 }

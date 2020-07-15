@@ -17,22 +17,22 @@ class Articles extends Controller {
     {
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
-        $newArticle = $articleManager->getNewArticle();
+        $lastArticles = $articleManager->listLastArticles();
         $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
 
-        include 'view/homeView.php';
+        include 'view/Visitor/homeView.php';
     }
 
-    public function allArticle()
+    public function listArticles()
     {
         $articleManager = new ArticleManager();
-        $listArticle = $articleManager->getAllArticles();
+        $articles = $articleManager->listArticles();
         $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
-        include 'view/allArticle.php';
+        include 'view/Visitor/listArticlesView.php';
     }
 
     /**
@@ -49,7 +49,7 @@ class Articles extends Controller {
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
             $article = $articleManager->getArticle($article_id);
-            $listComment = $commentManager->getListComment($article_id);
+            $listComment = $commentManager->listComments($article_id);
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
@@ -57,9 +57,20 @@ class Articles extends Controller {
         $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
-        include 'view/articleView.php';   
+        include 'view/Visitor/articleView.php';
     }
-    
+
+    public function nextArticle() {
+        $articleManager = new ArticleManager();
+
+        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
+            $getId = $this->trim_secur($_GET['id']);
+            $nextArticle = $articleManager->nextArticle($getId);
+        } else {
+            throw new \Exception("Aucun identifiant de billet envoyé");
+        }
+    }
+
     /**
      * Ajouter un article 
      * Instanciation de l'ArticleMAnager
@@ -97,7 +108,7 @@ class Articles extends Controller {
     {
         if($this->is_admin()) {
             $articleManager = new ArticleManager();
-            $listArticle = $articleManager->getAllArticles();
+            $articles = $articleManager->listArticles();
             $i = 1; 
         } else {
             \header('Location: index.php');
@@ -108,20 +119,7 @@ class Articles extends Controller {
         include 'view/Admin/manageArticleView.php';
     }
 
-    public function dashboard() {
-        $commentManager = new CommentManager();
 
-        if ($this->is_admin()) {
-        $listCommentsReport = $commentManager->getAllReported();
-        $i = 1;
-        } else {
-            \header("Location: index.php");
-        }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
-        include 'view/Admin/dashboardView.php';
-    }
     /**
      * Modifier un article
      */
@@ -152,6 +150,9 @@ class Articles extends Controller {
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
+
+        $isConnected = $this->is_connected();
+
         include 'view/Admin/editView.php';
     }
 

@@ -11,75 +11,110 @@ class UserManager extends Manager
     public $email_user;
     public $password_user;
 
+    /**
+     * @return array
+     */
     public function getUser()
     {
         $db = $this->dbConnect();
-        $reqUSer = $db->query('SELECT id, username, email_user, is_admin, date_user
-        FROM users');
+        $reqUSer = $db->query('
+            SELECT *
+            FROM users
+        ');
+        return $user = $reqUSer->fetchAll();
 
-        $user = $reqUSer->fetchAll();
-
-        return $user;
     }
 
-    public function ifUsernameExist($username)
+    /**
+     * @param $username
+     * @return int
+     */
+    public function getIfUsernameExist($username)
     {
         $db = $this->dbConnect();
-        $reqUsername = $db->prepare('SELECT * FROM users WHERE username = :username');
+        $reqUsername = $db->prepare('
+            SELECT * 
+            FROM users 
+            WHERE username = :username');
         $reqUsername->execute([
             'username' => $username
             ]);
-        $userExist = $reqUsername->rowCount();
+        return $ifUserExist = $reqUsername->rowCount();
 
-        return $userExist;
     }
 
-    public function ifMailExist($email_user)
+    /**
+     * @param $email_user
+     * @return int
+     */
+    public function getIfMailExist($email_user)
     {
         $db = $this->dbConnect();
-        $reqMail = $db->prepare('SELECT * FROM users WHERE email_user = :email_user');
+        $reqMail = $db->prepare('
+        SELECT * 
+        FROM users 
+        WHERE email_user = :email_user');
         $reqMail->execute([
             'email_user' => $email_user
         ]);
-        $mailExist = $reqMail->rowCount();
-        
-        return $mailExist;
+
+        return  $ifMailExist = $reqMail->rowCount();
     }
 
-    public function addNewUser($username,$email_user, $password_user)
+    /**
+     * @param $username
+     * @param $email_user
+     * @param $password_user
+     * @return bool
+     */
+    public function addUSer($username,$email_user, $password_user)
     {
         $db = $this->dbConnect();
-        $reqUSer = $db->prepare('INSERT INTO users(username, email_user, password_user, date_user) 
+        $reqUSer = $db->prepare('
+        INSERT INTO users(username, email_user, password_user, date_user) 
         VALUES (:username, :email_user, :password_user,NOW())');
-        $insertUser = $reqUSer->execute([
+
+        return $addUser = $reqUSer->execute([
             'username'          => $username,
-            'email_user'        => $email_user, 
-            'password_user'     => $password_user 
+            'email_user'        => $email_user,
+            'password_user'     => $password_user
         ]);
-        return $insertUser;
     }
 
-    public function userByEmail($email_user)
+    /**
+     * @param $email_user
+     * @return mixed
+     */
+    public function getUserByEmail($email_user)
     {
         $db = $this->dbConnect();
-        $reqMail = $db->prepare('SELECT id, username, password_user FROM users WHERE email_user = :email_user');
+        $reqMail = $db->prepare('
+            SELECT *
+            FROM users 
+            WHERE email_user = :email_user
+        ');
         $reqMail->execute([
             'email_user' => $email_user
         ]);
 
-        $user = $reqMail->fetch();
-
-        return $user;
+        return $userByEmail = $reqMail->fetch();
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function getUserById($user_id)
     {
         $db = $this->dbConnect();
-        $reqUSer = $db->prepare('SELECT id, username, email_user, is_admin, date_user  FROM users WHERE id = ?');
-        $reqUSer->execute([$user_id]);
-
-        $userInfo = $reqUSer->fetch();
-
-        return $userInfo;
+        $reqUSer = $db->prepare('
+            SELECT *
+            FROM users 
+            WHERE id = :id 
+        ');
+        $reqUSer->execute([
+            'id'=> $user_id
+        ]);
+        return $userById = $reqUSer->fetch();
     }
 }

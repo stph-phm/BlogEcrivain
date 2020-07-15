@@ -3,7 +3,7 @@
 <?php ob_start(); ?>
 <div class="global mt-3">
     <div class="header mb-4 row">
-        <header>
+        <header class="text-center">
             <div class="image-header mb-3 text-center container">
                 <img src="public/image/image1.jpg" alt="route alaska" class="mb-4">
             </div>
@@ -24,7 +24,7 @@
     </div>
     
     <div class="new-article col-10 mx-auto">
-        <?php foreach ($newArticle as  $lastArticle) { ?>
+        <?php foreach ($lastArticles as  $lastArticle) { ?>
         <div class="new text-center mb-4">
             <div class="new_title">
                 <h2>
@@ -45,7 +45,7 @@
 
 
 
-    <p class="text-center"><a href="index.php?action=allArticle" class="btn btn-primary"> La liste des tous les
+    <p class="text-center"><a href="index.php?action=listArticles" class="btn btn-primary"> La liste des tous les
             chapitres </a></p>
 
 </div>

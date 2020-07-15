@@ -2,7 +2,8 @@
 session_start();
 ini_set("display_errors", E_ALL);
 
-include_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
+require_once 'Config/error.php';
 
 use App\Controller\Users;
 use App\Controller\Articles;
@@ -17,12 +18,12 @@ if (isset($_GET['action'])) {
 try {
     switch ($action) {
         case 'home':
-            $newArticle = new Articles;
-            $newArticle->home();
+            $lastArticles = new Articles;
+            $lastArticles->home();
             break;
-        case 'allArticle':
-            $listArticle = new Articles; 
-            $listArticle->allArticle();
+        case 'listArticles':
+            $articles= new Articles;
+            $articles->listArticles();
             break;
         case 'article':
             $article = new Articles;
@@ -31,7 +32,7 @@ try {
         case 'addComment':
             $comment = new Comments;
             $comment->addComment(); 
-            break; 
+            break;
         case 'reportComment':
             $comment = new Comments;
             $comment->reportComment();
@@ -49,7 +50,7 @@ try {
             $profilUSer->profilUser();
             break;
         case 'dashboard':
-            $dashboard = new Articles;
+            $dashboard = new Comments;
             $dashboard->dashboard();
             break;
         case 'validateReported':
@@ -85,8 +86,8 @@ try {
             $logout->logoutUser();
             break;
         default:
-            $newArticle = new Articles;
-            $newArticle->home();
+            $lastArticles = new Articles;
+            $lastArticles->home();
             break;
     }
 } catch (\Exception $e) {

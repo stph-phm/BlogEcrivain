@@ -13,70 +13,62 @@ class ArticleManager extends Manager
     public $chapter_order;
 
     /**
-     * Get all articles in database articles
-     * @return $article
+     * Get all articles in the Database
+     * @return array
      */
-    public function getAllArticles()
+    public function listArticles()
     {
         $db = $this->dbConnect();
-        $articles = $db->query(
-            'SELECT id,  title, content,date_article
+        $reqArticle = $db->query('
+            SELECT id,  title, content,date_article
             FROM articles 
             ORDER BY date_article ASC');
-
-        $listArticle = $articles->fetchAll();
-
-        return $listArticle;
+        return  $articles = $reqArticle->fetchAll();
     }
 
     /**
-     * Get 1 article accordin to the ID passed in param
      * @param $article_id
-     * @return $article
+     * @return mixed
      */
     public function getArticle($article_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare(
-            'SELECT id, title, content, DATE_FORMAT(date_article, \'%d/%m/%Y à %Hh%imin\' )AS date_fr 
+        $req = $db->prepare('
+            SELECT *
             FROM articles 
-            WHERE id = ?');
+            WHERE id = :id 
+        ');
 
-        $req->execute(array($article_id));
-        $article = $req->fetch();
+        $req->execute([
+            'id' => $article_id
+        ]);
 
-        return $article;
+        return $article = $req->fetch();
     }
 
     /**
-     * Get last article in database articles 
-     * @return $article 
+     * Get the last 5 articles in Database 
+     * @return array
      */
-    public function getNewArticle()
+    public function listLastArticles()
     {
         $db = $this->dbConnect();
-        $reqArticle = $db->query(
-            'SELECT id,  title, content,date_article
+        $reqArticle = $db->query('
+            SELECT *
             FROM articles 
             ORDER BY date_article DESC LIMIT 0,5');
-
-        $newArticle = $reqArticle->fetchAll();
-
-        return $newArticle;
+        return $lastArticles = $reqArticle->fetchAll();
     }
 
-    /**
-     * Create a new article 
-     * @param $title, $content
-     */
+
     public function addArticle($title, $content)
     {
         $db = $this->dbConnect();
-        $reqArticle = $db->prepare(
-            'INSERT INTO articles (title,content, date_article) 
+        $reqArticle = $db->prepare('
+        INSERT INTO articles (title,content, date_article) 
             VALUES(:title, :content, NOW())');
 
-        $insertArticle =  $reqArticle->execute([
+        $addArticle =  $reqArticle->execute([
             'title' => $title,
             'content' => $content
         ]);
@@ -109,11 +101,49 @@ class ArticleManager extends Manager
     public function deleteArticle($article_id)
     {
         $db = $this->dbConnect();
+        $reqArticle = $db->prepare('
+            DELETE FROM articles
+            WHERE id = :id');
+        $deleteArticle = $reqArticle->execute([
+            'id' => $article_id
+        ]);
 
-        $reqArticle = $db->prepare('DELETE FROM articles WHERE id = ?'); 
-        $deleteArticle = $reqArticle->execute(array($article_id));
+        $reqArticle = $db->prepare('
+            DELETE FROM comments 
+            WHERE id = :id');
+        $deleteArticle = $reqArticle->execute([
+            'id' => $article_id
+        ]);
+    }
 
-        $reqArticle = $db->prepare('DELETE FROM comments WHERE id = ?'); 
-        $deleteArticle = $reqArticle->execute(array($article_id));
+    public function nextArticle($article_id)
+    {
+        $db = $this->dbConnect();
+        $reqArticle = $db->prepare('
+          SELECT * 
+          FROM articles 
+          WHERE id > id
+          ORDER BY date_article DESC LIMIT 0,1 
+        ');
+
+        $reqArticle->execute([
+            'id' => $article_id
+        ]);
+        return $nextArticle = $reqArticle->fetch();
+    }
+
+    public function previousArticle($article_id)
+    {
+        $db = $this->dbConnect();
+        $reqArticle = $db->prepare('
+            SELECT * 
+            FROM articles
+            WHERE id  < :id 
+            ORDER BY date_article DESC LIMIT 0,1
+        ');
+        $reqArticle->execute([
+            'id' => $article_id
+        ]);
+        return $previousArticle = $reqArticle->fetch();
     }
 }

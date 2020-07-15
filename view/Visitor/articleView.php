@@ -16,21 +16,10 @@
                 </article>
             </div>
             <p class="lead"> <?= nl2br($article['content']) ?> </p>
-            <p class="lead text-right"> publié le : <?= $article['date_fr'] ?></p>
+            <p class="lead text-right"> publié le : <?=  date_format(date_create($article['date_article']), 'd/m/Y à H:i') ?></p>
         </div>
     </div>
 </div>
-
-<div class="preview-next container">
-    <nav>
-        <ul class="pagination d-flex justify-content-between">
-            <li><a href="index.php?action=article&amp;id=<?= $article['id']-1 ?>" class="page-link">Précédent</a></li>
-            <li><a href="index.php?action=article&amp;id=<?= $article['id']+1 ?> " class="page-link">Suivant</a></li>
-
-        </ul>
-    </nav>
-</div>
-
 
 <?php 
     if ($isConnected) { ?>
@@ -40,9 +29,9 @@
     <form action="index.php?action=addComment&amp;id= <?= $article['id']?>" method="POST">
         <div class="form-group">
             <label for="comment">Commentaire</label>
-            <textarea class="form-control" id="comment" rows="3" name="comment"></textarea>
+            <textarea id="mytextarea" class="form-control" rows="3" name="comment"></textarea>
         </div>
-        <input type="submit" value="Commentez">
+        <input type="submit" class="btn btn-primary" value="Commentez">
     </form>
     <?php } else { ?>
 
@@ -84,4 +73,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php include 'template.php'; ?>
+<?php include 'view/template.php'; ?>

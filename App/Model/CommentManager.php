@@ -5,7 +5,7 @@ use App\Model\Manager;
 
 class CommentManager extends Manager
 {
-    public $id;
+    public $comment_id;
     public $comment;
     public $date_com;
     public $reported;
@@ -13,78 +13,84 @@ class CommentManager extends Manager
     public $user_id;
 
     /**
-     * Get all comments in database in comments
-     * @param $article_id (int)
-     * @return array $comments
+     * @param $article_id
+     * @return array
      */
-    public function getListComment($article_id)
+    public function listComments($article_id)
     {
         $db =  $this->dbConnect();
-        $reqComment = $db->prepare(
-            'SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
+        $reqComment = $db->prepare('
+            SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
             FROM comments 
             INNER JOIN users 
             ON comments.user_id = users.id 
-            WHERE article_id = ?
+            WHERE article_id = :article_id
             ORDER BY date_comment DESC ');
 
-        $reqComment->execute([$article_id]);
-
-        $listComment = $reqComment->fetchAll();
-        return $listComment;
+        $reqComment->execute([
+            'article_id' => $article_id
+        ]);
+        return $listComment = $reqComment->fetchAll();
     }
 
 
     /**
-     * Add comments 
-     * @param $comment, $article_id, $user_id
-     * @return array $addLinesComment
+     * Add comment
+     * @param $comment
+     * @param $article_id
+     * @param $user_id
+     * @return bool
      */
     public function addComment($comment, $article_id, $user_id)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare(
-            'INSERT INTO comments(comment,reported, date_comment, article_id, user_id) 
+        $comments = $db->prepare('
+            INSERT INTO comments(comment,reported, date_comment, article_id, user_id) 
             VALUES (:comment, 0, NOW(), :article_id, :user_id)');
 
-        $addLinesComment = $comments->execute([
+        return $addComment = $comments->execute([
             'comment' => $comment,
             'article_id' => $article_id,
             'user_id' => $user_id
-            ]); 
+        ]);
 
-        return $addLinesComment;
     }
 
-    //getcommentbyid 
-    public function getCommentById($id)
+    /**
+     * @param $comment_id
+     * @return mixed
+     */
+    public function getCommentById($comment_id)
     {
         $db = $this->dbConnect();
-        $reqComment = $db->query(
-            'SELECT * 
+        $reqComment = $db->prepare('
+            SELECT * 
             FROM comments 
-            WHERE article_id = ?');
-            
-        $reqComment->execute([$id]);
-        $commentById = $reqComment->fecth();
-
-        return $commentById;
+            WHERE id = ?
+        ');
+        $reqComment ->execute([
+            'id' => $comment_id
+        ]);
+        return $commentById = $reqComment->fetch();
     }
-    
+
 
     /**
      * Report comments 
      * @param $comment_id (int)
      */
-    public function reportComment($id)
+    public function reportComment($comment_id)
     {
 
         $db = $this->dbConnect();
-        $reqComment = $db->prepare(
-            'UPDATE comments 
+        $reqComment = $db->prepare('
+            UPDATE comments 
             SET reported = 1 
-            WHERE id = ?');
-        $commentReported = $reqComment->execute([$id]);
+            WHERE id = :id');
+
+        $commentReported = $reqComment->execute([
+            'id' => $comment_id
+        ]);
     }
 
 
@@ -92,19 +98,17 @@ class CommentManager extends Manager
      * Get all report comments 
      * @return $reqComment
      */
-    public function getAllReported()
+    public function listReportedCom()
     {
         $db = $this->dbConnect();
-        $reqComment = $db->query(
-            'SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
+        $reqComment = $db->query('
+            SELECT comments.id, users.username as pseudo, comment, reported, date_comment, article_id, user_id 
             FROM comments 
             INNER JOIN users 
             ON comments.user_id = users.id 
             WHERE reported = 1');
 
-        $listCommentsReport = $reqComment->fetchAll();
-
-        return $listCommentsReport;
+        return  $reportedComments = $reqComment->fetchAll();
     }
 
 
@@ -112,28 +116,32 @@ class CommentManager extends Manager
      * Ignore comment report
      * @param $comment_id (int)
      */
-    public function validateReport($id)
+    public function validateComReported($comment_id)
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare(
             'UPDATE comments 
             SET reported = 0 
-            WHERE id = ?');
+            WHERE id = :id');
 
-        $validateReport =  $reqComment->execute([$id]);
+        $validateReport =  $reqComment->execute([
+            'id' => $comment_id
+        ]);
     }
 
     /**
      * Delete comments 
      * @param $comment_id (int)
      */
-    public function deleteComment($id)
+    public function deleteComment($comment_id)
     {
         $db = $this->dbConnect();
         $reqComment = $db->prepare(
             'DELETE FROM comments 
-            WHERE id = ?');
+            WHERE id = :id');
         
-        $deleteCom = $reqComment->execute([$id]);
+        $deleteCom = $reqComment->execute([
+            'id' => $comment_id
+        ]);
     }
 }

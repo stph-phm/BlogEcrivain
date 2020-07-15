@@ -1,5 +1,6 @@
 <?php
 namespace App\Model;
+include_once 'base.php';
 
 class Manager 
 {
@@ -10,7 +11,7 @@ class Manager
     protected function dbConnect()
     {
         $db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        //$db = new \PDO('mysql:host=stephagblogp4.mysql.db;dbname=stephagblogp4;charset=utf8', 'stephagblogp4', 'BlogProjet4');
+        //$db = new \PDO($host,$dbName, $charset, $userDb,  $pswdDb );
         return $db;
     }
 }

@@ -63,4 +63,6 @@ class Controller {
     public function hashSession($valeur) {
         return hash("sha256", $valeur);
     }
+
+
 }

@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 
-<div class="part-info-user">
+<div class="part-info-user container text-center">
     <h1>Bonjour <?= $userInfo['username'] ?></h1>
 
     <p>adresse mail : <?= $userInfo['email_user'] ?></p>
@@ -10,4 +10,4 @@
 </div>
 
 <?php $content = ob_get_clean(); ?>
-<?php include 'template.php'; ?>
+<?php include 'view/template.php'; ?>

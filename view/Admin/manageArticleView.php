@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($listArticle as $article) { ?>
+            <?php foreach ($articles as $article) { ?>
             <tr>
                 <td> <?= $i++ ?></td>
                 <td><?= htmlspecialchars($article['title']) ?> </td>
@@ -48,4 +48,4 @@
 
 </div>
 <?php $content = ob_get_clean(); ?>
-<?php include 'layout.php'; ?>
+<?php include 'view/template.php'; ?>

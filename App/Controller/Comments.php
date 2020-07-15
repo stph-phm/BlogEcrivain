@@ -3,14 +3,15 @@ namespace App\Controller;
 
 use App\Model\UserManager;
 use App\Model\CommentManager;
-use App\Controller\Controller;
+
 
 class Comments extends Controller {
     public $article_id;
     public $pseudo;
     public $comment;
     public $comment_id;
-    public $i;
+
+
     /**
      * Instantiating the CommentManager object
      * Check if we have received the ID in  parameter in the URL 
@@ -29,7 +30,7 @@ class Comments extends Controller {
             $sessionId = $this->trim_secur($_SESSION['userId']);
 
             if (!empty($comment)) {
-                $addLinesComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
+                $addComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
                 \header('Location: index.php?action=article&id='.$getId);
             } else {
                 throw new \Exception("Veuillez remplir tous les champs ! ");
@@ -45,17 +46,33 @@ class Comments extends Controller {
         }
     }
 
+    public function dashboard() {
+        $commentManager = new CommentManager();
+
+        if ($this->is_admin()) {
+            $reportedComments = $commentManager->listReportedCom();
+            $i = 1;
+        } else {
+            \header("Location: index.php");
+        }
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
+        include 'view/Admin/dashboardView.php';
+    }
+
      // Signaler les commentaires 
     public function reportComment()
     {
         $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
+
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getId = $this->trim_secur($_GET['id']);
 
             $commentReported = $commentManager->reportComment($getId);
-            $comment = $commentManager->getCommentById($getId);
-            \header('Location: index.php?action=article&id='.$comment['article_id']);
+            $commentById = $commentManager->getCommentById($getId);
+            \header('Location: index.php?action=article&id='.$commentById['article_id']);
         }
     }
 
@@ -66,8 +83,8 @@ class Comments extends Controller {
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
 
-            $validateReport = $commentManager->validateReport($comment_id);
-            header('Location: index.php?action=admin');
+            $validateReport = $commentManager->validateComReported($comment_id);
+            header('Location: index.php?action=dashboard');
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }

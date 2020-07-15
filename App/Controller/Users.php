@@ -28,20 +28,19 @@ class Users extends Controller
             $pswd2 =  $_POST['pswd2'];
             
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {   
-                $userExist = $userManager->ifUsernameExist($username);
-                var_dump($userExist);
-                    if ($userExist == 0 ) {
+                $ifUserExist = $userManager->getIfUsernameExist($username);
+                    if ($ifUserExist == 0 ) {
 
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-                            $mailExist = $userManager->ifMailExist($email);
-                            if ($mailExist == 0) {
-                                if(strlen($pswd) >= 5) {
+                            $ifMailExist = $userManager->getIfMailExist($email);
+                            if ($ifMailExist == 0) {
 
+                                if(strlen($pswd) >= 5) {
                                     if ($pswd == $pswd2) {
 
                                         $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
-                                        $inserUser = $userManager->addNewUser($username, $email, $pswdHach);
+                                        $addUser = $userManager->addUSer($username, $email, $pswdHach);
 
                                         header('Location: index.php?action=connectUser');
                                     } else {
@@ -49,11 +48,11 @@ class Users extends Controller
                                     }
                                 } else{
                                     throw new \Exception("Le mot de passe doivent faire plus de 5 caractères");
-                                    
+
                                 }
                             } else {
                                 throw new \Exception("Votre adresse mail est déjà utilisé ! ");
-                                    
+
                             }
                         } else {
                             throw new \Exception("Votre adresse mail n'est pas valide !");
@@ -65,7 +64,7 @@ class Users extends Controller
             throw new \Exception("Veuillez remplir tous les champs ! ");
         }
     }
-        include 'view/registerView.php';
+        include 'view/Visitor/registerView.php';
     }
 
     /** Check if the button connect
@@ -83,8 +82,8 @@ class Users extends Controller
             $pswd = $this->trim_secur($_POST['pswd']);
     
             if (!empty($email) && !empty($pswd)) {
-                $user = $userManager->userByEmail($email);
-                $pswdCorrect = password_verify($pswd, $user['password_user']);
+                $userByEmail = $userManager->getUserByEmail($email);
+                $pswdCorrect = password_verify($pswd, $userByEmail['password_user']);
 
                 if ($pswdCorrect) {
                     $_SESSION['userId'] = $user['id'];
@@ -111,7 +110,7 @@ class Users extends Controller
         $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
-        include 'view/connectView.php';
+        include 'view/Visitor/connectView.php';
     }
 
     /**
@@ -128,7 +127,7 @@ class Users extends Controller
         $userInfo = $this->userInfo;
         $isConnected = $this->is_connected();
         $isAdmin = $this->is_admin();
-        include 'view/profilView.php';
+        include 'view/Visitor/profilView.php';
     }
 
     /**
