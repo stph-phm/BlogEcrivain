@@ -83,3 +83,7 @@ form {
 .text-center.mb-3 {
     font-size: 3.5em;
 }
+
+footer {
+    font-weight: 100;
+}

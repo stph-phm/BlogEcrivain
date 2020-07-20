@@ -33,17 +33,13 @@ class Comments extends Controller {
                 $addComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
                 \header('Location: index.php?action=article&id='.$getId);
             } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
-                
+                throw new \Exception("Veuillez remplir tous les champs !");
             }
-            //Afficher l'username dans input pseudo pour ajouter le commentaire 
-            //$sessionId = $this->trim_secur($_SESSION['userId']);
-            //$userInfo = $userManager->getUserById($sessionId);
-
-        } 
+        }
         else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
+
     }
 
     public function dashboard() {

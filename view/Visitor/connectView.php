@@ -15,11 +15,16 @@
             <button type="submit" class="btn btn-primary" name="connect">Se connecter</button>
         </form>
     </div>
+    <?php
+    if (isset($errorMsg)) { ?>
+    <div class="alert alert-danger" role="alert">
+        <?= $errorMsg ?>
+    </div>
+    <?php } ?>
+    
     <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
-</div><!--/.global-->
+</div>
+<!--/.global-->
 
-    <?php $content = ob_get_clean(); ?>
-    <?php include 'view/template.php'; ?>
-
-
-
+<?php $content = ob_get_clean(); ?>
+<?php include 'view/template.php'; ?>

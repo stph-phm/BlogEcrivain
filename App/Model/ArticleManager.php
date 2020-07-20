@@ -4,7 +4,7 @@ namespace App\Model;
 
 use App\Model\Manager;
 
-class ArticleManager extends BaseModel
+class ArticleManager extends Manager
 {
     public $article_id;
     public $title;
@@ -18,7 +18,7 @@ class ArticleManager extends BaseModel
      */
     public function listArticles()
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->query('
             SELECT id,  title, content,date_article
             FROM articles 
@@ -32,7 +32,7 @@ class ArticleManager extends BaseModel
      */
     public function getArticle($article_id)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $req = $db->prepare('
             SELECT *
             FROM articles 
@@ -52,18 +52,20 @@ class ArticleManager extends BaseModel
      */
     public function listLastArticles()
     {
-        $db = $this->getBdd();
-        $reqArticle = $db->query('
-            SELECT *
+        $db = $this->dbConnect();
+        $reqArticles = $db->query('  
+            SELECT * 
             FROM articles 
-            ORDER BY date_article DESC LIMIT 0,5');
-        return $lastArticles = $reqArticle->fetchAll();
+            ORDER BY date_article DESC LIMIT 0,5 
+        ');
+        $reqArticles->execute();
+        return $lastArticles = $reqArticles->fetchAll();
     }
 
 
     public function addArticle($title, $content)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->prepare('
         INSERT INTO articles (title,content, date_article) 
             VALUES(:title, :content, NOW())');
@@ -81,7 +83,7 @@ class ArticleManager extends BaseModel
      */
     public function editArticle($article_id, $title, $content)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->prepare(
             'UPDATE articles 
             SET title = :title, content = :content
@@ -100,7 +102,7 @@ class ArticleManager extends BaseModel
      */
     public function deleteArticle($article_id)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->prepare('
             DELETE FROM articles
             WHERE id = :id');
@@ -118,7 +120,7 @@ class ArticleManager extends BaseModel
 
     public function nextArticle($article_id)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->prepare('
           SELECT * 
           FROM articles 
@@ -134,7 +136,7 @@ class ArticleManager extends BaseModel
 
     public function previousArticle($article_id)
     {
-        $db = $this->getBdd();
+        $db = $this->dbConnect();
         $reqArticle = $db->prepare('
             SELECT * 
             FROM articles

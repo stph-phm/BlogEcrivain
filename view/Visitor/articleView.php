@@ -42,6 +42,14 @@
 
     <?php  } ?>
 
+    <?php
+    if (isset($errorMsg)) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $errorMsg ?> hello
+        </div>
+    <?php }
+    ?>
+
     <?php foreach ($listComment as $comment) { ?>
     <div class="comments container">
         <div class="pseudo-partComment d-flex p-2 ">

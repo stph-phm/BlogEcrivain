@@ -60,16 +60,7 @@ class Articles extends Controller {
         include 'view/Visitor/articleView.php';
     }
 
-    public function nextArticle() {
-        $articleManager = new ArticleManager();
 
-        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            $getId = $this->trim_secur($_GET['id']);
-            $nextArticle = $articleManager->nextArticle($getId);
-        } else {
-            throw new \Exception("Aucun identifiant de billet envoyé");
-        }
-    }
 
     /**
      * Ajouter un article 
@@ -89,7 +80,7 @@ class Articles extends Controller {
                     $insertArticle = $articleManager->addArticle($title, $content);
                     \header('Location: index.php?action=manageArticle');
                 } else {
-                    throw new \Exception("Veuillez remplir tous les champs ! ");
+                    $errorMsg = "Veuillez remplir tous les champs ! ";
                 }
             }
         } else {
@@ -141,7 +132,7 @@ class Articles extends Controller {
                         $edit = $articleManager->editArticle($getId, $title, $content);
                         header('Location: index.php?action=manageArticle');
                     } else {
-                        throw new \Exception("Veuillez remplir tous les champs ! ");
+                        $errorMsg = "Veuillez remplir tous les champs ! ";
                     }
                 }
             }else {

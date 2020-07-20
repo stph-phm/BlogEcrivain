@@ -44,26 +44,27 @@ class Users extends Controller
 
                                         header('Location: index.php?action=connectUser');
                                     } else {
-                                        throw new \Exception("Les mots de passe ne se correspondent pas !");
+                                        $errorMsg = "Les mots de passe ne se correspondent pas !";
                                     }
                                 } else{
-                                    throw new \Exception("Le mot de passe doivent faire plus de 5 caractères");
-
+                                    $errorMsg = "Le mot de passe doivent faire plus de 5 caractères";
                                 }
                             } else {
-                                throw new \Exception("Votre adresse mail est déjà utilisé ! ");
-
+                                $errorMsg = "Votre adresse mail est déjà utilisé ! ";
                             }
                         } else {
-                            throw new \Exception("Votre adresse mail n'est pas valide !");
+                            $errorMsg = "Votre adresse mail n'est pas valide !";
                         }
                     } else {
-                        throw new \Exception("Votre identifiant est deja pris, veuillez choisir un nouveau");
+                        $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
                     }
             } else {
-            throw new \Exception("Veuillez remplir tous les champs ! ");
+            $errorMsg = "Veuillez remplir tous les champs ! ";
         }
     }
+        $userInfo = $this->userInfo;
+        $isConnected = $this->is_connected();
+        $isAdmin = $this->is_admin();
         include 'view/Visitor/registerView.php';
     }
 
@@ -86,25 +87,17 @@ class Users extends Controller
                 $pswdCorrect = password_verify($pswd, $userByEmail['password_user']);
 
                 if ($pswdCorrect) {
-                    $_SESSION['userId'] = $user['id'];
-                    $hashSession = $this->hashSession($_SESSION['userId']); 
-
+                    $_SESSION['userId'] = $userByEmail['id'];
+                    $hashSession = $this->hashSession($_SESSION['userId']);
                     $_SESSION['hashUserId'] = $hashSession;
 
-                    $userInfo = $this->userInfo;
-                    $isConnected = $this->is_connected();
-                    $isAdmin = $this->is_admin();
                     
-                    \header('Location: index.php?action=profil&id='. $_SESSION['userId']);
-
-                    if ($isAdmin) {
-                        header('Location: index.php?action=dashboard');
-                    }
+                    \header('Location: index.php');
                 } else {
-                    throw new \Exception(" Vos identifiants incorrects ! ");
+                    $errorMsg = "Vos identifiants incorrects ! ";
                 }
             } else {
-                throw new \Exception("Veuillez remplir tous les champs ! ");
+                $errorMsg = "Veuillez remplir tous les champs ! ";
             }
         }
         $userInfo = $this->userInfo;

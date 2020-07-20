@@ -1,22 +1,42 @@
 <?php
 namespace App\Model;
-include_once 'BaseModel.php';
 
-class Manager 
+class Manager
 {
     /**
-     * Connection database local blog
-     * @return $db
+     * @return \PDO
      */
     protected function dbConnect()
     {
-        $db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        //$db = new \PDO($host,$dbName, $charset, $userDb,  $pswdDb );
+
+        $db = new \PDO("mysql:host=$host;dbname=$dbName;charset=utf8",$userDb, $pswdDb);
         return $db;
+
+        include_once 'ConnectData.php';
     }
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

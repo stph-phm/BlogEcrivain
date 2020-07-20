@@ -8,6 +8,7 @@ require_once 'Config/error.php';
 use App\Controller\Users;
 use App\Controller\Articles;
 use App\Controller\Comments;
+use App\Controller\Error;
 
 
 $action = '';
@@ -91,7 +92,8 @@ try {
             break;
     }
 } catch (\Exception $e) {
-    echo 'Erreur : ' .$e->getMessage();
+    $errorMsgBlock = new Error;
+    $errorMsgBlock->displayErrorBlock($e);
 }
 
 

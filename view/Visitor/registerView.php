@@ -25,6 +25,14 @@
         </form>
     </div>
 
+    <?php
+    if (isset($errorMsg)) { ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $errorMsg ?>
+        </div>
+    <?php }
+    ?>
+
     <a href="index.php?action=login"> Un compte ? Connectez-vous </a>
 </div><!--/.global-->
 <?php $content = ob_get_clean(); ?>
