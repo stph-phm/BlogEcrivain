@@ -9,7 +9,7 @@ class Manager
      */
     protected function dbConnect()
     {
-        include_once 'ressources/config.php';
+        include_once \dirname(\dirname(__DIR__)). '/ressources/config.php';
         //constante définir le chemin vers le fichier de configuration
         //define('CONFIG_FILE_PATH', __DIR__. '/ressources/config.ini');
         // On utilise la function parse ini file pour récup dans l'array php
