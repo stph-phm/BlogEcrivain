@@ -3,7 +3,7 @@ session_start();
 ini_set("display_errors", E_ALL);
 
 require_once 'vendor/autoload.php';
-require_once 'Config/error.php';
+
 
 use App\Controller\Users;
 use App\Controller\Articles;
