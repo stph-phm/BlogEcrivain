@@ -9,6 +9,7 @@ class Manager
      */
     protected function dbConnect()
     {
+        include_once 'ressources/config.php';
         //constante définir le chemin vers le fichier de configuration
         //define('CONFIG_FILE_PATH', __DIR__. '/ressources/config.ini');
         // On utilise la function parse ini file pour récup dans l'array php
@@ -20,12 +21,13 @@ class Manager
 
         //$db = new \PDO('mysql:host=' . DATABASE_HOST . ';dbname='. DATABASE_NAME .';charset=utf8mb4', DATABASE_USER, DATABASE_PASSWORD);
         $db = new \PDO("mysql:host=$host;dbname=$dbName;charset=utf8",$login, $passwd);
+        //$db = new \PDO('mysql:host='$host;dbname=$dbName;charset=utf8",$login, $passwd);
         //$db = new \PDO('mysql:host=stephagblogp4.mysql.db;dbname=stephagblogp4;charset=utf8', 'stephagblogp4', 'BlogProjet4');
         //$db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8','root', '');
         
         return $db;
 
-        include_once 'ressources/config.php';
+        
     }
 
 }
