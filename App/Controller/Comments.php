@@ -31,7 +31,6 @@ class Comments extends Controller {
 
             if (!empty($comment)) {
                 $addComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
-                \header('Location: index.php?action=article&id='.$getId);
             } else {
                 throw new \Exception("Veuillez remplir tous les champs !");
             }
@@ -40,6 +39,7 @@ class Comments extends Controller {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
 
+        \header('Location: index.php?action=article&id='.$getId);
     }
 
     public function dashboard() {
