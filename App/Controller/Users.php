@@ -44,6 +44,7 @@ class Users extends Controller
 
                                         header('Location: index.php?action=connectUser');
                                     } else {
+                                        $error = $this->set('error', 'Les mots de passe ne se correspondent pas ');
                                         $errorMsg = "Les mots de passe ne se correspondent pas !";
                                     }
                                 } else{

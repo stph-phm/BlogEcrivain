@@ -26,6 +26,10 @@
     </div>
 
     <?php
+    if (isset($error)) {
+        var_dump($error);
+    }
+    exit();
     if (isset($errorMsg)) { ?>
         <div class="alert alert-danger" role="alert">
             <?= $errorMsg ?>

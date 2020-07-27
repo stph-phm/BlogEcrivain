@@ -5,13 +5,12 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
-use App\Controller\Controller;
-
 
 class Articles extends Controller {
+
+
     /**
-      * Instantiating the ArticleManager object
-     * Call the getAllArticles method to display all articles 
+      * Show Home
      */
     public function home()
     {
@@ -25,6 +24,9 @@ class Articles extends Controller {
         include 'view/Visitor/homeView.php';
     }
 
+    /**
+     * Listing all Article ASC
+     */
     public function listArticles()
     {
         $articleManager = new ArticleManager();
@@ -36,9 +38,7 @@ class Articles extends Controller {
     }
 
     /**
-     * Instantiating the ArticleManager and CommentManager objects
-     * Check if we have received an id parameter in the URL ($_GET['id])
-     * If this is the cas, call  getArticle and getAllComments methods 
+     * show Article ($_get)
      */
     public function article()
     {
@@ -60,8 +60,6 @@ class Articles extends Controller {
         include 'view/Visitor/articleView.php';
     }
 
-
-
     /**
      * Ajouter un article 
      * Instanciation de l'ArticleMAnager
@@ -78,10 +76,16 @@ class Articles extends Controller {
     
                 if (!empty($title) && !empty($content)) {
                     $insertArticle = $articleManager->addArticle($title, $content);
+                    
+                    $_SESSION['successMsg'] = "Votre article est bien ajouté ! ";
+                    
+
                     \header('Location: index.php?action=manageArticle');
+
                 } else {
                     $errorMsg = "Veuillez remplir tous les champs ! ";
                 }
+                \header('Location: index.php?action=newArticle');
             }
         } else {
             header('Location: index.php');
@@ -117,6 +121,7 @@ class Articles extends Controller {
     public function editArticle()
     {
         $articleManager = new ArticleManager();
+        $messageFlash = new MessageFlash();
         
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $getId = $this->trim_secur($_GET['id']);
@@ -130,10 +135,14 @@ class Articles extends Controller {
 
                     if (!empty($title) && !empty($content)) {
                         $edit = $articleManager->editArticle($getId, $title, $content);
+
                         header('Location: index.php?action=manageArticle');
+
                     } else {
+
                         $errorMsg = "Veuillez remplir tous les champs ! ";
                     }
+                    header('Location: index.php?action=manageArticle');
                 }
             }else {
                 \header('Location: index.php');
