@@ -1,6 +1,18 @@
 <?php $title = "Modifier le chapitre :" ;  ?>
 <?php ob_start(); ?>
 
+<?php if (isset($_SESSION['successMsg'])) { ?>
+    <div class="alert alert-success text-center"> <?= $_SESSION['successMsg'] ?> </div>
+    <?php
+    unset($_SESSION['successMsg']);
+} ?>
+
+<?php if (isset($_SESSION['errorMsg'])) { ?>
+    <div class="alert alert-danger text-center"> <?= $_SESSION['errorMsg'] ?> </div>
+    <?php
+    unset($_SESSION['errorMsg']);
+} ?>
+
 
 <div class="global dashboard ">
     <h1>Modifier un article </h1>

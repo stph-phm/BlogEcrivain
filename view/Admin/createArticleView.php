@@ -1,8 +1,14 @@
 <?php $title = "Création d'un article";  ?>
 <?php ob_start(); ?>
 <div class="global dashboard ">
-
     <h1 class="mb-4 text-center">Création d'un article </h1>
+
+    <?php if (isset($_SESSION['errorMsg'])) { ?>
+        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
+        <?php
+        unset($_SESSION['errorMsg']);
+    } ?>
+
     <div class="form-newArticle">
         <form class="newArticle" action="" method="post">
             <div class="form-group form_header">
@@ -20,6 +26,8 @@
         </form>
     </div>
 </div>
+
+
 
 <?php $content = ob_get_clean(); ?>
 <?php include 'view/template.php'; ?>

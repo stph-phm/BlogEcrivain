@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Message\FlashMessage;
 use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
@@ -20,6 +21,8 @@ class Users extends Controller
     public function registerUser()
     {
         $userManager = new UserManager();
+        $flashMessage = new FlashMessage();
+
         if (isset($_POST['register'])) {
             
             $username = $this->str_secur($_POST['username']);
@@ -42,25 +45,26 @@ class Users extends Controller
                                         $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
                                         $addUser = $userManager->addUSer($username, $email, $pswdHach);
 
+
                                         header('Location: index.php?action=connectUser');
+                                        $flashMessage->setSuccessMsg("Inscription réussi ! Veuillez-vous connexter");
                                     } else {
-                                        $error = $this->set('error', 'Les mots de passe ne se correspondent pas ');
-                                        $errorMsg = "Les mots de passe ne se correspondent pas !";
+                                        $flashMessage->setErrorMsg("Inscription incorrect !");
                                     }
                                 } else{
-                                    $errorMsg = "Le mot de passe doivent faire plus de 5 caractères";
+                                    $flashMessage->setErrorMsg("Le mot de passe doivent faire plus de 5 caractères !");
                                 }
                             } else {
-                                $errorMsg = "Votre adresse mail est déjà utilisé ! ";
+                                $flashMessage->setErrorMsg("Votre adresse mail est déja utilisé !");
                             }
                         } else {
-                            $errorMsg = "Votre adresse mail n'est pas valide !";
+                            $flashMessage->setErrorMsg("Votre adresse mail n'est pas valide !");
                         }
                     } else {
-                        $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
+                        $flashMessage->setErrorMsg("Votre identifiant est deja pris, veuillez choisir un nouveau");
                     }
             } else {
-            $errorMsg = "Veuillez remplir tous les champs ! ";
+                $flashMessage->setErrorMsg("Veuillez remplir tous les champs ! ");
         }
     }
         $userInfo = $this->userInfo;
@@ -79,6 +83,8 @@ class Users extends Controller
     public function connectUser()
     {
         $userManager = new UserManager();
+        $flashMessage = new FlashMessage();
+
         if (isset($_POST['connect'])) {
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
@@ -92,13 +98,13 @@ class Users extends Controller
                     $hashSession = $this->hashSession($_SESSION['userId']);
                     $_SESSION['hashUserId'] = $hashSession;
 
-                    
                     \header('Location: index.php');
+                    $flashMessage->setSuccessMsg("Connexion réussi !");
                 } else {
-                    $errorMsg = "Vos identifiants incorrects ! ";
+                    $flashMessage->setErrorMsg("Vos identifiants incorrects ! ");
                 }
             } else {
-                $errorMsg = "Veuillez remplir tous les champs ! ";
+                $flashMessage->setErrorMsg("Vos identifiants incorrects ! ");
             }
         }
         $userInfo = $this->userInfo;
@@ -129,9 +135,11 @@ class Users extends Controller
      */
     public function logoutUser()
     {
+        $flashMessage = new FlashMessage();
         $_SESSION = array();
         session_destroy();
         \header("Location: index.php?action=login");
+        $flashMessage->setSuccessMsg("Vous êtes déconnecter !");
         include 'view/Include/nav.php';
     }
 }

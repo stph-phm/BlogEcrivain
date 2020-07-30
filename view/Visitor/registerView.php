@@ -25,17 +25,17 @@
         </form>
     </div>
 
-    <?php
-    if (isset($error)) {
-        var_dump($error);
-    }
-    exit();
-    if (isset($errorMsg)) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $errorMsg ?>
-        </div>
-    <?php }
-    ?>
+    <?php if (isset($_SESSION['successMsg'])) { ?>
+        <div class="alert alert-success"> <?= $_SESSION['successMsg'] ?> </div>
+        <?php
+        unset($_SESSION['successMsg']);
+    } ?>
+
+    <?php if (isset($_SESSION['errorMsg'])) { ?>
+        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
+        <?php
+        unset($_SESSION['errorMsg']);
+    } ?>
 
     <a href="index.php?action=login"> Un compte ? Connectez-vous </a>
 </div><!--/.global-->

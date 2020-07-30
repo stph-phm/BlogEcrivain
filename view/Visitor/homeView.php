@@ -5,7 +5,7 @@
     <div class="header mb-4 row">
         <header class="text-center">
             <div class="image-header mb-3 text-center container">
-                <img src="public/image/image1.jpg" alt="route alaska" class="mb-4">
+                <img src="public/image/image1.jpg" alt="route alaska" class="mb-4" class="text-center">
             </div>
 
             <div class="border text-center col mx-auto ">

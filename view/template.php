@@ -20,7 +20,6 @@
 
 <body>
     <?php include 'Include/nav.php'; ?>
-    <?php print_r($_SESSION) ?>
 
     <?= $content; ?>
 

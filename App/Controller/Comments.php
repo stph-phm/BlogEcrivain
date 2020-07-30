@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controller;
 
+use App\Message\FlashMessage;
 use App\Model\UserManager;
 use App\Model\CommentManager;
 
@@ -23,23 +24,26 @@ class Comments extends Controller {
         $commentManager = new CommentManager();
         $userManager = new UserManager();
         $isConnected = $this->is_connected();
+        $flashMessage = new FlashMessage();
         
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getId = $this->trim_secur($_GET['id']);
+            $comment_id = $this->trim_secur($_GET['id']);
             $comment = $this->str_secur($_POST['comment']);
             $sessionId = $this->trim_secur($_SESSION['userId']);
 
             if (!empty($comment)) {
-                $addComment = $commentManager->addComment($comment, $getId, $_SESSION['userId']);
+                $addComment = $commentManager->addComment($comment, $comment_id, $_SESSION['userId']);
+
+                $flashMessage->setSuccessMsg("Votre commentaire est bien ajouté ");
             } else {
-                throw new \Exception("Veuillez remplir tous les champs !");
+               $flashMessage->setErrorMsg("Veuillez remplir tous les champs !");
             }
         }
         else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
 
-        \header('Location: index.php?action=article&id='.$getId);
+        \header('Location: index.php?action=article&id='. $comment_id);
     }
 
     public function dashboard() {
@@ -62,25 +66,55 @@ class Comments extends Controller {
     {
         $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
+        $flashMessage = new FlashMessage();
 
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getId = $this->trim_secur($_GET['id']);
+            $comment_id = $this->trim_secur($_GET['id']);
 
-            $commentReported = $commentManager->reportComment($getId);
-            $commentById = $commentManager->getCommentById($getId);
+            $commentReported = $commentManager->reportComment($comment_id);
+            $commentById = $commentManager->getCommentById($comment_id);
             \header('Location: index.php?action=article&id='.$commentById['article_id']);
+            $flashMessage->setSuccessMsg('Le commentaire est signalé');
+
+        } else {
+            throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }
+    public function deleteComment()
+    {
+        $isAdmin = $this->is_admin();
+        $commentManager = new CommentManager();
+        $flashMessage = new FlashMessage();
+
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
+            $comment_id = $this->trim_secur($_GET['id']);
+
+            $deleteCom = $commentManager->deleteComment($comment_id);
+            $commentById = $commentManager->getCommentById($comment_id);
+
+            \header('Location: index.php?action=article&id='.$commentById['article_id']);
+            $flashMessage->setSuccessMsg("Votre commentaire est bien supprimé !");
+
+        }else {
+            throw new \Exception("Aucun identifiant de billet envoyé");
+        }
+    }
+
 
     public function validateReportCom()
     {
         $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
+        $flashMessage = new FlashMessage();
+
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
 
             $validateReport = $commentManager->validateComReported($comment_id);
+
             header('Location: index.php?action=dashboard');
+            $flashMessage->setSuccessMsg("Votre commentaire signalé est validé ! ");
+
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
@@ -90,11 +124,14 @@ class Comments extends Controller {
     {
         $isAdmin = $this->is_admin();
         $commentManager = new CommentManager();
+        $flashMessage = new FlashMessage();
+
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
-
             $deleteCom = $commentManager->deleteComment($comment_id);
+
             header('Location: index.php?action=admin');
+            $flashMessage->setSuccessMsg("Votre commentaire signalé est supprimé");
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }

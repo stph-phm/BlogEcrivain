@@ -15,12 +15,17 @@
             <button type="submit" class="btn btn-primary" name="connect">Se connecter</button>
         </form>
     </div>
-    <?php
-    if (isset($errorMsg)) { ?>
-    <div class="alert alert-danger" role="alert">
-        <?= $errorMsg ?>
-    </div>
-    <?php } ?>
+    <?php if (isset($_SESSION['successMsg'])) { ?>
+        <div class="alert alert-success"> <?= $_SESSION['successMsg'] ?> </div>
+        <?php
+        unset($_SESSION['successMsg']);
+    } ?>
+
+    <?php if (isset($_SESSION['errorMsg'])) { ?>
+        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
+        <?php
+        unset($_SESSION['errorMsg']);
+    } ?>
     
     <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
 </div>

@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use App\Message\FlashMessage;
 use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
 
-class Articles extends Controller {
 
+class Articles extends Controller {
 
     /**
       * Show Home
@@ -38,14 +39,13 @@ class Articles extends Controller {
     }
 
     /**
-     * show Article ($_get)
+     * show Article ()
      */
     public function article()
     {
         $articleManager = new ArticleManager();
         $commentManager = new CommentManager();
-        $userManager = new UserManager();
-        
+
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
             $article = $articleManager->getArticle($article_id);
@@ -68,6 +68,8 @@ class Articles extends Controller {
     public function addArticle()
     {
         $articleManager = new ArticleManager();
+        $flashMessage = new FlashMessage();
+
 
         if($this->is_admin()) {
             if (isset($_POST['submit'])) {
@@ -76,16 +78,16 @@ class Articles extends Controller {
     
                 if (!empty($title) && !empty($content)) {
                     $insertArticle = $articleManager->addArticle($title, $content);
-                    
-                    $_SESSION['successMsg'] = "Votre article est bien ajouté ! ";
-                    
+                    $flashMessage->setSuccessMsg('Votre article est bien ajouté !');
 
                     \header('Location: index.php?action=manageArticle');
+                    $displayMsg = $flashMessage->displayMsg();
 
                 } else {
-                    $errorMsg = "Veuillez remplir tous les champs ! ";
+                    $flashMessage->setErrorMsg('Veuillez remplir tous les champs !');
+                    \header('Location: index.php?action=newArticle');
+                    $displayMsg = $flashMessage->displayMsg();
                 }
-                \header('Location: index.php?action=newArticle');
             }
         } else {
             header('Location: index.php');
@@ -121,11 +123,11 @@ class Articles extends Controller {
     public function editArticle()
     {
         $articleManager = new ArticleManager();
-        $messageFlash = new MessageFlash();
-        
+        $flashMessage = new FlashMessage();
+
         if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getId = $this->trim_secur($_GET['id']);
-            $article = $articleManager->getArticle($getId);
+            $article_id = $this->trim_secur($_GET['id']);
+            $article = $articleManager->getArticle($article_id);
             $isAdmin = $this->is_admin();
 
             if ($isAdmin) {
@@ -134,15 +136,15 @@ class Articles extends Controller {
                     $content = $this->nl2br_secur($_POST['content']);
 
                     if (!empty($title) && !empty($content)) {
-                        $edit = $articleManager->editArticle($getId, $title, $content);
+                        $edit = $articleManager->editArticle($article_id, $title, $content);
 
                         header('Location: index.php?action=manageArticle');
+                        $flashMessage->setSuccessMsg('Votre article a bien été modifié !');
 
                     } else {
-
-                        $errorMsg = "Veuillez remplir tous les champs ! ";
+                        header('Location: index.php?action=edit&id=' . $article_id);
+                        $flashMessage->setErrorMsg('Veuillez remplir tous les champs pour pouvoir modifier votre article !');
                     }
-                    header('Location: index.php?action=manageArticle');
                 }
             }else {
                 \header('Location: index.php');
@@ -157,23 +159,25 @@ class Articles extends Controller {
     }
 
 /**
- * Delete article 
- * 
+ * Delete article
  */
     public function deleteArticle()
     {
         $articleManager = new ArticleManager();
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            $getID = $this->trim_secur($_GET['id']);
+        $flashMessage = new FlashMessage();
 
-            $deleteArticle = $articleManager->deleteArticle($getID);
+        if (isset($_GET['id']) && $_GET['id'] > 0) {
+            $article_id = $this->trim_secur($_GET['id']);
+
+            $deleteArticle = $articleManager->deleteArticle($article_id);
             header('Location: index.php?action=manageArticle');
+            $flashMessage->setSuccessMsg("Votre article est bien été supprimer !");
+
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }
 
-    
     /**
      * List all article in the Nav
      */

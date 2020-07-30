@@ -6,7 +6,7 @@
     <div class="jumbotron jumbotron-fluid rounded ">
         <div class="ml-5">
             <h1 class="display-4 mb-3">Billet simple pour l'Alaska</h1>
-            <p class="lead mb-3"><a href="index.php">Retour à la liste des chapitres:</a></p>
+            <p class="lead mb-3"><a href="index.php?action=listArticles">Retour à la liste des chapitres:</a></p>
         </div>
 
         <div class="container">
@@ -16,7 +16,7 @@
                 </article>
             </div>
             <p class="lead"> <?= nl2br($article['content']) ?> </p>
-            <p class="lead text-right"> publié le : <?=  date_format(date_create($article['date_article']), 'd/m/Y à H:i') ?></p>
+            <p class="lead text-right"> publié le : <?=  date_format(date_create($article['date_article']), 'd/m/Y à H:i') ?></p> 
         </div>
     </div>
 </div>
@@ -42,13 +42,18 @@
 
     <?php  } ?>
 
+    <?php if (isset($_SESSION['successMsg'])) { ?>
+        <div class="alert alert-success"> <?= $_SESSION['successMsg'] ?> </div>
     <?php
-    if (isset($errorMsg)) { ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $errorMsg ?> hello
-        </div>
-    <?php }
-    ?>
+        unset($_SESSION['successMsg']);
+    } ?>
+
+    <?php if (isset($_SESSION['errorMsg'])) { ?>
+        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
+        <?php
+        unset($_SESSION['errorMsg']);
+    } ?>
+
 
     <?php foreach ($listComment as $comment) { ?>
     <div class="comments container">
@@ -59,14 +64,19 @@
             </p>
 
             <p>
-                <?php 
-                        if ($comment['reported'] == 0) { ?>
+                <?php if ($comment['reported'] == 0) { ?>
 
                 <a class="btn btn-secondary btn-sm " href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>"
                     title="Signaler le commentaire"><span><i class="fas fa-flag"></i></span>&nbsp;</a>
+
+                <?php if ($isAdmin) { ?>
+                    <a class="btn btn-secondary btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>"> Supprimer le commentaire</a>
+
+                <?php } ?>
             </p>
             <?php } else { ?>
             <p class="text-danger"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
+
             <?php } ?>
             <!--else-->
         </div>
@@ -75,6 +85,7 @@
         <hr>
     </div>
     <?php } ?>
+
     <!--foreach-->
 </section>
 

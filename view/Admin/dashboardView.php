@@ -1,5 +1,16 @@
 <?php $title = "Tableau de bord";  ?>
 <?php ob_start(); ?>
+<?php if (isset($_SESSION['successMsg'])) { ?>
+    <div class="alert alert-success text-center"> <?= $_SESSION['successMsg'] ?> </div>
+    <?php
+    unset($_SESSION['successMsg']);
+} ?>
+
+<?php if (isset($_SESSION['errorMsg'])) { ?>
+    <div class="alert alert-danger text-center"> <?= $_SESSION['errorMsg'] ?> </div>
+    <?php
+    unset($_SESSION['errorMsg']);
+} ?>
 
 <div class="container text-center">
     <div class="dashboard-area">
@@ -9,6 +20,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="dashboard-body">
         <table class="table">

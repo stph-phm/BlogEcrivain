@@ -30,6 +30,9 @@ try {
             $article = new Articles;
             $article->article();
             break;
+        case 'deleteComment':
+            $deleteComment = new Comments;
+            $deleteComment->deleteComment();
         case 'addComment':
             $comment = new Comments;
             $comment->addComment(); 
@@ -95,6 +98,8 @@ try {
     $errorMsgBlock = new Error;
     $errorMsgBlock->displayErrorBlock($e);
 }
+
+var_dump(session_status());
 
 
 
