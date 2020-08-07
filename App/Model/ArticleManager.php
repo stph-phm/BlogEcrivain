@@ -106,16 +106,16 @@ class ArticleManager extends Manager
         $reqArticle = $db->prepare('
             DELETE FROM articles
             WHERE id = :id');
-        $deleteArticle = $reqArticle->execute([
+            $deleteArticle = $reqArticle->execute([
             'id' => $article_id
         ]);
 
-        $reqArticle = $db->prepare('
-            DELETE FROM comments 
-            WHERE id = :id');
-        $deleteArticle = $reqArticle->execute([
-            'id' => $article_id
-        ]);
+        // $reqArticle = $db->prepare('
+        //     DELETE FROM comments 
+        //     WHERE id = :id'); // article_id
+        // $deleteArticle = $reqArticle->execute([
+        //     'id' => $article_id
+        // ]);
     }
 
     public function nextArticle($article_id)

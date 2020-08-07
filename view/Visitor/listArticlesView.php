@@ -1,7 +1,7 @@
 <?php $title = "Tous les chapitres"; ?>
 
 <?php ob_start(); ?>
-<div class="list-article">
+<div class="jumbotron jumbotron-fluid">
     <h1 class="text-center mb-3">Tous les chapitres </h1>
     <?php foreach ($articles as  $articles) { ?>
         <section class="card">

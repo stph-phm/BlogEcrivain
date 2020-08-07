@@ -1,6 +1,9 @@
 <?php $title = "Inscription" ?>
 
 <?php ob_start(); ?>
+<?php if (isset($errorMsg)) { ?>
+    <div class="alert alert-danger text-center"> <?= $errorMsg ?> </div>
+<?php } ?>
 <div class="global connect text-center">
     <h1>Espace membre - inscription </h1>
 
@@ -25,17 +28,7 @@
         </form>
     </div>
 
-    <?php if (isset($_SESSION['successMsg'])) { ?>
-        <div class="alert alert-success"> <?= $_SESSION['successMsg'] ?> </div>
-        <?php
-        unset($_SESSION['successMsg']);
-    } ?>
 
-    <?php if (isset($_SESSION['errorMsg'])) { ?>
-        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
-        <?php
-        unset($_SESSION['errorMsg']);
-    } ?>
 
     <a href="index.php?action=login"> Un compte ? Connectez-vous </a>
 </div><!--/.global-->

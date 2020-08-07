@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Message\FlashMessage;
 use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
+use App\Session\FlashSession;
 use App\Controller\Controller;
 
 class Users extends Controller 
@@ -21,7 +21,6 @@ class Users extends Controller
     public function registerUser()
     {
         $userManager = new UserManager();
-        $flashMessage = new FlashMessage();
 
         if (isset($_POST['register'])) {
             
@@ -47,24 +46,21 @@ class Users extends Controller
 
 
                                         header('Location: index.php?action=connectUser');
-                                        $flashMessage->setSuccessMsg("Inscription réussi ! Veuillez-vous connexter");
-                                    } else {
-                                        $flashMessage->setErrorMsg("Inscription incorrect !");
                                     }
                                 } else{
-                                    $flashMessage->setErrorMsg("Le mot de passe doivent faire plus de 5 caractères !");
+                                    $errorMsg = "Le mot de passe doivent faire plus de 5 caractères !";
                                 }
                             } else {
-                                $flashMessage->setErrorMsg("Votre adresse mail est déja utilisé !");
+                                $errorMsg = "Votre adresse mail est déja utilisé !" ;
                             }
                         } else {
-                            $flashMessage->setErrorMsg("Votre adresse mail n'est pas valide !");
+                            $errorMsg = "Votre adresse mail n'est pas valide !";
                         }
                     } else {
-                        $flashMessage->setErrorMsg("Votre identifiant est deja pris, veuillez choisir un nouveau");
+                        $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
                     }
             } else {
-                $flashMessage->setErrorMsg("Veuillez remplir tous les champs ! ");
+                $errorMsg = "Veuillez remplir tous les champs ! ";
         }
     }
         $userInfo = $this->userInfo;
@@ -83,8 +79,8 @@ class Users extends Controller
     public function connectUser()
     {
         $userManager = new UserManager();
-        $flashMessage = new FlashMessage();
-
+        $flashSession = new FlashSession();
+        
         if (isset($_POST['connect'])) {
             $email = $this->str_secur($_POST['email']);
             $pswd = $this->trim_secur($_POST['pswd']);
@@ -99,12 +95,12 @@ class Users extends Controller
                     $_SESSION['hashUserId'] = $hashSession;
 
                     \header('Location: index.php');
-                    $flashMessage->setSuccessMsg("Connexion réussi !");
+                    $flashSession->set('success',"Connexion réussi !");
                 } else {
-                    $flashMessage->setErrorMsg("Vos identifiants incorrects ! ");
+                    $errorMsg = "Vos identifiants incorrects ! ";
                 }
             } else {
-                $flashMessage->setErrorMsg("Vos identifiants incorrects ! ");
+                $errorMsg = "Vos identifiants incorrects ! ";
             }
         }
         $userInfo = $this->userInfo;
@@ -135,11 +131,8 @@ class Users extends Controller
      */
     public function logoutUser()
     {
-        $flashMessage = new FlashMessage();
-        $_SESSION = array();
         session_destroy();
         \header("Location: index.php?action=login");
-        $flashMessage->setSuccessMsg("Vous êtes déconnecter !");
         include 'view/Include/nav.php';
     }
 }

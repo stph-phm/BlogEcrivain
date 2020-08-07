@@ -1,8 +1,12 @@
 <?php $title = "Homepage" ?>
 
 <?php ob_start(); ?>
-<div class="global mt-3">
-    <div class="header mb-4 row">
+<?php if (isset($_SESSION['success'])) { ?>
+    <div class="alert alert-success text-center"> <?= $_SESSION['success'] ?> </div>
+    <?php unset($_SESSION['success']); ?>
+<?php } ?>
+<div class="global mt-3 jumbotron jumbotron-fluid align-center">
+    <div class="header ">
         <header class="text-center">
             <div class="image-header mb-3 text-center container">
                 <img src="public/image/image1.jpg" alt="route alaska" class="mb-4" class="text-center">
@@ -10,9 +14,11 @@
 
             <div class="border text-center col mx-auto ">
                 <h1 class="text-center mt-3">Billet simple pour l'Alaska</h1>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, molestias amet assumenda
-                    doloremque voluptate consequatur vitae incidunt, ea ducimus atque iusto, harum eligendi repellat
-                    laboriosam labore ipsam beatae aspernatur dolor. RESUMER DE L'HISTOIRE</p>
+                <p>Un résumé permet d’évaluer la capacité d’un étudiant à analyser et synthétiser un support.
+                    Il s’agit d’écarter tout ce qui est accessoire du contenu essentiel d’un texte. Généralement,
+                    le candidat doit rédiger un résumé compris entre 250 et 300 mots, avec une marge d’erreur tolérée d’environ 10%.
+                    Un bon résumé est donc concis et efficace : il reprend de manière concise et efficace, l’essentiel du contenu d’un document
+                    (littéraire ou non), en respectant les contraintes données.</p>
             </div>
 
         </header>

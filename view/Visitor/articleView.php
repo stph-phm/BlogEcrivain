@@ -20,6 +20,19 @@
         </div>
     </div>
 </div>
+<?php if(isset($_SESSION['success'])) { ?>
+    <div class="alert alert-success text-center"> <?= $_SESSION['success'] ?> </div>
+<?php unset($_SESSION['success']) ?>
+
+<?php } elseif(isset($_SESSION['error'])) { ?>
+
+    <div class="alert alert-danger text-center"> <?= $_SESSION['error'] ?> </div>
+    <?php unset($_SESSION['error']) ?>
+<?php } elseif(isset($_SESSION['info'])) { ?>
+
+    <div class="alert alert-info text-center"> <?= $_SESSION['info'] ?></div>
+    <?php unset($_SESSION['info']) ?>
+<?php } ?>
 
 <?php 
     if ($isConnected) { ?>
@@ -42,17 +55,7 @@
 
     <?php  } ?>
 
-    <?php if (isset($_SESSION['successMsg'])) { ?>
-        <div class="alert alert-success"> <?= $_SESSION['successMsg'] ?> </div>
-    <?php
-        unset($_SESSION['successMsg']);
-    } ?>
 
-    <?php if (isset($_SESSION['errorMsg'])) { ?>
-        <div class="alert alert-danger"> <?= $_SESSION['errorMsg'] ?> </div>
-        <?php
-        unset($_SESSION['errorMsg']);
-    } ?>
 
 
     <?php foreach ($listComment as $comment) { ?>
@@ -76,6 +79,7 @@
             </p>
             <?php } else { ?>
             <p class="text-danger"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
+            <a class="btn btn-secondary btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>"> Supprimer le commentaire</a>
 
             <?php } ?>
             <!--else-->

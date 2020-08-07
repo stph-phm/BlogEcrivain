@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: 'textarea#default'
+        selector: 'textarea#default'
 });
 
 // Create methods
@@ -17,4 +17,7 @@ for( var i = 0, len = linkDelete.length; i < len; i++) {
 
     linkDelete[i].addEventListener('click', confirmDelete);
 }
+
+//si true OK 
+// Si faux => event.preventDefault();
 

@@ -98,8 +98,3 @@ try {
     $errorMsgBlock = new Error;
     $errorMsgBlock->displayErrorBlock($e);
 }
-
-var_dump(session_status());
-
-
-

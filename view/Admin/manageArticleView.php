@@ -1,23 +1,22 @@
 <?php $title = "Gestion des chapitres ";  ?>
 <?php ob_start(); ?>
+
 <div class="global manage_article ">
+<?php if(isset($_SESSION['success'])) { ?>
+    <div class="alert alert-success text-center"> <?= $_SESSION['success'] ?> </div>
+<?php unset($_SESSION['success']) ?>
 
+<?php } elseif(isset($_SESSION['error'])) { ?>
 
-    <?php if ($isAdmin); { ?>
+    <div class="alert alert-danger text-center"> <?= $_SESSION['error'] ?> </div>
+    <?php unset($_SESSION['error']) ?>
+<?php } elseif(isset($_SESSION['info'])) { ?>
 
-        <?php if (isset($_SESSION['successMsg'])) { ?>
-            <div class="alert alert-success text-center"> <?= $_SESSION['successMsg'] ?> </div>
-            <?php
-            unset($_SESSION['successMsg']);
-        } ?>
+    <div class="alert alert-info text-center" role="alert"> <?= $_SESSION['info'] ?></div>
+    <?php unset($_SESSION['info']) ?>
+<?php }  ?>
 
-        <?php if (isset($_SESSION['errorMsg'])) { ?>
-            <div class="alert alert-danger text-center"> <?= $_SESSION['errorMsg'] ?> </div>
-            <?php
-            unset($_SESSION['errorMsg']);
-        } ?>
-
-    <h1>Gestion des articles </h1>
+    <h1 class="text-center">Gestion des articles </h1>
     <table class="table">
         <thead class="table">
             <tr>
@@ -45,7 +44,7 @@
                         </span> Modifier </a>
 
                     <a href="index.php?action=deleteArticle&amp;id= <?= $article['id'] ?>"
-                       class="linkDelete btn btn-danger" id="linkDelete"><span>
+                        class="linkDelete btn btn-danger" id="linkDelete"><span>
                             <i class="fas fa-times"></i> &nbsp;
                         </span> Supprimer </a>
                 </td>
@@ -55,10 +54,6 @@
                 ?>
         </tbody>
     </table>
-
-    <?php 
-    } 
-    ?>
 
 </div>
 <?php $content = ob_get_clean(); ?>
