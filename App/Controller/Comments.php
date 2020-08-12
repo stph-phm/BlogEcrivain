@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controller;
 
-use App\Model\UserManager;
+
 use App\Model\CommentManager;
 use App\Session\FlashSession;
 
@@ -22,21 +22,21 @@ class Comments extends Controller {
     public function addComment()
     {
         $commentManager = new CommentManager();
-        $userManager = new UserManager();
         $flashSession = new FlashSession();
-        $isConnected = $this->is_connected();
-        
+
+        $this->isConnected;
+
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $comment_id = $this->trim_secur($_GET['id']);
             $comment = $this->str_secur($_POST['comment']);
             $sessionId = $this->trim_secur($_SESSION['userId']);
 
             if (!empty($comment)) {
-                $addComment = $commentManager->addComment($comment, $comment_id, $_SESSION['userId']);
+                $addComment = $commentManager->addComment($comment, $comment_id, $sessionId);
                 $flashSession->set('success', 'Le commentaire est bien ajouté');
 
                 } else {
-                    $flashSession->set('error',"Veuillez remplir tous les champs !");
+                    $errorMsg = "Veuillez remplir tous les champs !";
             }
         }
         else {
@@ -46,8 +46,9 @@ class Comments extends Controller {
         \header('Location: index.php?action=article&id='. $comment_id);
     }
 
-    public function dashboard() {
+    public function listReportComments() {
         $commentManager = new CommentManager();
+        parent::__construct();
 
         if ($this->is_admin()) {
             $reportedComments = $commentManager->listReportedCom();
@@ -55,9 +56,6 @@ class Comments extends Controller {
         } else {
             \header("Location: index.php");
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
         include 'view/Admin/dashboardView.php';
     }
 

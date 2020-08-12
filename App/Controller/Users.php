@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
-use App\Model\ArticleManager;
-use App\Model\CommentManager;
 use App\Session\FlashSession;
-use App\Controller\Controller;
 
 class Users extends Controller 
 {
@@ -20,7 +17,12 @@ class Users extends Controller
      */
     public function registerUser()
     {
+        parent::__construct();
         $userManager = new UserManager();
+        $username = "";
+        $email = "";
+        $pswd = "";
+        $pswd2 ="";
 
         if (isset($_POST['register'])) {
             
@@ -39,12 +41,11 @@ class Users extends Controller
                             if ($ifMailExist == 0) {
 
                                 if(strlen($pswd) >= 5) {
+
                                     if ($pswd == $pswd2) {
 
                                         $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
                                         $addUser = $userManager->addUSer($username, $email, $pswdHach);
-
-
                                         header('Location: index.php?action=connectUser');
                                     }
                                 } else{
@@ -63,9 +64,6 @@ class Users extends Controller
                 $errorMsg = "Veuillez remplir tous les champs ! ";
         }
     }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
         include 'view/Visitor/registerView.php';
     }
 
@@ -80,6 +78,10 @@ class Users extends Controller
     {
         $userManager = new UserManager();
         $flashSession = new FlashSession();
+        parent::__construct();
+
+        $email = "";
+        $pswd = "";
         
         if (isset($_POST['connect'])) {
             $email = $this->str_secur($_POST['email']);
@@ -97,15 +99,13 @@ class Users extends Controller
                     \header('Location: index.php');
                     $flashSession->set('success',"Connexion réussi !");
                 } else {
-                    $errorMsg = "Vos identifiants incorrects ! ";
+                    $errorMsg = "Vos identifiants sont incorrects ! ";
                 }
             } else {
-                $errorMsg = "Vos identifiants incorrects ! ";
+                $errorMsg = "Vos identifiants sont incorrects ! ";
             }
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
+
         include 'view/Visitor/connectView.php';
     }
 
@@ -114,15 +114,10 @@ class Users extends Controller
      */
     public function profilUser() 
     {
-        $userManager = new UserManager();
-        if ($this->is_connected()) {
-            $userInfo = $this->userInfo['id'];
-        } else {
-            \header("Location: index.php");
+        parent::__construct();
+        if (!$this->isConnected) {
+            header('Location: index.php');
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
         include 'view/Visitor/profilView.php';
     }
 

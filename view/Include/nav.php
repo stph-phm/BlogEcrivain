@@ -12,7 +12,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.php?action=listArticles">Tous les chapitres <span class="sr-only">(current)</span></a>
             </li>
-            <?php if ($isAdmin) { ?>
+            <?php if ($this->isAdmin) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-nav"  href="index.php?action=dashboard">Tableau de bord</a>
                 </li>
@@ -24,10 +24,10 @@
                         <i class="fas fa-plus"> &nbsp</i></span>Ajouter un chapitre </a>
                 </li>
             <?php } ?>
-            <?php if ($isConnected) { ?>
+            <?php if ($this->isConnected) {  ?>
                 <li class="nav-item">
                     <a class="nav-link text-nav" href="index.php?action=profil"><span>
-                        <i class="fas fa-user">&nbsp;</i></span>Votre profile</a>
+                        <i class="fas fa-user">&nbsp;</i></span>Votre profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-outline-danger my-2 my-sm-0 text-nav" href="index.php?action=logout"><span>
@@ -43,3 +43,16 @@
         </ul>
     </div>
 </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+

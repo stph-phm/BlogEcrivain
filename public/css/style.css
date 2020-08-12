@@ -1,85 +1,149 @@
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-body{
-    background: #000;
-    min-height: 200vh;
+* {
+     font-family: "Arial", "Segoe Script";
 }
 
-header{
-    position: relative;
-}
-image-header {
-    width: 100%;
-}
-
-img {
-    width: 90%;
+/*
+- PART HOME PAGE
+- HEADER
+*/
+.globalContent {
+     margin-top: 2em;
 }
 
-.global {
-    padding: 3em;
-    width: auto;
-    /*background-color: #343a40;*/
+.imageHeader {
+     margin-bottom: 1em;
 }
 
-nav {
-    margin-bottom: 2em;
+.imageHeader img {
+     width: 60em;
 }
 
-footer {
-    margin-top: 2em;
+.titleHeader {
+     font-weight: 600;
+     font-size: 4em;
 }
 
-.connect {
-    height: 48em ;
+.contentHeader {
+     width: 80%;
+     margin: 2em auto;
 }
 
-.form-div{
-    background-color: gainsboro;
-    margin: 50px auto;
-    padding: 10px;
-    border-radius: 5px;
-    width: 300px;
+/*
+- SECTION
+ */
+
+.titleSection {
+     font-weight: 500;
+     font-size: 2em;
+     margin-bottom: 1em;
 }
 
-form {
-    margin: 10px 5px;
+/*
+   ARTICLE
+ */
+
+article {
+     width: 80%;
+     margin: 2em auto;
 }
 
-.form_header{
-    display: flex;
-}
-.title, .nbChap{
-    margin-right: 1em;
+.articlePara p {
+     font-size: 1.5em;
 }
 
-.nbChap{
-    width: 10em;
+.buttonlink {
+     height: 2em;
 }
 
-#nbChap{
-    width: 10%;
-}
+/*
+LIST ARTICLE PAGE ASC
+ */
 
-.newArticle{
-    font-size: medium;
+.cardTitle {
+     font-size: 4em;
+     font-weight: 600;
 }
 
 .card {
-    padding: 1em ;
-    width: 80%;
-    margin: 1.5em auto;
-    box-shadow: 3px 3px 5px 6px #ccc;
-}
-.text-center.mb-3 {
-    font-size: 3.5em;
+     padding: 2em;
+     box-shadow: rgba(1, 2, 4, 0.65) 10px 5px 5px;
 }
 
-footer {
-    font-weight: 100;
+/*
+ARTICLE PAGE
+ */
+.articleGlobal {
+     margin: 0;
+     padding: 0;
+}
+
+.part {
+     margin: 4em;
+}
+
+.HeaderArticle {
+     margin: 2em;
+}
+
+.partArticle {
+     padding: 5em 5em;
+     border-radius: 30px;
+}
+
+/* DASHBOARD PAGE */
+.dashboard_header {
+     margin-bottom: 1em;
+     font-weight: 700;
+     font-size: 3em;
+}
+
+.dashboard_body {
+     margin: 1em;
+}
+
+
+/* CREATE ARTICLE PAGE*/
+.addArticleHeader {
+     font-weight: 700;
+     font-size: 4em;
+}
+
+.form-newArticle {
+     margin: 2em;
+}
+
+.form_header label {
+     font-size: 1.8em;
+}
+
+.form_content label {
+     font-size: 1.8em;
+}
+
+
+/*
+PROFILE PAGE
+ */
+
+.part-info-user.container.text-center {
+     height: 38.5em;
+     margin: 2em;
+}
+
+/*Connect & Register PAGE*/
+.connect {
+     height: 48em;
+}
+
+.form-div {
+     background-color: gainsboro;
+     margin: 50px auto;
+     padding: 2em;
+     border-radius: 5px;
+     width: 350px;
+}
+
+.connectTitle {
+     font-size: 3em;
+     font-weight: 700;
 }

@@ -4,18 +4,37 @@ namespace App\Session;
 
 class FlashSession {
 
-     public function get($key, $default = null) {
-          if (array_key_exists($key, $_SESSION)) {
-               return $_SESSION[$key];
-          }
-          return $default;
+     public function get() {
+          $_SESSION['flash'] = [];
+          $this->delete();
+          return $_SESSION['flash'] = [];
      }
 
-     public function set($key, $message) {
-          $_SESSION[$key] = $message;
+     public function set($type = 'error' OR 'success' OR 'info', $message) {
+          $_SESSION['flash'] = [
+              'message'     => $message,
+              'type'        => $type
+          ];
      }
 
-     public function delete($key) {
-          unset($_SESSION[$key]);
+     public function delete() {
+          unset($_SESSION['flash']);
      }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

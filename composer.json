@@ -12,6 +12,6 @@
         }
     },
     "require": {
-        
+        "plasticbrain/php-flash-messages": "^1.0"
     }
 }

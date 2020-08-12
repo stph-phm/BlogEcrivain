@@ -1,5 +1,83 @@
-@media screen and (max-width: 1024px) {
-     body {
-          background-color: black;
-     }
+@media all and (max-width :1440px ) {
+    p , .linkListArticle{
+        font-size: 18px;
+    }
+
+    /*HOME PAGE*/
+    .imageHeader img {
+        width: 80%;
+    }
+    .titleHeader {
+        font-size: 4em;
+        font-weight: 300;
+    }
+
+    .titleSection {
+        font-size: 40px;
+        font-weight: 200;
+    }
+
+    /*LIST ARTICLE ASC PAGE */
+    .cardTitle {
+        font-size: 45px;
+    }
+}
+
+@media all and (max-width: 850px) {
+    p , .linkListArticle{
+        font-size: 15px;
+    }
+
+    .titleHeader {
+        font-size: 50px;
+    }
+}
+
+@media all and  (max-width: 550px){
+
+    .partArticle {
+        padding: 1em;
+    }
+    .HeaderArticle .part {
+        margin: 0;
+    }
+    .ArticleTitle h1 {
+        font-size: 2em;
+        margin: 1em;
+    }
+
+    .titleHeader {
+        font-size: 40px;
+    }
+
+    /*Connect / Register */
+    .connectTitle {
+        font-size: 2em;
+        font-weight: 500;
+    }
+
+    .form-div {
+        width: 80%;
+        margin: 30px auto;
+    }
+}
+
+@media all and (max-width: 350px) {
+    p, .linkListArticle {
+        font-size: 13px;
+    }
+    h1.titleHeader {
+        font-size: 2em;
+    }
+
+    .ArticleTitle h1 {
+        font-size: 1.5em;
+        font-weight: 400;
+        margin: 0.5em;
+    }
+
+    section h2 {
+        font-size: 1.5em;
+    }
+
 }

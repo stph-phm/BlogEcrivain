@@ -18,9 +18,7 @@ class Articles extends Controller {
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
         $lastArticles = $articleManager->listLastArticles();
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
+        parent::__construct();
 
         include 'view/Visitor/homeView.php';
     }
@@ -32,20 +30,18 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
         $articles = $articleManager->listArticles();
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
+        parent::__construct();
         include 'view/Visitor/listArticlesView.php';
     }
 
     /**
      * show Article ()
      */
-    public function article()
+    public function displayArticle()
     {
         $articleManager = new ArticleManager();
         $commentManager = new CommentManager();
-
+        parent::__construct();
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
             $article = $articleManager->getArticle($article_id);
@@ -54,9 +50,7 @@ class Articles extends Controller {
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
+
         include 'view/Visitor/articleView.php';
     }
 
@@ -69,31 +63,29 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
         $flashSession = new FlashSession();
+        parent::__construct();
 
-        if($this->is_admin()) {
-            if (isset($_POST['submit'])) {
-                $title = $this->str_secur($_POST['title']);
-                $content = $this->nl2br_secur($_POST['content']);
-    
-                if (!empty($title) && !empty($content)) {
-                    $insertArticle = $articleManager->addArticle($title, $content);
-
-                    \header('Location: index.php?action=manageArticle');
-                    $flashSession->set('success', 'L\'article est bien ajouté !');
-                    
-                
-                } else {
-                    \header('Location: index.php?action=newArticle');
-                    $flashSession->set('error', 'Veuillez remplir tous les champs !');
-                    
-                }
-            }
-        } else {
-            header('Location: index.php');
+        if (!$this->is_admin()) {
+            \header('Location: index.php');
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
+
+        $article_title = "";
+        $content ="";
+
+        if (isset($_POST['submit'])) {
+            $article_title = $this->str_secur($_POST['title']);
+            $content = $this->nl2br_secur($_POST['content']);
+
+            if (!empty($article_title) && !empty($content)) {
+                $insertArticle = $articleManager->addArticle($article_title, $content);
+
+                $flashSession->set('success', 'L\'article est bien ajouté');
+                header('Location: index.php?action=manageArticle');
+            } else {
+                $errorMsg = "Veuillez remplir tous les champs !";
+            }
+        }
+
         include 'view/Admin/createArticleView.php';
     }
     
@@ -102,17 +94,15 @@ class Articles extends Controller {
     // Voir, Modifier et supprimer un article
     public function manageArticle()
     {
-        if($this->is_admin()) {
-            $articleManager = new ArticleManager();
-            $articles = $articleManager->listArticles();
-            $i = 1; 
-        } else {
-            \header('Location: index.php');
+        parent::__construct();
+        if (!$this->isAdmin) {
+            header('Location: index.php');
         }
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
-        include 'view/Admin/manageArticleView.php';
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->listArticles();
+        $i = 1;
+
+        include 'view/Admin/listArticlesAdminView.php';
     }
 
 
@@ -123,38 +113,37 @@ class Articles extends Controller {
     {
         $articleManager = new ArticleManager();
         $flashSession = new FlashSession();
+        parent::__construct();
+
+        if (!$this->isAdmin) {
+            \header('Location: index.php');
+        }
 
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $article_id = $this->trim_secur($_GET['id']);
             $article = $articleManager->getArticle($article_id);
-            $isAdmin = $this->is_admin();
 
-            if ($isAdmin) {
-                if (isset($_POST['submit'])) {
-                    $title = $this->str_secur($_POST['title']);
+            $article_title = $article['title'];
+            $content = $article['content'];
+
+            if (isset($_POST['submit'])) {
+                    $article_title = $this->str_secur($_POST['title']);
                     $content = $this->nl2br_secur($_POST['content']);
 
                     if (!empty($title) && !empty($content)) {
-                        $edit = $articleManager->editArticle($article_id, $title, $content);
+                        $edit = $articleManager->editArticle($article_id, $article_title, $content);
 
-                        header('Location: index.php?action=manageArticle');
                         $flashSession->set('success', 'Votre article est bien modifié !');
+                        header('Location: index.php?action=manageArticle');
                         
                     } else {
-                        header('Location: index.php?action=edit&id=' . $article_id);
                         $flashSession->set('error', 'Erreur ! Veuillez réessez !');
                     }
                 }
-            }else {
-                \header('Location: index.php');
-            }
         } else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
-
-        $isConnected = $this->is_connected();
-
-        include 'view/Admin/editView.php';
+        include 'view/Admin/editArticleView.php';
     }
 
 /**
@@ -183,10 +172,7 @@ class Articles extends Controller {
      */
     public function listArticleNav()
     {
-        $userInfo = $this->userInfo;
-        $isConnected = $this->is_connected();
-        $isAdmin = $this->is_admin();
-
+        parent::__construct();
         include 'view/Include/nav.php';
     }
 } 

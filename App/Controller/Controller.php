@@ -4,9 +4,20 @@ namespace App\Controller;
 
 use App\Model\UserManager;
 
+
 class Controller {
     public $userInfo;
+    public $isConnected;
+    public  $isAdmin;
 
+    /**
+     * Controller constructor.
+     */
+    function __construct() {
+        $this->isConnected = $this->is_connected();
+        $this->isAdmin = $this->is_admin();
+    }
+    
     // methodes pour savoir si le membre est connecter 
     public function is_connected()
     {

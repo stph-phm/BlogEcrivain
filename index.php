@@ -4,12 +4,10 @@ ini_set("display_errors", E_ALL);
 
 require_once 'vendor/autoload.php';
 
-
 use App\Controller\Users;
 use App\Controller\Articles;
 use App\Controller\Comments;
 use App\Controller\Error;
-
 
 $action = '';
 if (isset($_GET['action'])) {
@@ -28,11 +26,12 @@ try {
             break;
         case 'article':
             $article = new Articles;
-            $article->article();
+            $article->displayArticle();
             break;
         case 'deleteComment':
             $deleteComment = new Comments;
             $deleteComment->deleteComment();
+            break;
         case 'addComment':
             $comment = new Comments;
             $comment->addComment(); 
@@ -55,7 +54,7 @@ try {
             break;
         case 'dashboard':
             $dashboard = new Comments;
-            $dashboard->dashboard();
+            $dashboard->listReportComments();
             break;
         case 'validateReported':
             $validateReported = new Comments;
