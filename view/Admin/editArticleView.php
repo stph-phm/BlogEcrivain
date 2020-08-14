@@ -1,7 +1,7 @@
 <?php $title = "Modifier le chapitre :" ;  ?>
 <?php ob_start(); ?>
 
-<div class="global dashboard ">
+<div class="global editArtcleGlobale ">
 <a href="index.php?action=manageArticle"> Retour à la gestion des articles</a>
     <h1 class="text-center">Modifier un article </h1>
     <form action="index.php?action=edit&amp;id= <?= $article['id'] ?>" method="post">

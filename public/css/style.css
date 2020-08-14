@@ -101,24 +101,19 @@ ARTICLE PAGE
      margin: 1em;
 }
 
+/*EDIT ARTICLE PAGE*/
+.editArtcleGlobale {
+     margin: 2em;
+}
+
 
 /* CREATE ARTICLE PAGE*/
-.addArticleHeader {
-     font-weight: 700;
-     font-size: 4em;
-}
+
 
 .form-newArticle {
      margin: 2em;
 }
 
-.form_header label {
-     font-size: 1.8em;
-}
-
-.form_content label {
-     font-size: 1.8em;
-}
 
 
 /*

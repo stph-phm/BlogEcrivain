@@ -34,6 +34,10 @@
     <div class="alert alert-danger text-center"> <?= $errorMsg ?> </div>
     <?php } ?>
 
+    <?php if (isset($_SESSION['flash'])) {
+        $_SESSION['flash'];
+    } ?>
+
     <?= $content ?>
 
     <?php include 'Include/footer.php'; ?>

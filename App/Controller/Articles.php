@@ -79,7 +79,8 @@ class Articles extends Controller {
             if (!empty($article_title) && !empty($content)) {
                 $insertArticle = $articleManager->addArticle($article_title, $content);
 
-                $flashSession->set('success', 'L\'article est bien ajouté');
+                $flashSession->set('success', 'Votre article est ajouté!');
+
                 header('Location: index.php?action=manageArticle');
             } else {
                 $errorMsg = "Veuillez remplir tous les champs !";

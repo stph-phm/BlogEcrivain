@@ -4,22 +4,27 @@ namespace App\Session;
 
 class FlashSession {
 
+    
+
      public function get() {
-          $_SESSION['flash'] = [];
-          $this->delete();
-          return $_SESSION['flash'] = [];
+
+           $flash = $_SESSION['flash'] = array();
+
+          if ($_SESSION['flash'] = false) {
+              unset($_SESSION['flash']);
+          }
+          return $flash;
      }
 
-     public function set($type = 'error' OR 'success' OR 'info', $message) {
-          $_SESSION['flash'] = [
-              'message'     => $message,
-              'type'        => $type
+     // Permet d'ajouter un message dans le tableau Flash de la Session
+     public function set($type , $message) {
+          $_SESSION['flash']= [
+              'type'        => $type,
+              'message'     => $message
           ];
      }
 
-     public function delete() {
-          unset($_SESSION['flash']);
-     }
+
 }
 
 

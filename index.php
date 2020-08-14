@@ -13,6 +13,7 @@ $action = '';
 if (isset($_GET['action'])) {
     $action = trim($_GET['action']);
 }
+var_dump($_SESSION);
 
 try {
     switch ($action) {
