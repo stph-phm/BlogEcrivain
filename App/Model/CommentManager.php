@@ -35,10 +35,9 @@ class CommentManager extends Manager
 
 
     /**
-     * Add comment
-     * @param $comment
-     * @param $article_id
-     * @param $user_id
+     * @param $comment (string)
+     * @param $article_id (int)
+     * @param $user_id (int)
      * @return bool
      */
     public function addComment($comment, $article_id, $user_id)
@@ -74,8 +73,7 @@ class CommentManager extends Manager
     }
 
 
-    /**
-     * Report comments 
+    /** 
      * @param $comment_id (int)
      */
     public function reportComment($comment_id)
@@ -94,8 +92,7 @@ class CommentManager extends Manager
 
 
     /**
-     * Get all report comments 
-     * @return $reqComment
+     * @return $reqComment ()
      */
     public function listReportedCom()
     {
@@ -112,7 +109,6 @@ class CommentManager extends Manager
 
 
     /**
-     * Ignore comment report
      * @param $comment_id (int)
      */
     public function validateComReported($comment_id)
@@ -129,7 +125,6 @@ class CommentManager extends Manager
     }
 
     /**
-     * Delete comments 
      * @param $comment_id (int)
      */
     public function deleteComment($comment_id)

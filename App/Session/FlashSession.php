@@ -3,33 +3,23 @@
 namespace App\Session;
 
 class FlashSession {
-
     
-    //permet de récupérer les messages du tableau $_Session
-     public function get() {
 
-         //récupère la valeure de $_Session['flash'] et renvoie un tableau vie s'il n'existe pas
-         $flash = $_SESSION['flash'] ?? [];
+    public function getSession() {
 
-          if ($_SESSION['flash'] = false) {
-              unset($_SESSION['flash']);
-          }
-          return $flash;
-     }
+        //récupère la valeure de $_Session['flash'] et renvoie un tableau vide s'il n'existe pas
+        $flash = $_SESSION['flash'] ?? [];
+        unset($_SESSION['flash']);
+        return $flash;
+    }
 
-     // Permet d'ajouter un message dans le tableau Flash de la Session
-     public function set($type , $message) {
-         //récupère la valeure de $_Session['flash'] et renvoie un tableau vie s'il n'existe pas
-         $flash = $_SESSION['flash'] ?? [];
 
-         $flash[] = [
-             'type' => $type,
-             'message' => $message
-         ];
-
-         $_SESSION['flash'] = $flash;
-     }
-
+    public function addFlash($type , $message) {
+        $_SESSION['flash'] = [
+            'type' => $type,
+            'message' => $message
+        ];
+    }
 }
 
 

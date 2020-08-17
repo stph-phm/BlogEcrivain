@@ -13,7 +13,6 @@ class ArticleManager extends Manager
     public $chapter_order;
 
     /**
-     * Get all articles in the Database
      * @return array
      */
     public function listArticles()
@@ -47,7 +46,7 @@ class ArticleManager extends Manager
     }
 
     /**
-     * Get the last 5 articles in Database 
+
      * @return array
      */
     public function listLastArticles()
@@ -97,7 +96,6 @@ class ArticleManager extends Manager
     }
     
     /**
-     * Delete an article 
      * @param $article_id
      */
     public function deleteArticle($article_id)
@@ -109,43 +107,5 @@ class ArticleManager extends Manager
             $deleteArticle = $reqArticle->execute([
             'id' => $article_id
         ]);
-
-        // $reqArticle = $db->prepare('
-        //     DELETE FROM comments 
-        //     WHERE id = :id'); // article_id
-        // $deleteArticle = $reqArticle->execute([
-        //     'id' => $article_id
-        // ]);
-    }
-
-    public function nextArticle($article_id)
-    {
-        $db = $this->dbConnect();
-        $reqArticle = $db->prepare('
-          SELECT * 
-          FROM articles 
-          WHERE id > id
-          ORDER BY date_article DESC LIMIT 0,1 
-        ');
-
-        $reqArticle->execute([
-            'id' => $article_id
-        ]);
-        return $nextArticle = $reqArticle->fetch();
-    }
-
-    public function previousArticle($article_id)
-    {
-        $db = $this->dbConnect();
-        $reqArticle = $db->prepare('
-            SELECT * 
-            FROM articles
-            WHERE id  < :id 
-            ORDER BY date_article DESC LIMIT 0,1
-        ');
-        $reqArticle->execute([
-            'id' => $article_id
-        ]);
-        return $previousArticle = $reqArticle->fetch();
     }
 }

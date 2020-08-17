@@ -3,6 +3,7 @@
 namespace App\Controller; 
 
 use App\Model\UserManager;
+use App\Session\FlashSession;
 
 
 class Controller {
@@ -16,6 +17,7 @@ class Controller {
     function __construct() {
         $this->isConnected = $this->is_connected();
         $this->isAdmin = $this->is_admin();
+        $this->displayFlash = $this->displayFlash();
     }
     
     // methodes pour savoir si le membre est connecter 
@@ -73,5 +75,10 @@ class Controller {
 
     public function hashSession($valeur) {
         return hash("sha256", $valeur);
+    }
+
+    public function displayFlash() {
+        $flashSession = new FlashSession();
+        $flashSession->getSession();
     }
 }

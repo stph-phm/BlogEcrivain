@@ -7,78 +7,75 @@ use App\Session\FlashSession;
 
 class Users extends Controller 
 {
-    /**
-     * Check if the button exists
-     * Secrure the variables by calling different mothods in the Controller class 
-     * and using 2 functions the strlen and hashing the password 
-     * several test :  
-     * empty filds, number of caractères, existings username, valid mails and existing mails
-     * call the method to insert a new user
-     */
+        public function __construct() {
+        parent::__construct();
+
+    }
+    
     public function registerUser()
     {
-        parent::__construct();
         $userManager = new UserManager();
+        $flashSession = new FlashSession();
         $username = "";
         $email = "";
         $pswd = "";
         $pswd2 ="";
 
         if (isset($_POST['register'])) {
-            
             $username = $this->str_secur($_POST['username']);
             $email = $this->str_secur($_POST['email']);
             $pswd = $_POST['pswd'];
             $pswd2 =  $_POST['pswd2'];
-            
-            if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {   
+
+            if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
                 $ifUserExist = $userManager->getIfUsernameExist($username);
-                    if ($ifUserExist == 0 ) {
 
-                        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                if ($ifUserExist == 0) {
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        $ifMailExist = $userManager->getIfMailExist($email);
 
-                            $ifMailExist = $userManager->getIfMailExist($email);
-                            if ($ifMailExist == 0) {
+                        if ($ifMailExist == 0 ) {
 
-                                if(strlen($pswd) >= 5) {
+                            if (strlen($pswd) >= 5 ) {
 
-                                    if ($pswd == $pswd2) {
+                                if ($pswd == $pswd2) {
+                                    $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
+                                    $addUser = $userManager->addUSer($username, $email, $pswdHach);
 
-                                        $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
-                                        $addUser = $userManager->addUSer($username, $email, $pswdHach);
-                                        header('Location: index.php?action=connectUser');
-                                    }
-                                } else{
-                                    $errorMsg = "Le mot de passe doivent faire plus de 5 caractères !";
+                                    $flashSession->addFlash('success', 'Inscription réussi ! Vous pouvez connecter ! ');
+                                    header('Location: index.php?action=connectUser');
                                 }
-                            } else {
-                                $errorMsg = "Votre adresse mail est déja utilisé !" ;
+                                else {
+                                    $errorMsg = "Les mots de passe ne se correspondent pas !";
+                                }
                             }
-                        } else {
-                            $errorMsg = "Votre adresse mail n'est pas valide !";
+                            else {
+                                $errorMsg = "Le mot de passe doit faire plus de 5 caractères !";
+                            }
                         }
-                    } else {
-                        $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
+                        else {
+                            $errorMsg = "Votre adresse mail est déja utilisé !" ;
+                        }
                     }
-            } else {
+                    else {
+                        $errorMsg = "Votre adresse mail n'est pas valide !";
+                    }
+                }
+                else {
+                    $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
+                }
+            }
+            else {
                 $errorMsg = "Veuillez remplir tous les champs ! ";
+            }
         }
-    }
         include 'view/Visitor/registerView.php';
     }
 
-    /** Check if the button connect
-     * Secrure the variables by calling different mothods in the Controller class 
-     * and using 
-     * several test :  
-     * empty $empty & $pswd
-     * verify 
-     */
     public function connectUser()
     {
         $userManager = new UserManager();
         $flashSession = new FlashSession();
-        parent::__construct();
 
         $email = "";
         $pswd = "";
@@ -96,8 +93,8 @@ class Users extends Controller
                     $hashSession = $this->hashSession($_SESSION['userId']);
                     $_SESSION['hashUserId'] = $hashSession;
 
+                    $flashSession->addFlash('success',"Connexion réussi !");
                     \header('Location: index.php');
-                    $flashSession->set('success',"Connexion réussi !");
                 } else {
                     $errorMsg = "Vos identifiants sont incorrects ! ";
                 }
@@ -105,29 +102,20 @@ class Users extends Controller
                 $errorMsg = "Vos identifiants sont incorrects ! ";
             }
         }
-
         include 'view/Visitor/connectView.php';
     }
 
-    /**
-     * 
-     */
     public function profilUser() 
     {
-        parent::__construct();
         if (!$this->isConnected) {
             header('Location: index.php');
         }
         include 'view/Visitor/profilView.php';
     }
 
-    /**
-     * 
-     */
     public function logoutUser()
     {
         session_destroy();
         \header("Location: index.php?action=login");
-        include 'view/Include/nav.php';
     }
 }
