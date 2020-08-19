@@ -105,7 +105,7 @@ class Articles extends Controller {
             \header('Location: index.php');
         }
 
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
+        if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
             $article = $articleManager->getArticle($article_id);
 
@@ -113,22 +113,25 @@ class Articles extends Controller {
             $content = $article['content'];
 
             if (isset($_POST['submit'])) {
-                    $article_title = $this->str_secur($_POST['title']);
-                    $content = $this->nl2br_secur($_POST['content']);
+                $article_title = $this->str_secur($_POST['title']);
+                $content = $this->nl2br_secur($_POST['content']);
 
-                    if (!empty($title) && !empty($content)) {
-                        $edit = $articleManager->editArticle($article_id, $article_title, $content);
+                if (!empty($article_title) && !empty($content)) {
+                    $edit = $articleManager->editArticle($article_id, $article_title, $content);
 
-                        $flashSession->addFlash('success', 'Votre article est bien modifié !');
-                        header('Location: index.php?action=manageArticle');
-                        
-                    } else {
-                        $errorMsg = 'Erreur ! Veuillez réessayer';
-                    }
+                    $flashSession->addFlash('success', 'Votre article est bien modifié !');
+                    header('Location: index.php?action=manageArticle');
+
                 }
-        } else {
-            throw new \Exception("Aucun identifiant de billet envoyé");
+                else {
+                    $errorMsg = 'Erreur Veuillez réessayer !';
+                }
+            }
         }
+        else {
+            throw new \Exception('Aucun idantifiant de billet envoyé');
+        }
+        
         include 'view/Admin/editArticleView.php';
     }
 
