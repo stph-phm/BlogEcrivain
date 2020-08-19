@@ -114,15 +114,13 @@ ARTICLE PAGE
      margin: 2em;
 }
 
-
-
 /*
 PROFILE PAGE
  */
 
-.part-info-user.container.text-center {
-     height: 38.5em;
-     margin: 2em;
+.part-info-user{
+     height: 35em;
+     margin: 2em auto;
 }
 
 /*Connect & Register PAGE*/

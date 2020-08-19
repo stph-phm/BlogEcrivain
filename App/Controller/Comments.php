@@ -12,6 +12,9 @@ class Comments extends Controller {
     public $comment;
     public $comment_id;
 
+    /**
+     * Comments constructor.
+     */
     public function __construct() {
         parent::__construct();
     }

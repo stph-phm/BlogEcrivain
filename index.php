@@ -13,14 +13,9 @@ $action = '';
 if (isset($_GET['action'])) {
     $action = trim($_GET['action']);
 }
-var_dump($_SESSION);
 
 try {
     switch ($action) {
-        case 'home':
-            $lastArticles = new Articles;
-            $lastArticles->home();
-            break;
         case 'listArticles':
             $articles= new Articles;
             $articles->listArticles();
@@ -81,14 +76,11 @@ try {
             $deleteArticle = new Articles;
             $deleteArticle->deleteArticle();
             break;
-        case 'nav':
-            $listArticle = new Articles;
-            $listArticle->listArticleNav();
-            break;
         case 'logout':
             $logout = new Users;
             $logout->logoutUser();
             break;
+        case 'home':
         default:
             $lastArticles = new Articles;
             $lastArticles->home();

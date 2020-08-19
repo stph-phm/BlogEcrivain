@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 
-<div class="part-info-user container text-center m-1">
+<div class="part-info-user text-center ">
     <h1>Bonjour <?= $this->userInfo['username'] ?></h1>
 
     <p>adresse mail : <?= $this->userInfo['email_user'] ?></p>

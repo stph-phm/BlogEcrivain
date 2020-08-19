@@ -10,6 +10,8 @@ class Controller {
     public $userInfo;
     public $isConnected;
     public  $isAdmin;
+    public $displayFlash;
+
 
     /**
      * Controller constructor.
@@ -18,9 +20,11 @@ class Controller {
         $this->isConnected = $this->is_connected();
         $this->isAdmin = $this->is_admin();
         $this->displayFlash = $this->displayFlash();
-    }
-    
-    // methodes pour savoir si le membre est connecter 
+        }
+
+    /**
+     * @return false|mixed
+     */
     public function is_connected()
     {
         if (isset($_SESSION['userId']) && $this->ifHashSession()) {
@@ -32,7 +36,9 @@ class Controller {
         return $this->userInfo;
     }
 
-    // méthode pour savoir si il est admin 
+    /**
+     * @return bool
+     */
     public function is_admin()
     {
         
@@ -47,6 +53,9 @@ class Controller {
         }
     }
 
+    /**
+     * @return bool
+     */
     public function ifHashSession() {
 
         $hashSession = $this->hashSession($_SESSION['userId']);
@@ -58,27 +67,50 @@ class Controller {
             }
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function str_secur($string)
     {
         return trim(htmlspecialchars($string));
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function trim_secur($string)
     {
         return trim($string);
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function nl2br_secur($string)
     {
         return nl2br($string);
     }
 
+    /**
+     * @param $valeur
+     * @return string
+     */
     public function hashSession($valeur) {
         return hash("sha256", $valeur);
     }
 
+
+
     public function displayFlash() {
-        $flashSession = new FlashSession();
-        $flashSession->getSession();
+        if (isset($_SESSION['flash'])) {
+            $flashSession = new FlashSession();
+            return$flashSession->getSession();
+        }
+        return [];
     }
+
+
 }

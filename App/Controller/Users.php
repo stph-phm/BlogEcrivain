@@ -7,9 +7,11 @@ use App\Session\FlashSession;
 
 class Users extends Controller 
 {
-        public function __construct() {
+    /**
+     * Users constructor.
+     */
+    public function __construct() {
         parent::__construct();
-
     }
     
     public function registerUser()

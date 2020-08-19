@@ -10,16 +10,19 @@ use App\Session\FlashSession;
 
 class Articles extends Controller {
 
+    /**
+     * Articles constructor.
+     */
     public function __construct() {
         parent::__construct();
     }
-    
+
+
     public function home()
     {
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
         $lastArticles = $articleManager->listLastArticles();
-
         include 'view/Visitor/homeView.php';
     }
 
@@ -32,7 +35,6 @@ class Articles extends Controller {
         $articles = $articleManager->listArticles();
         include 'view/Visitor/listArticlesView.php';
     }
-
 
     public function displayArticle()
     {
@@ -54,7 +56,7 @@ class Articles extends Controller {
         $articleManager = new ArticleManager();
         $flashSession = new FlashSession();
 
-        if (!$this->is_admin()) {
+        if (!$this->isAdmin) {
             \header('Location: index.php');
         }
 
@@ -122,7 +124,6 @@ class Articles extends Controller {
                         
                     } else {
                         $errorMsg = 'Erreur ! Veuillez réessayer';
-                        $flashSession->addFlash('error', 'Erreur ! Veuillez réessez !');
                     }
                 }
         } else {

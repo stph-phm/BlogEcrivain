@@ -34,13 +34,17 @@
     <div class="alert alert-danger text-center"> <?= $errorMsg ?> </div>
     <?php } ?>
 
-    <?php  if (isset($_SESSION['flash'])) {
-        foreach ($this->displayFlash as $flash) { ?>
-            <div class="alert alert-<?= $flash['type'] ?> ">
-                <p> <?= $flash['message'] ?> </p>
-            </div>
-        <?php } ?>
-<?php  } ?>
+
+
+    <?php
+    $flashMessages = $this->displayFlash;
+
+    if (!empty($flashMessages)) {
+        foreach ($flashMessages as $flash) { ?>
+            <div class="alert alert-<?=$flash['type'] ?> text-center"> <?= $flash['message'] ?> </div>
+        <?php }
+    }
+    ?>
     <?= $content ?>
 
     <?php include 'Include/footer.php'; ?>
