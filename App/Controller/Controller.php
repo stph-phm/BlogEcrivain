@@ -9,7 +9,7 @@ use App\Session\FlashSession;
 class Controller {
     public $userInfo;
     public $isConnected;
-    public  $isAdmin;
+    public $isAdmin;
     public $displayFlash;
 
 
@@ -107,10 +107,8 @@ class Controller {
     public function displayFlash() {
         if (isset($_SESSION['flash'])) {
             $flashSession = new FlashSession();
-            return$flashSession->getSession();
+            return $flashSession->getSession();
         }
         return [];
     }
-
-
 }

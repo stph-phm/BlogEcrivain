@@ -3,8 +3,6 @@
 namespace App\Session;
 
 class FlashSession {
-
-
     /**
      * @param $type
      * @param $message
@@ -23,9 +21,9 @@ class FlashSession {
      */
     public function getSession()
     {
-       $flash = $_SESSION['flash'] ?? [];
-       unset($_SESSION['flash']);
-       return $flash;
+        $flash = $_SESSION['flash'] ?? [];
+        unset($_SESSION['flash']);
+        return $flash;
     }
 }
 

@@ -14,7 +14,8 @@
 
             <div class="ArticleContent">
                 <p class="ArticleContent"> <?= nl2br($article['content']) ?> </p>
-                <p class="ArticleContent text-right"> publié le : <?=  date_format(date_create($article['date_article']), 'd/m/Y à H:i') ?></p>
+                <p class="ArticleContent text-right"> publié le :
+                    <?=  date_format(date_create($article['date_article']), 'd/m/Y à H:i') ?></p>
             </div>
         </div>
     </div>
@@ -33,50 +34,54 @@
         </form>
         <?php } else { ?>
 
-            <div class="jumbotron">
-                <p class="lead text-center"> <a href="index.php?action=login" class="text-center">Connectez-vous pour pouvoir commenter</a>
-                </p>
-            </div>
+        <div class="jumbotron">
+            <p class="lead text-center"> <a href="index.php?action=login" class="text-center">Connectez-vous pour
+                    pouvoir commenter</a>
+            </p>
+        </div>
 
         <?php  } ?>
         <?php if(isset($errorMsg)) { ?>
-            <div class="alert alert-danger text-center"> <?= $errorMsg ?> </div>
+        <div class="alert alert-danger text-center"> <?= $errorMsg ?> </div>
         <?php } ?>
 
         <?php foreach ($listComment as $comment) { ?>
-            <div class="container">
-                <div class="d-flex">
-                    <p>
-                        <strong> <?= $comment['pseudo'] ?> </strong>
-                        <?= date_format(date_create($comment['date_comment']), 'd/m/Y à H:i') ?> : &nbsp;
-                    </p>
+        <div class="container">
+            <div class="d-flex">
+                <p>
+                    <strong> <?= $comment['pseudo'] ?> </strong>
+                    <?= date_format(date_create($comment['date_comment']), 'd/m/Y à H:i') ?> : &nbsp;
+                </p>
 
-                    <p>
-                        <?php if ($comment['reported'] == 0) { ?>
+                <p>
+                    <?php if ($comment['reported'] == 0) { ?>
 
-                        <a class="buttonlink btn btn-secondary btn-sm mr-2" href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>"
-                           title="Signaler le commentaire"><span><i class="fas fa-flag"></i></span>&nbsp;</a>
+                    <a class="buttonlink btn btn-secondary btn-sm mr-2"
+                        href="index.php?action=reportComment&amp;id= <?= $comment['id'] ?>"
+                        title="Signaler le commentaire"><span><i class="fas fa-flag"></i></span>&nbsp;</a>
 
-                        <?php if ($this->isAdmin) { ?>
-                            <a class="linkDelete btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
-                                <i class="fas fa-minus-circle"></i>
-                            </a>
-                        <?php }  ?>
-                    </p>
+                    <?php if ($this->isAdmin) { ?>
+                    <a class="linkDelete buttonlink  btn btn-danger btn-sm "
+                        href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
+                        <i class="fas fa-minus-circle"></i>
+                    </a>
+                    <?php }  ?>
+                </p>
 
-                    <?php } else { ?>
-                        <p class="text-danger mr-2"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
-                        <?php if($this->isAdmin)  { ?>
-                            <a class="linkDelete btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
-                                <i class="fas fa-minus-circle"></i>
-                            </a>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-
-                <p> <?=  $comment['comment'] ?> </p>
-                <hr>
+                <?php } else { ?>
+                <p class="text-danger mr-2"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
+                <?php if($this->isAdmin)  { ?>
+                <a class="linkDelete buttonlink  btn btn-danger btn-sm "
+                    href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
+                    <i class="fas fa-minus-circle"></i>
+                </a>
+                <?php } ?>
+                <?php } ?>
             </div>
+
+            <p> <?=  $comment['comment'] ?> </p>
+            <hr>
+        </div>
         <?php } ?>
     </section>
 </div>
