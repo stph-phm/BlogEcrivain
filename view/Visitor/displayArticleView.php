@@ -58,7 +58,7 @@
                            title="Signaler le commentaire"><span><i class="fas fa-flag"></i></span>&nbsp;</a>
 
                         <?php if ($this->isAdmin) { ?>
-                            <a class="buttonlink btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
+                            <a class="linkDelete btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
                                 <i class="fas fa-minus-circle"></i>
                             </a>
                         <?php }  ?>
@@ -67,7 +67,7 @@
                     <?php } else { ?>
                         <p class="text-danger mr-2"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
                         <?php if($this->isAdmin)  { ?>
-                            <a class="buttonlink btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
+                            <a class="linkDelete btn btn-danger btn-sm " href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
                                 <i class="fas fa-minus-circle"></i>
                             </a>
                         <?php } ?>
