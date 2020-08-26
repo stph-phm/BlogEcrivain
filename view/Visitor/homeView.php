@@ -29,7 +29,7 @@
 
         <article>
             <?php foreach ($lastArticles as  $lastArticle) { ?>
-                <div class="article-global">
+                <div class="article-global card">
                     <div class="article-title">
                         <h2>
                             <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>"
@@ -37,7 +37,7 @@
                         </h2> &ensp;
                     </div>
 
-                    <div class="article-content card ">
+                    <div class="article-content  ">
                         <p class="articlePara card-body">
                             <?= date_format(date_create($lastArticle['date_article']), 'd/m/Y à H:i') ?>
                         </p>
