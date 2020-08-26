@@ -5,7 +5,7 @@
 <div class="globalContent container-fluid">
     <header class="header text-center">
         <div class="imageHeader">
-            <img src="public/image/image1.jpg" alt="route alaska" >
+            <img src="public/image/image1.jpg" alt="route alaska">
         </div>
         <div class="ContentHeader">
             <h1 class="titleHeader">Billet simple pour l'Alaska</h1>
@@ -29,27 +29,25 @@
 
         <article>
             <?php foreach ($lastArticles as  $lastArticle) { ?>
-                <div class="article-global card">
+            <div class="article-global">
+                <div class="article-global">
                     <div class="article-title">
                         <h2>
                             <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>"
-                               class="text-dark"><?= $lastArticle['title'] ?> </a>
+                                class="text-dark"><?= $lastArticle['title'] ?> </a>
                         </h2> &ensp;
                     </div>
 
-                    <div class="article-content  ">
-                        <p class="articlePara card-body">
+                    <div class="article-content">
+                        <p class="articlePara ">
                             <?= date_format(date_create($lastArticle['date_article']), 'd/m/Y à H:i') ?>
-                        </p>
-                        <p class="articlePara card-body">
                             <?= mb_substr($lastArticle['content'], 0, 400) ?> ...
-                            <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" role="button" class="link-read-more">
-                                Lire la suite
-                            </a>
-                        </p>
+                            <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" role="button"
+                                class="link-read-more">Lire la suite</a>
                     </div>
                 </div>
-                <hr>
+            </div>
+            <hr>
 
             <?php } ?>
         </article>
