@@ -37,11 +37,11 @@
                         </h2> &ensp;
                     </div>
 
-                    <div class="article-content">
-                        <p class="articlePara">
+                    <div class="article-content card ">
+                        <p class="articlePara card-body">
                             <?= date_format(date_create($lastArticle['date_article']), 'd/m/Y à H:i') ?>
                         </p>
-                        <p class="articlePara">
+                        <p class="articlePara card-body">
                             <?= mb_substr($lastArticle['content'], 0, 400) ?> ...
                             <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" role="button" class="link-read-more">
                                 Lire la suite
