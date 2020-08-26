@@ -67,6 +67,7 @@ class Controller {
             }
     }
 
+
     /**
      * @param $string
      * @return string
@@ -101,7 +102,6 @@ class Controller {
     public function hashSession($valeur) {
         return hash("sha256", $valeur);
     }
-
 
 
     public function displayFlash() {

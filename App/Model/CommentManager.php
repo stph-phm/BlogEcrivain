@@ -5,14 +5,11 @@ use App\Model\Manager;
 
 class CommentManager extends Manager
 {
-    public $comment_id;
+
     public $comment;
-    public $date_com;
-    public $reported;
-    public $article_id;
-    public $user_id;
 
     /**
+     * DESC
      * @param $article_id
      * @return array
      */
@@ -47,7 +44,7 @@ class CommentManager extends Manager
             INSERT INTO comments(comment,reported, date_comment, article_id, user_id) 
             VALUES (:comment, 0, NOW(), :article_id, :user_id)');
 
-        return $addComment = $comments->execute([
+        return $comments->execute([
             'comment' => $comment,
             'article_id' => $article_id,
             'user_id' => $user_id
@@ -72,7 +69,6 @@ class CommentManager extends Manager
         return $commentById = $reqComment->fetch();
     }
 
-
     /** 
      * @param $comment_id (int)
      */
@@ -85,14 +81,12 @@ class CommentManager extends Manager
             SET reported = 1 
             WHERE id = :id');
 
-        $commentReported = $reqComment->execute([
+        $reqComment->execute([
             'id' => $comment_id
         ]);
     }
-
-
     /**
-     * @return $reqComment ()
+
      */
     public function listReportedCom()
     {
@@ -107,7 +101,6 @@ class CommentManager extends Manager
         return  $reportedComments = $reqComment->fetchAll();
     }
 
-
     /**
      * @param $comment_id (int)
      */
@@ -119,7 +112,7 @@ class CommentManager extends Manager
             SET reported = 0 
             WHERE id = :id');
 
-        $validateReport =  $reqComment->execute([
+        $reqComment->execute([
             'id' => $comment_id
         ]);
     }
@@ -134,7 +127,7 @@ class CommentManager extends Manager
             'DELETE FROM comments 
             WHERE id = :id');
         
-        $deleteCom = $reqComment->execute([
+        $reqComment->execute([
             'id' => $comment_id
         ]);
     }

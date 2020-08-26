@@ -16,8 +16,6 @@ class Users extends Controller
     
     public function registerUser()
     {
-        $userManager = new UserManager();
-        $flashSession = new FlashSession();
         $username = "";
         $email = "";
         $pswd = "";
@@ -26,45 +24,49 @@ class Users extends Controller
         if (isset($_POST['register'])) {
             $username = $this->str_secur($_POST['username']);
             $email = $this->str_secur($_POST['email']);
-            $pswd = $_POST['pswd'];
-            $pswd2 =  $_POST['pswd2'];
+            $pswd = $this->str_secur($_POST['pswd']);
+            $pswd2 =  $this->str_secur($_POST['pswd2']);
 
+            //is not
             if (!empty($username) && !empty($email) && !empty($pswd) && !empty($pswd2)) {
-                $ifUserExist = $userManager->getIfUsernameExist($username);
+                $userManager = new UserManager();
+                $userByUsername = $userManager->getUserByUsername($username);
 
-                if ($ifUserExist == 0) {
+                //is not
+                if (!$userByUsername) {
                     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        $ifMailExist = $userManager->getIfMailExist($email);
+                        $userByEmail = $userManager->getUserByEmail($email);
 
-                        if ($ifMailExist == 0 ) {
-
-                            if (strlen($pswd) >= 5 ) {
-
+                        //is not
+                        if (!$userByEmail) {
+                            if (strlen($this->trim_secur($pswd)) >= 5 ) {
                                 if ($pswd == $pswd2) {
-                                    $pswdHach = password_hash($pswd, PASSWORD_DEFAULT);
-                                    $addUser = $userManager->addUSer($username, $email, $pswdHach);
+                                    $pswdHasch = password_hash($pswd, PASSWORD_DEFAULT);
+                                    $userManager->addUser($username, $email, $pswdHasch);
 
-                                    $flashSession->addFlash('success', 'Inscription réussi ! Vous pouvez connecter ! ');
-                                    header('Location: index.php?action=connectUser');
+                                    $flashSession = new FlashSession();
+                                    $flashSession->addFlash('success', 'Inscription réussie ! Connectez-vous !');
+
+                                    header('Location: index.php?action=login');
                                 }
                                 else {
                                     $errorMsg = "Les mots de passe ne se correspondent pas !";
                                 }
                             }
                             else {
-                                $errorMsg = "Le mot de passe doit faire plus de 5 caractères !";
+                                $errorMsg = "Le mot de passe doit faire plus de 5 caractère";
                             }
                         }
                         else {
-                            $errorMsg = "Votre adresse mail est déja utilisé !" ;
+                            $errorMsg = "L'adresse mail est déjà utilisée ! Veuillez choisi un autre !";
                         }
                     }
                     else {
-                        $errorMsg = "Votre adresse mail n'est pas valide !";
+                        $errorMsg = " L'adresse mail n'est pas valide! Veuillez recommencer !";
                     }
                 }
                 else {
-                    $errorMsg = "Votre identifiant est deja pris, veuillez choisir un nouveau";
+                    $errorMsg = "L'identifiant existe déjà, veuillez choisir un nouvel !";
                 }
             }
             else {
@@ -76,9 +78,6 @@ class Users extends Controller
 
     public function connectUser()
     {
-        $userManager = new UserManager();
-        $flashSession = new FlashSession();
-
         $email = "";
         $pswd = "";
         
@@ -87,7 +86,8 @@ class Users extends Controller
             $pswd = $this->trim_secur($_POST['pswd']);
     
             if (!empty($email) && !empty($pswd)) {
-                $userByEmail = $userManager->getUserByEmail($email);
+                $userManager = new UserManager();
+                $userByEmail = $userByEmail = $userManager->getUserByEmail($email);
                 $pswdCorrect = password_verify($pswd, $userByEmail['password_user']);
 
                 if ($pswdCorrect) {
@@ -95,6 +95,7 @@ class Users extends Controller
                     $hashSession = $this->hashSession($_SESSION['userId']);
                     $_SESSION['hashUserId'] = $hashSession;
 
+                    $flashSession = new FlashSession();
                     $flashSession->addFlash('success',"Connexion réussi !");
                     \header('Location: index.php');
                 } else {

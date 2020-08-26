@@ -6,11 +6,9 @@ use App\Model\Manager;
 
 class ArticleManager extends Manager
 {
-    public $article_id;
+
     public $title;
     public $content;
-    public $date_article;
-    public $chapter_order;
 
     /**
      * @return array
@@ -69,7 +67,7 @@ class ArticleManager extends Manager
         INSERT INTO articles (title,content, date_article) 
             VALUES(:title, :content, NOW())');
 
-        $addArticle =  $reqArticle->execute([
+        $reqArticle->execute([
             'title' => $title,
             'content' => $content
         ]);
@@ -77,7 +75,7 @@ class ArticleManager extends Manager
 
 
     /**
-     * Edit an article 
+     * Edit an article
      * @param $article_id (int), $title, $content
      */
     public function editArticle($article_id, $title, $content)
@@ -87,14 +85,14 @@ class ArticleManager extends Manager
             'UPDATE articles 
             SET title = :title, content = :content
             WHERE id = :id ');
-            
-        $edit = $reqArticle->execute([
-            "id" => $article_id, 
+
+        $reqArticle->execute([
+            "id" => $article_id,
             "title" => $title,
             "content" => $content
             ]);
     }
-    
+
     /**
      * @param $article_id
      */
@@ -104,7 +102,7 @@ class ArticleManager extends Manager
         $reqArticle = $db->prepare('
             DELETE FROM articles
             WHERE id = :id');
-            $deleteArticle = $reqArticle->execute([
+        $reqArticle->execute([
             'id' => $article_id
         ]);
     }

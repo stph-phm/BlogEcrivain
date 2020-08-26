@@ -6,7 +6,7 @@
     <table class="manageArticle table">
         <thead class=" table thead-dark">
             <tr>
-                <th class=" title-form-article text-center align-midle ">#</th>
+                <th class=" title-form-article text-center align-midle ">Nbre de charpitre</th>
                 <th class=" title-form-article text-center align-midle">titre du chapitre </th>
                 <th class=" title-form-article text-center align-midle"> Contenue de l'article </th>
                 <th class=" title-form-article text-center align-midle">Date de publication</th>
@@ -16,9 +16,9 @@
         <tbody>
             <?php foreach ($articles as $article) { ?>
             <tr>
-                <td> <?= $i++ ?></td>
+                <td class="text-center"> <?= $i++ ?></td>
                 <td width=200><?= htmlspecialchars($article['title']) ?> </td>
-                <td ><?= nl2br(substr($article['content'], 0, 150)) ?> </td>
+                <td ><?= mb_substr($article['content'], 0, 150) ?>... </td>
                 <td> <?= date_format(date_create($article['date_article']), 'd/m/Y') ?> </td>
                 <td class="table-action" width=400>
                     <a href="index.php?action=article&amp;id= <?= $article['id'] ?>" class="btn btn-secondary"><span> <i

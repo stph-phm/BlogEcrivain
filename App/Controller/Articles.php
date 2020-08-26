@@ -38,12 +38,19 @@ class Articles extends Controller {
 
     public function displayArticle()
     {
-        $articleManager = new ArticleManager();
-        $commentManager = new CommentManager();
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
+
+            $articleManager = new ArticleManager();
             $article = $articleManager->getArticle($article_id);
-            $listComment = $commentManager->listComments($article_id);
+
+            if (!$article) {
+                throw new \Exception('Aucun identifiant de billet envoyé');
+            }
+            else {
+                $commentManager = new CommentManager();
+                $listComment = $commentManager->listComments($article_id);
+            }
         } 
         else {
             throw new \Exception('Aucun identifiant de billet envoyé');
@@ -53,9 +60,6 @@ class Articles extends Controller {
 
     public function addArticle()
     {
-        $articleManager = new ArticleManager();
-        $flashSession = new FlashSession();
-
         if (!$this->isAdmin) {
             \header('Location: index.php');
         }
@@ -65,11 +69,13 @@ class Articles extends Controller {
 
         if (isset($_POST['submit'])) {
             $article_title = $this->str_secur($_POST['title']);
-            $content = $this->nl2br_secur($_POST['content']);
+            $content = $this->str_secur($this->nl2br_secur($_POST['content']));
 
             if (!empty($article_title) && !empty($content)) {
-                $insertArticle = $articleManager->addArticle($article_title, $content);
+                $articleManager = new ArticleManager();
+                $articleManager->addArticle($article_title, $content);
 
+                $flashSession = new FlashSession();
                 $flashSession->addFlash('success', 'Votre article est ajouté!');
 
                 header('Location: index.php?action=manageArticle');
@@ -77,6 +83,7 @@ class Articles extends Controller {
                 $errorMsg = "Veuillez remplir tous les champs !";
             }
         }
+        
         include 'view/Admin/createArticleView.php';
     }
 
@@ -85,10 +92,10 @@ class Articles extends Controller {
      */
     public function manageArticle()
     {
-        
         if (!$this->isAdmin) {
             header('Location: index.php');
         }
+
         $articleManager = new ArticleManager();
         $articles = $articleManager->listArticles();
         $i = 1;
@@ -96,58 +103,78 @@ class Articles extends Controller {
         include 'view/Admin/listArticlesView.php';
     }
 
+    // Only administrators
     public function editArticle()
     {
-        $articleManager = new ArticleManager();
-        $flashSession = new FlashSession();
-
         if (!$this->isAdmin) {
             \header('Location: index.php');
         }
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $article_id = $this->trim_secur($_GET['id']);
+
+            $articleManager = new ArticleManager();
             $article = $articleManager->getArticle($article_id);
+            //is not
+            if (!$article) {
+                throw new \Exception('Aucun identifiant de billet envoyé');
+            }
+            else {
+                $article_title = $article['title'];
+                $content = $article['content'];
 
-            $article_title = $article['title'];
-            $content = $article['content'];
+                if (isset($_POST['submit'])) {
+                    $article_title = $this->str_secur($_POST['title']);
+                    $content = $this->str_secur($this->nl2br_secur($_POST['content']));
 
-            if (isset($_POST['submit'])) {
-                $article_title = $this->str_secur($_POST['title']);
-                $content = $this->nl2br_secur($_POST['content']);
+                    if (!empty($article_title) && !empty($content)) {
+                        $articleManager = new ArticleManager();
+                        $articleManager->editArticle($article_id, $article_title, $content);
 
-                if (!empty($article_title) && !empty($content)) {
-                    $edit = $articleManager->editArticle($article_id, $article_title, $content);
-
-                    $flashSession->addFlash('success', 'Votre article est bien modifié !');
-                    header('Location: index.php?action=manageArticle');
-
-                }
-                else {
-                    $errorMsg = 'Erreur Veuillez réessayer !';
+                        $flashSession = new FlashSession();
+                        $flashSession->addFlash('success', 'Votre article est bien modifié !');
+                        header('Location: index.php?action=manageArticle');
+                    }
+                    else {
+                        $errorMsg = 'Erreur Veuillez réessayer !';
+                    }
                 }
             }
         }
         else {
-            throw new \Exception('Aucun idantifiant de billet envoyé');
+            throw new \Exception("Aucun identifiant de billet envoyé");
         }
-        
+
         include 'view/Admin/editArticleView.php';
     }
 
+    // Only administrators
     public function deleteArticle()
     {
-        $articleManager = new ArticleManager();
-        $flashSession = new FlashSession();
+        if (!$this->isAdmin) {
+            header('Location: index.php');
+        }
 
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $article_id = $this->trim_secur($_GET['id']);
 
-            $deleteArticle = $articleManager->deleteArticle($article_id);
-            $flashSession->addFlash('info', 'Votre article est supprimé');
+            $articleManager = new ArticleManager();
+            $article = $articleManager->getArticle($article_id);
 
-            header('Location: index.php?action=manageArticle');            
-        } else {
+            // is not
+            if (!$article) {
+                throw new \Exception('Aucun identifiant de billet envoyé');
+            }
+            else {
+                $articleManager->deleteArticle($article_id);
+
+                $flashSession = new FlashSession();
+                $flashSession->addFlash('info', 'Votre article est supprimé');
+
+                header('Location: index.php?action=manageArticle');
+            }
+        }
+        else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }

@@ -71,10 +71,12 @@
                 <?php } else { ?>
                 <p class="text-danger mr-2"><span><i class="fas fa-flag"></i></span>&nbsp;</p>
                 <?php if($this->isAdmin)  { ?>
+
                 <a class="linkDelete buttonlink  btn btn-danger btn-sm "
                     href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
                     <i class="fas fa-minus-circle"></i>
                 </a>
+                
                 <?php } ?>
                 <?php } ?>
             </div>
