@@ -69,7 +69,7 @@ class Articles extends Controller {
 
         if (isset($_POST['submit'])) {
             $article_title = $this->str_secur($_POST['title']);
-            $content = $this->str_secur($this->nl2br_secur($_POST['content']));
+            $content = $this->trim_secur($this->nl2br_secur($_POST['content']));
 
             if (!empty($article_title) && !empty($content)) {
                 $articleManager = new ArticleManager();
@@ -83,7 +83,6 @@ class Articles extends Controller {
                 $errorMsg = "Veuillez remplir tous les champs !";
             }
         }
-        
         include 'view/Admin/createArticleView.php';
     }
 

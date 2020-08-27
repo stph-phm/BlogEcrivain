@@ -5,13 +5,11 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Session\FlashSession;
 
-
 class Controller {
     public $userInfo;
     public $isConnected;
     public $isAdmin;
     public $displayFlash;
-
 
     /**
      * Controller constructor.
@@ -21,6 +19,28 @@ class Controller {
         $this->isAdmin = $this->is_admin();
         $this->displayFlash = $this->displayFlash();
         }
+
+    /**
+     * @param $valeur
+     * @return string
+     */
+    public function hashSession($valeur) {
+        return hash("sha256", $valeur);
+    }
+
+    /**
+     * @return bool
+     */
+    public function ifHashSession() {
+
+        $hashSession = $this->hashSession($_SESSION['userId']);
+        if ($hashSession == $_SESSION['hashUserId']) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     /**
      * @return false|mixed
@@ -53,20 +73,18 @@ class Controller {
         }
     }
 
+
+
     /**
-     * @return bool
+     * @return array|mixed
      */
-    public function ifHashSession() {
-
-        $hashSession = $this->hashSession($_SESSION['userId']);
-            if ($hashSession == $_SESSION['hashUserId']) {
-                return true;
-                
-            } else {
-                return false;
-            }
+    public function displayFlash() {
+        if (isset($_SESSION['flash'])) {
+            $flashSession = new FlashSession();
+            return $flashSession->getSession();
+        }
+        return [];
     }
-
 
     /**
      * @param $string
@@ -93,22 +111,5 @@ class Controller {
     public function nl2br_secur($string)
     {
         return nl2br($string);
-    }
-
-    /**
-     * @param $valeur
-     * @return string
-     */
-    public function hashSession($valeur) {
-        return hash("sha256", $valeur);
-    }
-
-
-    public function displayFlash() {
-        if (isset($_SESSION['flash'])) {
-            $flashSession = new FlashSession();
-            return $flashSession->getSession();
-        }
-        return [];
     }
 }

@@ -1,11 +1,9 @@
 <?php
 namespace App\Controller;
 
-
 use App\Model\CommentManager;
 use App\Session\FlashSession;
 use mysql_xdevapi\Exception;
-
 
 class Comments extends Controller {
     public $article_id;
