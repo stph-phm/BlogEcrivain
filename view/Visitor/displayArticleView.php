@@ -4,7 +4,15 @@
 <div class="articleGlobal">
     <div class="HeaderArticle">
         <div class="part">
-            <p><a href="index.php?action=listArticles">Retour à la liste des chapitres:</a></p>
+            <p class="linkDisplayArticle">
+                <a href="index.php?action=listArticles" class="btn btn-primary">Retour à la liste des chapitres:</a>
+                <?php
+                if($this->isAdmin) { ?>
+                    <a href="index.php?action=manageArticle" class="btn btn-primary text-right"> Retour au gestion des chapitres  </a>
+                <?php } ?>
+            </p>
+
+
         </div>
 
         <div class="partArticle jumbotron jumbotron-fluid">
@@ -23,7 +31,7 @@
     <?php
     if ($this->isConnected) { ?>
     <section class="container">
-        <h2>Commentaire</h2>
+        <h2 class="text-center"> Espace commentaire</h2>
 
         <form class="mb-4" action="index.php?action=addComment&amp;id= <?= $article['id']?>" method="POST">
             <div class="form-group">

@@ -104,6 +104,8 @@ class Comments extends Controller {
             else {
                 $commentReported = $commentManager->reportComment($comment_id);
 
+                $flashSession = new FlashSession();
+                $flashSession->addFlash('success', 'Le commentaire est bien signalé');
                 \header('Location: index.php?action=article&id='.$commentById['article_id']);
             }
         } else {
