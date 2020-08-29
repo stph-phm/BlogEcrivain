@@ -10,6 +10,7 @@ use App\Session\FlashSession;
 
 class Articles extends Controller {
 
+
     /**
      * Articles constructor.
      */

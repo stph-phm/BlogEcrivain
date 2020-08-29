@@ -1,15 +1,13 @@
 <?php
 namespace App\Controller;
 
+use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Session\FlashSession;
 use mysql_xdevapi\Exception;
 
 class Comments extends Controller {
-    public $article_id;
-    public $pseudo;
-    public $comment;
-    public $comment_id;
+
 
     /**
      * Comments constructor.
@@ -29,50 +27,30 @@ class Comments extends Controller {
             $comment = $this->str_secur($_POST['comment']);
             $sessionId = $this->trim_secur($_SESSION['userId']);
 
-            if (!empty($comment)) {
-                $commentManager = new CommentManager();
-                $addComment = $commentManager->addComment($comment, $article_id, $sessionId);
+            $articleManager = new ArticleManager();
+            $article = $articleManager->getArticle($article_id);
 
-                $flashSession = new FlashSession();
-                $flashSession->addFlash('success', 'Le commentaire est bien ajouté');
+            if (!$article) {
+                throw new \Exception('Aucun identifiant de billet envoyé');
             }
             else {
-                $flashSession = new FlashSession();
-                $flashSession->addFlash('danger', "Veuillez remplir tous les champs !");
+                if (!empty($comment)) {
+                    $commentManager = new CommentManager();
+                    $addComment = $commentManager->addComment($comment, $article_id, $sessionId);
+
+                    $flashSession = new FlashSession();
+                    $flashSession->addFlash('success', 'Le commentaire est bien ajouté');
+                }
+                else {
+                    $flashSession = new FlashSession();
+                    $flashSession->addFlash('danger', "Veuillez remplir tous les champs !");
+                }
             }
         }
         else {
             throw new Exception('Aucun identifiant de billet envoyé');
-            
+
         }
-
-        // if (isset($_GET['id']) && $_GET['id'] > 0) {
-        //     $comment_id = $this->trim_secur($_GET['id']);
-        //     $commentManager = new CommentManager();
-        //     $commentById = $commentManager->getCommentById($comment_id);
-
-        //     if (!$commentById['id']) {
-        //         throw new \Exception('Aucun identifiant de billet envoyé');
-        //     }
-        //     else {
-        //         $comment = $this->str_secur($_POST['comment']);
-        //         $sessionId = $this->trim_secur($_SESSION['userId']);
-
-        //         if (!empty($comment)) {
-
-        //             $addComment = $commentManager->addComment($comment, $comment_id, $sessionId);
-
-        //             $flashSession = new FlashSession();
-        //             $flashSession->addFlash('success', 'Le commentaire est bien ajouté');
-        //         }
-        //         else {
-        //             $errorMsg = "Veuillez remplir tous les champs !";
-        //         }
-        //     }
-        //  }
-        // else {
-        //     throw new \Exception("Aucun identifiant de billet envoyé");
-        // }
         \header('Location: index.php?action=article&id='. $article_id);
     }
 

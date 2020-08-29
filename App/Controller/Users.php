@@ -7,6 +7,7 @@ use App\Session\FlashSession;
 
 class Users extends Controller 
 {
+
     /**
      * Users constructor.
      */
