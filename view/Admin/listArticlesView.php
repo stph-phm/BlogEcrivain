@@ -10,7 +10,7 @@
                 <th class=" title-form-article text-center align-midle">titre du chapitre </th>
                 <th class=" title-form-article text-center align-midle"> Contenue de l'article </th>
                 <th class=" title-form-article text-center align-midle">Date de publication</th>
-                <th class=" title-form-article text-center align-midle" width=300>Action </th>
+                <th class=" title-form-article text-center align-midle" width=500>Action </th>
             </tr>
         </thead>
         <tbody>
