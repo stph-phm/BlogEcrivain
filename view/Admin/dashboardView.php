@@ -32,7 +32,7 @@
                                    class="btn btn-primary"> Valider <i class="fas fa-check"> </i></a>
 
                               <a href="index.php?action=deleteCommentReport&amp;id= <?= $commentReported['id'] ?>"
-                                   class="linkDelete btn btn-danger">Supprimer <i class="fas fa-times"></i></a>
+                                   class="linkDelete btn btn-danger">Supprimer <i class="fas fa-times"> </i></a>
                          </td>
                     </tr>
                     <?php } ?>

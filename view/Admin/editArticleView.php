@@ -2,7 +2,7 @@
 <?php ob_start(); ?>
 
 <div class="global editArtcleGlobale ">
-<a href="index.php?action=manageArticle"> Retour à la gestion des articles</a>
+    <a href="index.php?action=manageArticle"> Retour à la gestion des articles</a>
     <h1 class="text-center">Modifier un article </h1>
     <form action="index.php?action=edit&amp;id= <?= $article['id'] ?>" method="post">
         <div class="form-group">
@@ -11,7 +11,9 @@
         </div>
         <div class="form-group">
             <label for="content">Contenue du chapitre </label>
-            <textarea name="content" id="default" class="form-control" rows="20"> <?= $article['content'] ?>  </textarea>
+            <textarea name="content" id="default" class="form-control" rows="20">
+                <?= $article['content'] ?>  
+            </textarea>
         </div>
         <button class="btn btn-primary" type="submit" name="submit">Modifier</button>
     </form>

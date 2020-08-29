@@ -25,20 +25,20 @@ class Comments extends Controller {
         }
 
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-            $comment_id = $this->trim_secur($_GET['id']);
-            
+            $article_id = $this->trim_secur($_GET['id']);
             $comment = $this->str_secur($_POST['comment']);
             $sessionId = $this->trim_secur($_SESSION['userId']);
 
             if (!empty($comment)) {
                 $commentManager = new CommentManager();
-                $addComment = $commentManager->addComment($comment, $comment_id, $sessionId);
+                $addComment = $commentManager->addComment($comment, $article_id, $sessionId);
 
                 $flashSession = new FlashSession();
                 $flashSession->addFlash('success', 'Le commentaire est bien ajouté');
             }
             else {
-                $errorMsg = "Veuillez remplir tous les champs !";
+                $flashSession = new FlashSession();
+                $flashSession->addFlash('danger', "Veuillez remplir tous les champs !");
             }
         }
         else {
@@ -73,7 +73,7 @@ class Comments extends Controller {
         // else {
         //     throw new \Exception("Aucun identifiant de billet envoyé");
         // }
-        \header('Location: index.php?action=article&id='. $comment_id);
+        \header('Location: index.php?action=article&id='. $article_id);
     }
 
     /*

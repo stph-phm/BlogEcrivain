@@ -42,8 +42,7 @@
                         <p class="articlePara ">
                             <?= date_format(date_create($lastArticle['date_article']), 'd/m/Y à H:i') ?>
                             <?= nl2br(mb_substr($lastArticle['content'], 0, 400))  ?> ...
-                            <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" role="button"
-                                class="link-read-more">Lire la suite</a>
+                            <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" class="link-read-more">Lire la suite</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +54,6 @@
         <p><a href="index.php?action=listArticles" class="linkListArticle btn btn-primary"> La liste des tous les
                 chapitres </a>
         </p>
-
     </section>
 
 </div>

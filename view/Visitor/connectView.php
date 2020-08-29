@@ -18,8 +18,7 @@
 
     <a href="index.php?action=register"> Pas de compte ? Inscrivez vous</a>
 
-</div>
-<!--/.global-->
+</div><!--/.global-->
 
 <?php $content = ob_get_clean(); ?>
 <?php include 'view/template.php'; ?>
