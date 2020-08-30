@@ -108,7 +108,7 @@ class Comments extends Controller {
                 $commentManager->deleteComment($comment_id);
 
                 $flashSession = new FlashSession();
-                $flashSession->addFlash('info', 'Le commentaire signalée est bien supprimé !');
+                $flashSession->addFlash('info', 'Le commentaire est bien supprimé !');
                 \header('Location: index.php?action=article&id='.$commentById['article_id']);
             }
         }
