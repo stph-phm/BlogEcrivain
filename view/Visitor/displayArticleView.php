@@ -27,12 +27,11 @@
             </div>
         </div>
         <!--partArticle-->
-    </header>
+    </header><h2 class="text-center"> Espace commentaire</h2>
+
 
     <?php if ($this->isConnected) { ?>
     <section class="container">
-        <h2 class="text-center"> Espace commentaire</h2>
-
         <form class="mb-4" action="index.php?action=addComment&amp;id= <?= $article['id']?>" method="POST">
             <div class="form-group">
                 <label for="comment">Commentaire</label>
@@ -44,7 +43,7 @@
 
         <div class="jumbotron">
             <p class="lead text-center">
-                <a href="index.php?action=login" class="text-center">Connectez-vous pourpouvoir commenter</a>
+                <a href="index.php?action=login" class="text-center">Cliquez ici pour se connecter ! Ensuite vous pouvez commenter !</a>
             </p>
         </div>
 
