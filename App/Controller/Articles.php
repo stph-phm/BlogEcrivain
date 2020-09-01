@@ -7,9 +7,7 @@ use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Session\FlashSession;
 
-
 class Articles extends Controller {
-
 
     /**
      * Articles constructor.
@@ -24,6 +22,7 @@ class Articles extends Controller {
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
         $lastArticles = $articleManager->listLastArticles();
+
         include 'view/Visitor/homeView.php';
     }
 
@@ -80,7 +79,8 @@ class Articles extends Controller {
                 $flashSession->addFlash('success', 'Votre article est ajouté!');
 
                 header('Location: index.php?action=manageArticle');
-            } else {
+            } 
+            else {
                 $errorMsg = "Veuillez remplir tous les champs !";
             }
         }
@@ -103,7 +103,7 @@ class Articles extends Controller {
         include 'view/Admin/listArticlesView.php';
     }
 
-    // Only administrators
+    // Only administrator
     public function editArticle()
     {
         if (!$this->isAdmin) {

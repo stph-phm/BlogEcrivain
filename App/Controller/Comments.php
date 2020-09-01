@@ -49,7 +49,6 @@ class Comments extends Controller {
         }
         else {
             throw new Exception('Aucun identifiant de billet envoyé');
-
         }
         \header('Location: index.php?action=article&id='. $article_id);
     }
@@ -76,6 +75,7 @@ class Comments extends Controller {
             $comment_id = $this->trim_secur($_GET['id']);
             $commentManager = new CommentManager();
             $commentById = $commentManager->getCommentById($comment_id);
+
             if (!$commentById) {
                 throw new \Exception("Aucun identifiant de billet envoyé");
             }
@@ -86,7 +86,8 @@ class Comments extends Controller {
                 $flashSession->addFlash('success', 'Le commentaire est bien signalé');
                 \header('Location: index.php?action=article&id='.$commentById['article_id']);
             }
-        } else {
+        } 
+        else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }
@@ -101,6 +102,7 @@ class Comments extends Controller {
             $comment_id = $this->trim_secur($_GET['id']);
             $commentManager = new CommentManager();
             $commentById = $commentManager->getCommentById($comment_id);
+
             if (!$commentById) {
                 throw new \Exception('Aucun identifiant de billet envoyé');
             }
@@ -120,8 +122,9 @@ class Comments extends Controller {
     public function validateReportCom()
     {
         if (!$this->isAdmin) {
-           \header('Location: index.php');
+            \header('Location: index.php');
         }
+        
         if (isset($_GET['id']) && $_GET['id'] > 0 ) {
             $comment_id = $this->trim_secur($_GET['id']);
             $commentManager = new CommentManager();
@@ -164,7 +167,8 @@ class Comments extends Controller {
                 $flashSession->addFlash('info', 'Le commentaire signalé est bien supprimé !');
                 header('Location: index.php?action=dashboard');
             }
-        } else {
+        } 
+        else {
             throw new \Exception("Aucun identifiant de billet envoyé");
         }
     }

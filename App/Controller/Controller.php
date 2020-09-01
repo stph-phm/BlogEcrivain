@@ -50,7 +50,8 @@ class Controller {
         if (isset($_SESSION['userId']) && $this->ifHashSession()) {
             $userManager = new UserManager;
             $this->userInfo = $userManager->getUserById($_SESSION['userId']);
-        } else {
+        } 
+        else {
             $this->userInfo = false;
         }
         return $this->userInfo;
@@ -65,10 +66,12 @@ class Controller {
         if ($this->is_connected()) {
             if ($this->userInfo['is_admin'] == 1 ) {
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
-        } else {
+        } 
+        else {
             return false;
         }
     }

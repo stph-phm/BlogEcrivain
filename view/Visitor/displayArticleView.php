@@ -27,7 +27,8 @@
             </div>
         </div>
         <!--partArticle-->
-    </header><h2 class="text-center"> Espace commentaire</h2>
+    </header>
+    <h2 class="text-center"> Espace commentaire</h2>
 
 
     <?php if ($this->isConnected) { ?>
@@ -43,7 +44,8 @@
 
         <div class="jumbotron">
             <p class="lead text-center">
-                <a href="index.php?action=login" class="text-center">Cliquez ici pour se connecter ! Ensuite vous pouvez commenter !</a>
+                <a href="index.php?action=login" class="text-center">Cliquez ici pour se connecter ! Ensuite vous pouvez
+                    commenter !</a>
             </p>
         </div>
 
@@ -80,7 +82,8 @@
 
                 <?php if($this->isAdmin)  { ?>
 
-                <a class="linkDelete buttonlink  btn btn-danger btn-sm "href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
+                <a class="linkDelete buttonlink  btn btn-danger btn-sm "
+                    href="index.php?action=deleteComment&amp;id= <?= $comment['id'] ?>">
                     <i class="fas fa-minus-circle"></i>
                 </a>
 

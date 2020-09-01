@@ -13,10 +13,12 @@
 
             </div>
             <div class="form-group form_content">
-                <label for="content">Contenue de l'article </label>
-                <textarea id="default" class="form-control" name="content" rows="18"
-                    name="content"> <?= $content ?> </textarea>
+                <label for="content">Contenu de l'article </label>
+                <textarea id="default" class="form-control" name="content" rows="18" name="content">
+                    <?= $content ?> 
+                </textarea>
             </div>
+            
             <button type="submit" class="btn btn-primary text-align-center" name="submit">Publier</button>
         </form>
     </div>

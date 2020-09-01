@@ -51,8 +51,8 @@
             <?php } ?>
         </article>
 
-        <p><a href="index.php?action=listArticles" class="linkListArticle btn btn-primary"> La liste des tous les
-                chapitres </a>
+        <p>
+        <a href="index.php?action=listArticles" class="linkListArticle btn btn-primary">La liste des tous les chapitres </a>
         </p>
     </section>
 

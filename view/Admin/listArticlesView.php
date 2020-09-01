@@ -2,7 +2,9 @@
 <?php ob_start(); ?>
 
 <div class="global manage_article ">
+
     <h1 class="text-center gestionArticle">Gestion des articles </h1>
+
     <table class="manageArticle table">
         <thead class=" table thead-dark">
             <tr>
@@ -13,6 +15,7 @@
                 <th class=" title-form-article text-center align-midle" width=500>Action </th>
             </tr>
         </thead>
+
         <tbody>
             <?php foreach ($articles as $article) { ?>
             <tr>
@@ -36,6 +39,7 @@
                 }   
                 ?>
         </tbody>
+        
     </table>
 
 </div>

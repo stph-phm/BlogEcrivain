@@ -99,10 +99,12 @@ class Users extends Controller
                     $flashSession = new FlashSession();
                     $flashSession->addFlash('success',"Connexion réussi !");
                     \header('Location: index.php');
-                } else {
+                } 
+                else {
                     $errorMsg = "Vos identifiants sont incorrects ! ";
                 }
-            } else {
+            } 
+            else {
                 $errorMsg = "Vos identifiants sont incorrects ! ";
             }
         }
@@ -120,6 +122,6 @@ class Users extends Controller
     public function logoutUser()
     {
         session_destroy();
-         \header("Location: index.php?action=login");
+        \header("Location: index.php?action=login");
     }
 }

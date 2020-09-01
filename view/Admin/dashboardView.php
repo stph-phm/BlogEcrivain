@@ -28,11 +28,9 @@
                          <td><?= htmlspecialchars($commentReported['pseudo']) ?> </td>
                          <td> <?= nl2br(htmlspecialchars($commentReported['comment'])) ?> </td>
                          <td class="table-action">
-                              <a href="index.php?action=validateReported&amp;id=<?= $commentReported['id'] ?>"
-                                   class="btn btn-primary"> Valider <i class="fas fa-check"> </i></a>
+                              <a href="index.php?action=validateReported&amp;id=<?= $commentReported['id'] ?>" class="btn btn-primary"> Valider <i class="fas fa-check"> </i> </a>
 
-                              <a href="index.php?action=deleteCommentReport&amp;id= <?= $commentReported['id'] ?>"
-                                   class="linkDelete btn btn-danger">Supprimer <i class="fas fa-times"> </i></a>
+                              <a href="index.php?action=deleteCommentReport&amp;id= <?= $commentReported['id'] ?>" class="linkDelete btn btn-danger">Supprimer <i class="fas fa-times"> </i></a>
                          </td>
                     </tr>
                     <?php } ?>

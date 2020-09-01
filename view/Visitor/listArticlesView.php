@@ -10,7 +10,7 @@
             </h2>
 
             <p class="text-center"><?= date_format(date_create($articles['date_article']), 'd/m/Y à H:i') ?></p>
-            <p class="text-center"><?= mb_substr($articles['content'],0,400) ?>...a
+            <p class="text-center"><?= mb_substr($articles['content'],0,400) ?>...
                 <a href="index.php?action=article&amp;id=<?= $articles['id'] ?>" >Lire la suite</a>
             </p>
         </section>
