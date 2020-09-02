@@ -1,8 +1,8 @@
-<?php $title = "Création d'un article";  ?>
+<?php $title = "Création d'un chapitre";  ?>
 <?php ob_start(); ?>
 
 <div class="global dashboard ">
-    <h1 class=" addArticleHeader text-center">Création d'un article </h1>
+    <h1 class=" addArticleHeader text-center">Création d'un chapitre </h1>
 
     <div class="form-newArticle">
         <form class="newArticle" action="" method="post">

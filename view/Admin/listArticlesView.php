@@ -3,7 +3,7 @@
 
 <div class="global manage_article ">
 
-    <h1 class="text-center gestionArticle">Gestion des articles </h1>
+    <h1 class="text-center gestionArticle">Gestion des chapitres </h1>
 
     <table class="manageArticle table">
         <thead class=" table thead-dark">
