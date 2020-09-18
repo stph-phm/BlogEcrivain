@@ -6,6 +6,7 @@ use App\Model\UserManager;
 use App\Model\ArticleManager;
 use App\Model\CommentManager;
 use App\Session\FlashSession;
+use App\Controller\Controller;
 
 class Articles extends Controller {
 

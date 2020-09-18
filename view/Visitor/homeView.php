@@ -43,6 +43,7 @@
                             <?= date_format(date_create($lastArticle['date_article']), 'd/m/Y à H:i') ?>
                             <?= nl2br(mb_substr($lastArticle['content'], 0, 400))  ?> ...
                             <a href="index.php?action=article&amp;id=<?= $lastArticle['id'] ?>" class="link-read-more">Lire la suite</a>
+                        </p>
                     </div>
                 </div>
             </div>

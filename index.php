@@ -87,6 +87,6 @@ try {
             break;
     }
 } catch (\Exception $e) {
-    $errorMsgBlock = new Error;
-    $errorMsgBlock->displayErrorBlock($e);
+        $errorMsgBlock = new Error;
+        $errorMsgBlock->displayErrorBlock($e);
 }
