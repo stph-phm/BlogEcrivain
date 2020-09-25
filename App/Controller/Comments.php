@@ -48,7 +48,7 @@ class Comments extends Controller {
             }
         }
         else {
-            throw new Exception('Aucun identifiant de billet envoyé');
+            throw new \Exception('Aucun identifiant de billet envoyé');
         }
         \header('Location: index.php?action=article&id='. $article_id);
     }
