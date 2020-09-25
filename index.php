@@ -80,7 +80,7 @@ try {
             $logout = new Users;
             $logout->logoutUser();
             break;
-        case 'home':
+        
         default:
             $lastArticles = new Articles;
             $lastArticles->home();
